@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_night_gradient"
+    android:keepScreenOn="true"
+    android:padding="24dp">
+
+    <ImageButton
+        android:id="@+id/btn_dnd_toggle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_notifications_off"
+        android:background="@drawable/bg_circle_gray"
+        android:backgroundTint="#26FFFFFF"
+        app:tint="@color/white"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sleep_mode_active"
+        android:textColor="#80FFFFFF"
+        android:letterSpacing="0.1"
+        android:textSize="14sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_dnd_toggle" />
+
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_00_00_00"
+        android:textColor="@color/white"
+        android:textSize="72sp"
+        android:fontFamily="sans-serif-thin"
+        android:shadowColor="#33000000"
+        android:shadowDy="4"
+        android:shadowRadius="8"
+        app:layout_constraintBottom_toTopOf="@id/btn_stop_sleep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_status" />
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_moon"
+        app:tint="#1AFFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_status"
+        app:layout_constraintBottom_toTopOf="@id/tv_timer"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_stop_sleep"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:text="@string/bangun"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:backgroundTint="#D84315"
+        app:cornerRadius="40dp"
+        app:elevation="12dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tekan_tombol_untuk_mengakhiri_sesi_tidur"
+        android:textColor="#66FFFFFF"
+        android:textSize="12sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/btn_stop_sleep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

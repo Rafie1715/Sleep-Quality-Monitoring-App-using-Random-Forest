@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_onboarding"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_moon"
+        android:layout_marginBottom="32dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tidur_lebih_berkualitas"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/sleep_primary"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pantau_pola_tidurmu_dapatkan_analisis_ai_dan_bangun_lebih_segar_setiap_hari_bersama_restup"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/btn_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mulai_sekarang"
+        android:backgroundTint="@color/sleep_primary"
+        android:layout_marginTop="60dp"/>
+
+</LinearLayout>

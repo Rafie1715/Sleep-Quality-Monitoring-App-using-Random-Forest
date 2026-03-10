@@ -1,174 +1,171 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.tracker
 
-import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
+import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
-import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.restupskripsirafierojagatbachri.R
+import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivitySleepTrackerBinding
-import com.dicoding.restupskripsirafierojagatbachri.ui.result.ResultActivity
+import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
 class SleepTrackerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySleepTrackerBinding
+    private lateinit var sharedPref: SharedPreferences
 
-    // Variabel Timer
-    private var startTime = 0L
-    private var timeInSeconds = 0L
-    private var isRunning = false
-    private val handler = Handler(Looper.getMainLooper())
-    private lateinit var notificationManager: NotificationManager
-    private var isDndActive = false
+    private val viewModel: TrackerViewModel by viewModels()
 
-    // Runnable yang dijalankan berulang-ulang setiap detik
-    private val timerRunnable = object : Runnable {
-        override fun run() {
-            if (isRunning) {
-                val millis = SystemClock.uptimeMillis() - startTime
-                timeInSeconds = millis / 1000
-
-                // Update UI: Detik -> Jam:Menit:Detik
-                val hours = timeInSeconds / 3600
-                val minutes = (timeInSeconds % 3600) / 60
-                val secs = timeInSeconds % 60
-
-                val timeString = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, secs)
-                binding.tvTimer.text = timeString
-
-                // Ulangi lagi 1 detik kemudian
-                handler.postDelayed(this, 1000)
-            }
-        }
-    }
+    private var isSleeping = false
+    private var sleepStartTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inisialisasi ViewBinding untuk Activity
         binding = ActivitySleepTrackerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Notification Manager
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        // Tombol Back di pojok atas (opsional, jika ingin kembali ke MainActivity)
+        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Cek status awal DND (Siapa tahu user sudah set DND dari luar)
-        checkCurrentDndState()
+        // Inisialisasi SharedPreferences
+        sharedPref = getSharedPreferences("SleepTrackerPref", Context.MODE_PRIVATE)
 
-        // Tombol DND ditekan
-        binding.btnDndToggle.setOnClickListener {
-            toggleDndMode()
-        }
+        // Cek status tidur saat halaman dibuka
+        checkSleepStatus()
 
-        // 1. Mulai Timer Otomatis saat halaman dibuka
-        startTimer()
-
-        // 2. Tombol STOP / BANGUN
-        binding.btnStopSleep.setOnClickListener {
-            stopTimer()
-            disableDndMode()
-            goToResultPage()
-        }
-    }
-
-    // Fungsi Cek & Ubah DND
-    private fun toggleDndMode() {
-        // 1. Cek Izin Dulu
-        if (notificationManager.isNotificationPolicyAccessGranted) {
-            // Punya Izin -> Toggle ON/OFF
-            if (isDndActive) {
-                disableDndMode()
+        // Aksi ketika tombol raksasa ditekan
+        binding.btnToggleSleep.setOnClickListener {
+            if (isSleeping) {
+                stopSleep()
             } else {
-                enableDndMode()
+                startSleep()
             }
-        } else {
-            // Belum Punya Izin -> Buka Settings
-            Toast.makeText(this, "Izinkan akses 'Jangan Ganggu' untuk fitur ini", Toast.LENGTH_LONG).show()
-            val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
-            startActivity(intent)
         }
+
+        observeViewModel()
     }
 
-    private fun enableDndMode() {
-        // Set ke Mode: Interruption Filter None (Hening Total) atau Priority
-        try {
-            notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
-            isDndActive = true
-            updateDndIcon()
-            Toast.makeText(this, "Mode Jangan Ganggu: AKTIF", Toast.LENGTH_SHORT).show()
-        } catch (e: SecurityException) {
-            // Jaga-jaga kalau izin dicabut tiba-tiba
-        }
-    }
+    private fun observeViewModel() {
+        viewModel.saveStatus.observe(this) { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    // Opsional: Kamu bisa menampilkan ProgressBar di sini
+                    binding.btnToggleSleep.isEnabled = false
+                    Toast.makeText(this, "Menyimpan data...", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Success -> {
+                    binding.btnToggleSleep.isEnabled = true
+                    Toast.makeText(this, result.data, Toast.LENGTH_LONG).show()
 
-    private fun disableDndMode() {
-        // Set ke Mode: Interruption Filter All (Semua Notif Masuk)
-        try {
-            // Hanya matikan jika kita yang mengaktifkan (opsional)
-            notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
-            isDndActive = false
-            updateDndIcon()
-            Toast.makeText(this, "Mode Jangan Ganggu: NON-AKTIF", Toast.LENGTH_SHORT).show()
-        } catch (e: SecurityException) {
-            // Ignore
-        }
-    }
-
-    private fun checkCurrentDndState() {
-        // Cek apakah HP sedang DND saat aplikasi dibuka
-        val filter = notificationManager.currentInterruptionFilter
-        isDndActive = (filter == NotificationManager.INTERRUPTION_FILTER_NONE ||
-                filter == NotificationManager.INTERRUPTION_FILTER_PRIORITY ||
-                filter == NotificationManager.INTERRUPTION_FILTER_ALARMS)
-        updateDndIcon()
-    }
-
-    private fun updateDndIcon() {
-        if (isDndActive) {
-            // Ganti warna icon jadi Aktif (misal: Putih/Kuning)
-            binding.btnDndToggle.setColorFilter(getColor(R.color.white)) // Atau warna accent
-        } else {
-            // Ganti warna icon jadi Mati (misal: Abu-abu)
-            binding.btnDndToggle.setColorFilter(getColor(android.R.color.darker_gray))
-        }
-    }
-
-    private fun startTimer() {
-        startTime = SystemClock.uptimeMillis()
-        isRunning = true
-
-        binding.tvTimer.animate()
-            .alpha(0.7f)
-            .setDuration(1000)
-            .withEndAction {
-                binding.tvTimer.animate().alpha(1.0f).setDuration(1000).start()
+                    // Tutup halaman setelah sukses disimpan
+                    finish()
+                }
+                is Resource.Error -> {
+                    binding.btnToggleSleep.isEnabled = true
+                    Toast.makeText(this, "Gagal: ${result.message}", Toast.LENGTH_LONG).show()
+                }
             }
-            .start()
-
-        handler.postDelayed(timerRunnable, 0)
+        }
     }
 
-    private fun stopTimer() {
-        isRunning = false
-        handler.removeCallbacks(timerRunnable)
+    private fun checkSleepStatus() {
+        // Ambil data waktu tidur yang tersimpan (default 0 kalau belum tidur)
+        sleepStartTime = sharedPref.getLong("START_TIME", 0L)
+        isSleeping = sleepStartTime != 0L
+
+        updateUI()
     }
 
-    private fun goToResultPage() {
-        // Kirim data durasi tidur ke halaman hasil
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra("EXTRA_DURATION_SECONDS", timeInSeconds)
-        startActivity(intent)
-        finish() // Tutup halaman tracker agar tidak bisa di-back
+    private fun startSleep() {
+        // Catat waktu sekarang (dalam milidetik)
+        sleepStartTime = System.currentTimeMillis()
+
+        // Simpan ke SharedPreferences agar aman meskipun aplikasi ditutup / HP mati
+        sharedPref.edit().putLong("START_TIME", sleepStartTime).apply()
+        isSleeping = true
+
+        updateUI()
+        Toast.makeText(this, "Selamat tidur! 🌙", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkCurrentDndState()
+    private fun stopSleep() {
+        // 1. Ambil waktu bangun (sekarang)
+        val wakeUpTime = System.currentTimeMillis()
+
+        // 2. Hitung durasi (Selisih waktu bangun dan tidur)
+        val durationMillis = wakeUpTime - sleepStartTime
+        val durationMinutes = (durationMillis / (1000 * 60)).toInt() // Konversi ke menit
+
+        // 3. Reset SharedPreferences karena sudah bangun
+        sharedPref.edit().putLong("START_TIME", 0L).apply()
+        isSleeping = false
+        updateUI()
+
+        // 4. Panggil Bottom Sheet Morning Survey!
+        showMorningSurvey(sleepStartTime, wakeUpTime, durationMinutes)
+    }
+
+    private fun showMorningSurvey(sleepTime: Long, wakeTime: Long, durationMins: Int) {
+        val bottomSheet = MorningSurveyBottomSheet()
+
+        // Tangkap data dari Bottom Sheet saat tombol "SIMPAN" ditekan
+        bottomSheet.onSubmitListener = { latency, disturbances, habits, mood ->
+
+            // Format tanggal hari ini (contoh: "10 Mar 2026")
+            val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val currentDate = sdf.format(Date(wakeTime))
+
+            // Bungkus semua data ke dalam Model Class yang sudah kita buat
+            val sleepRecord = SleepRecord(
+                date = currentDate,
+                sleep_time = sleepTime,
+                wake_time = wakeTime,
+                duration_minutes = durationMins,
+                sleep_latency = latency,
+                disturbances = disturbances,
+                habits = habits,
+                mood = mood
+                // Catatan: user_id, sleep_quality, dan recommendation
+                // akan diisi di ViewModel/Repository nanti
+            )
+
+            viewModel.saveSleepRecord(sleepRecord)
+        }
+
+        // Di Activity, kita menggunakan supportFragmentManager (bukan parentFragmentManager)
+        bottomSheet.show(supportFragmentManager, "MorningSurveyBottomSheet")
+    }
+
+    private fun updateUI() {
+        if (isSleeping) {
+            binding.tvGreeting.text = "Ssst... Sedang Tidur"
+            binding.tvSubtitle.text = "Aplikasi sedang merekam waktu tidurmu."
+            binding.tvTrackerStatus.text = "Tidur dimulai pada: ${formatTime(sleepStartTime)}"
+
+            binding.btnToggleSleep.text = "BANGUN\nTIDUR"
+            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF7043"))
+        } else {
+            binding.tvGreeting.text = "Siap untuk beristirahat?"
+            binding.tvSubtitle.text = "Pastikan lingkungan tidurmu nyaman."
+            binding.tvTrackerStatus.text = "Belum ada aktivitas tidur direkam"
+
+            binding.btnToggleSleep.text = "MULAI\nTIDUR"
+            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+        }
+    }
+
+    private fun formatTime(timeInMillis: Long): String {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        return sdf.format(Date(timeInMillis))
     }
 }

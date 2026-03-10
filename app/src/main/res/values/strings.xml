@@ -45,4 +45,7 @@
     <string name="pastikan_lingkungan_tidurmu_nyaman">Pastikan lingkungan tidurmu nyaman.</string>
     <string name="belum_ada_aktivitas_tidur_direkam">Belum ada aktivitas tidur direkam</string>
     <string name="mulai_ntidur">MULAI\nTIDUR</string>
+    <string name="_15_menit_cepat"><![CDATA[< 15 Menit (Cepat)]]></string>
+    <string name="_15_30_menit">15 - 30 Menit</string>
+    <string name="_1_jam_sulit_tidur"><![CDATA[> 1 Jam (Sulit Tidur)]]></string>
 </resources>

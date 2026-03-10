@@ -57,7 +57,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="< 15 Menit (Cepat)"
+                android:text="@string/_15_menit_cepat"
                 android:checked="true"/>
 
             <com.google.android.material.chip.Chip
@@ -65,7 +65,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15 - 30 Menit"/>
+                android:text="@string/_15_30_menit"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_lat_60"
@@ -79,7 +79,7 @@
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="> 1 Jam (Sulit Tidur)"/>
+                android:text="@string/_1_jam_sulit_tidur"/>
         </com.google.android.material.chip.ChipGroup>
 
 

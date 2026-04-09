@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivitySleepTrackerBinding
 import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
+import com.dicoding.restupskripsirafierojagatbachri.utils.SleepRecommendationEngine
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.core.content.edit
+import androidx.core.graphics.toColorInt
 
 @AndroidEntryPoint
 class SleepTrackerActivity : AppCompatActivity() {
@@ -30,20 +33,15 @@ class SleepTrackerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inisialisasi ViewBinding untuk Activity
         binding = ActivitySleepTrackerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Tombol Back di pojok atas (opsional, jika ingin kembali ke MainActivity)
-        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Inisialisasi SharedPreferences
         sharedPref = getSharedPreferences("SleepTrackerPref", Context.MODE_PRIVATE)
 
-        // Cek status tidur saat halaman dibuka
         checkSleepStatus()
 
-        // Aksi ketika tombol raksasa ditekan
         binding.btnToggleSleep.setOnClickListener {
             if (isSleeping) {
                 stopSleep()
@@ -59,7 +57,6 @@ class SleepTrackerActivity : AppCompatActivity() {
         viewModel.saveStatus.observe(this) { result ->
             when (result) {
                 is Resource.Loading -> {
-                    // Opsional: Kamu bisa menampilkan ProgressBar di sini
                     binding.btnToggleSleep.isEnabled = false
                     Toast.makeText(this, "Menyimpan data...", Toast.LENGTH_SHORT).show()
                 }
@@ -67,7 +64,6 @@ class SleepTrackerActivity : AppCompatActivity() {
                     binding.btnToggleSleep.isEnabled = true
                     Toast.makeText(this, result.data, Toast.LENGTH_LONG).show()
 
-                    // Tutup halaman setelah sukses disimpan
                     finish()
                 }
                 is Resource.Error -> {
@@ -79,7 +75,6 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun checkSleepStatus() {
-        // Ambil data waktu tidur yang tersimpan (default 0 kalau belum tidur)
         sleepStartTime = sharedPref.getLong("START_TIME", 0L)
         isSleeping = sleepStartTime != 0L
 
@@ -87,11 +82,9 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun startSleep() {
-        // Catat waktu sekarang (dalam milidetik)
         sleepStartTime = System.currentTimeMillis()
 
-        // Simpan ke SharedPreferences agar aman meskipun aplikasi ditutup / HP mati
-        sharedPref.edit().putLong("START_TIME", sleepStartTime).apply()
+        sharedPref.edit { putLong("START_TIME", sleepStartTime) }
         isSleeping = true
 
         updateUI()
@@ -99,50 +92,46 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun stopSleep() {
-        // 1. Ambil waktu bangun (sekarang)
         val wakeUpTime = System.currentTimeMillis()
 
-        // 2. Hitung durasi (Selisih waktu bangun dan tidur)
         val durationMillis = wakeUpTime - sleepStartTime
-        val durationMinutes = (durationMillis / (1000 * 60)).toInt() // Konversi ke menit
+        val durationMinutes = (durationMillis / (1000 * 60)).toInt()
 
-        // 3. Reset SharedPreferences karena sudah bangun
-        sharedPref.edit().putLong("START_TIME", 0L).apply()
+        sharedPref.edit { putLong("START_TIME", 0L) }
         isSleeping = false
         updateUI()
 
-        // 4. Panggil Bottom Sheet Morning Survey!
         showMorningSurvey(sleepStartTime, wakeUpTime, durationMinutes)
     }
 
     private fun showMorningSurvey(sleepTime: Long, wakeTime: Long, durationMins: Int) {
         val bottomSheet = MorningSurveyBottomSheet()
 
-        // Tangkap data dari Bottom Sheet saat tombol "SIMPAN" ditekan
-        bottomSheet.onSubmitListener = { latency, disturbances, habits, mood ->
+        bottomSheet.onSubmitListener = { latency, isStressed, hasCaffeine, highScreenTime, freqAwake, badTemp, mood ->
 
-            // Format tanggal hari ini (contoh: "10 Mar 2026")
             val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val currentDate = sdf.format(Date(wakeTime))
 
-            // Bungkus semua data ke dalam Model Class yang sudah kita buat
             val sleepRecord = SleepRecord(
                 date = currentDate,
                 sleep_time = sleepTime,
                 wake_time = wakeTime,
                 duration_minutes = durationMins,
                 sleep_latency = latency,
-                disturbances = disturbances,
-                habits = habits,
-                mood = mood
-                // Catatan: user_id, sleep_quality, dan recommendation
-                // akan diisi di ViewModel/Repository nanti
+                is_stressed = isStressed,
+                has_caffeine = hasCaffeine,
+                high_screen_time = highScreenTime,
+                frequent_awakenings = freqAwake,
+                bad_temperature = badTemp,
+                wake_up_mood = mood
             )
+
+            val saran = SleepRecommendationEngine.generateRecommendation(sleepRecord)
+            sleepRecord.recommendation = saran
 
             viewModel.saveSleepRecord(sleepRecord)
         }
 
-        // Di Activity, kita menggunakan supportFragmentManager (bukan parentFragmentManager)
         bottomSheet.show(supportFragmentManager, "MorningSurveyBottomSheet")
     }
 
@@ -153,14 +142,14 @@ class SleepTrackerActivity : AppCompatActivity() {
             binding.tvTrackerStatus.text = "Tidur dimulai pada: ${formatTime(sleepStartTime)}"
 
             binding.btnToggleSleep.text = "BANGUN\nTIDUR"
-            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF7043"))
+            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf("#FF7043".toColorInt())
         } else {
             binding.tvGreeting.text = "Siap untuk beristirahat?"
             binding.tvSubtitle.text = "Pastikan lingkungan tidurmu nyaman."
             binding.tvTrackerStatus.text = "Belum ada aktivitas tidur direkam"
 
             binding.btnToggleSleep.text = "MULAI\nTIDUR"
-            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+            binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf("#4CAF50".toColorInt())
         }
     }
 

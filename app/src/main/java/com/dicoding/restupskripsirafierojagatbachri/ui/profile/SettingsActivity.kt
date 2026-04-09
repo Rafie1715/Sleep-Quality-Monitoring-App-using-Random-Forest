@@ -16,7 +16,6 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.btnBackSettings.setOnClickListener { finish() }
 
-        // Link ke Reminder
         binding.cardReminderSetting.setOnClickListener {
             startActivity(Intent(this, ReminderActivity::class.java))
         }

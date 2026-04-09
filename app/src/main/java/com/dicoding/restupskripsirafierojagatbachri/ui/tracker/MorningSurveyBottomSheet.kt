@@ -14,10 +14,17 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
     private var _binding: BottomSheetMorningSurveyBinding? = null
     private val binding get() = _binding!!
 
-    // Variabel untuk menyimpan pilihan Mood sementara
     private var selectedMood: String = ""
 
-    var onSubmitListener: ((latency: String, disturbances: List<String>, habits: List<String>, mood: String) -> Unit)? = null
+    var onSubmitListener: ((
+        latency: String,
+        isStressed: Boolean,
+        hasCaffeine: Boolean,
+        highScreenTime: Boolean,
+        frequentAwakenings: Boolean,
+        badTemperature: Boolean,
+        mood: String
+    ) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +36,11 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupCardClicks()
-
-        binding.btnSaveSurvey.setOnClickListener {
-            collectDataAndSubmit()
-        }
+        binding.btnSaveSurvey.setOnClickListener { collectDataAndSubmit() }
     }
 
     private fun setupCardClicks() {
-        // --- Multi Select Cards (Gangguan & Kebiasaan) ---
-        // Fungsi helper untuk toggle status checked pada kartu
         val toggleCard = View.OnClickListener { view ->
             if (view is MaterialCardView) {
                 view.isChecked = !view.isChecked
@@ -50,59 +51,49 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         binding.cardDistPhysic.setOnClickListener(toggleCard)
         binding.cardHabitBad.setOnClickListener(toggleCard)
 
-        // --- Single Select Cards (Mood Emoji) ---
-        binding.cardMoodBad.setOnClickListener {
-            updateMoodSelection("Lelah", binding.cardMoodBad)
-        }
-        binding.cardMoodNeutral.setOnClickListener {
-            updateMoodSelection("Biasa", binding.cardMoodNeutral)
-        }
-        binding.cardMoodGood.setOnClickListener {
-            updateMoodSelection("Bugar", binding.cardMoodGood)
-        }
+        binding.cardMoodBad.setOnClickListener { updateMoodSelection("Buruk", binding.cardMoodBad) }
+        binding.cardMoodNeutral.setOnClickListener { updateMoodSelection("Cukup", binding.cardMoodNeutral) }
+        binding.cardMoodGood.setOnClickListener { updateMoodSelection("Baik", binding.cardMoodGood) }
     }
 
-    // Helper untuk memastikan hanya 1 kartu mood yang terpilih
     private fun updateMoodSelection(mood: String, selectedCard: MaterialCardView) {
         selectedMood = mood
-        // Reset semua kartu mood jadi tidak terpilih
         binding.cardMoodBad.isChecked = false
         binding.cardMoodNeutral.isChecked = false
         binding.cardMoodGood.isChecked = false
-        // Set kartu yang diklik jadi terpilih
         selectedCard.isChecked = true
     }
 
-
     private fun collectDataAndSubmit() {
-        // 1. Ambil Data Latency (Dari ChipGroup)
-        // ChipGroup otomatis menangani single selection
         val latencyId = binding.cgLatency.checkedChipId
         val latencyStr = when (latencyId) {
-            binding.chipLat15.id -> "<15m"
-            binding.chipLat30.id -> "15-30m"
-            binding.chipLat60.id -> "30-60m"
-            binding.chipLatMore.id -> ">60m"
-            else -> "" // Seharusnya tidak terjadi karena selectionRequired=true
+            binding.chipLat15.id -> "<15 menit"
+            binding.chipLat30.id -> "15-30 menit"
+            binding.chipLat60.id -> "30-60 menit"
+            binding.chipLatMore.id -> ">60 menit"
+            else -> ""
         }
 
-        // 2 & 3. Ambil Data Disturbances & Habits (Dari Kartu yang di-check)
-        val disturbances = mutableListOf<String>()
-        val habits = mutableListOf<String>()
-
-        if (binding.cardDistWake.isChecked) disturbances.add("Sering Terbangun")
-        if (binding.cardDistPhysic.isChecked) disturbances.add("Fisik (Suhu/Toilet)")
-        // Saya gabung habit jadi satu parameter di UI baru biar simpel
-        if (binding.cardHabitBad.isChecked) habits.add("Screen/Kafein")
-
-        // Validasi Mood
         if (selectedMood.isEmpty()) {
             Toast.makeText(requireContext(), "Bagaimana perasaanmu pagi ini? Pilih salah satu emoji.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // 4. Kirim data
-        onSubmitListener?.invoke(latencyStr, disturbances, habits, selectedMood)
+        val freqAwakenings = binding.cardDistWake.isChecked
+        val badTemp = binding.cardDistPhysic.isChecked
+        val badHabits = binding.cardHabitBad.isChecked
+
+        val isStressed = false
+
+        onSubmitListener?.invoke(
+            latencyStr,
+            isStressed,
+            badHabits,
+            badHabits,
+            freqAwakenings,
+            badTemp,
+            selectedMood
+        )
 
         dismiss()
     }

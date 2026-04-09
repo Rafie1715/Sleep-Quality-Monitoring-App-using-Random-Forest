@@ -19,7 +19,7 @@ class HelpActivity : AppCompatActivity() {
 
         binding.btnContactSupport.setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = "mailto:support@restup.com".toUri() // Ganti dengan emailmu
+                data = "mailto:support@restup.com".toUri()
                 putExtra(Intent.EXTRA_SUBJECT, "Bantuan Aplikasi RestUP")
             }
             startActivity(intent)

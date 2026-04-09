@@ -23,10 +23,8 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Hubungkan BottomNav dengan Controller
         binding.navView.setupWithNavController(navController)
 
-        // Opsional: Sembunyikan BottomNav saat di halaman Tracking/Detail
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.navigation_home, R.id.navigation_history,
@@ -39,7 +37,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // com.dicoding.restupskripsirafierojagatbachri.utils.DataSeeder.uploadSampleArticles()
     }
 }

@@ -19,14 +19,12 @@ class SplashActivity : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // 1. Pasang Splash Screen API (Wajib sebelum super.onCreate)
         val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)
 
-        // 2. Tahan Splash Screen tetap muncul sampai kita selesai cek login
         splashScreen.setKeepOnScreenCondition {
-            true // Tahan sebentar...
+            true
         }
 
         val sharedPref = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
@@ -34,13 +32,10 @@ class SplashActivity : AppCompatActivity() {
         val currentUser = firebaseAuth.currentUser
 
         if (!hasSeenOnboarding) {
-            // 1. User Baru Install -> Ke Onboarding
             startActivity(Intent(this, OnboardingActivity::class.java))
         } else if (currentUser != null) {
-            // 2. User Lama & Sudah Login -> Ke Home
             startActivity(Intent(this, MainActivity::class.java))
         } else {
-            // 3. User Lama tapi Belum Login -> Ke Login
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }

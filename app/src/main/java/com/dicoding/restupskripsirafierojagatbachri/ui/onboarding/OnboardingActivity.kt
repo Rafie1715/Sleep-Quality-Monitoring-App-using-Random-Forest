@@ -18,13 +18,11 @@ class OnboardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnGetStarted.setOnClickListener {
-            // Simpan status bahwa user sudah pernah lihat onboarding
             val sharedPref = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
             sharedPref.edit {
                 putBoolean("HasSeenOnboarding", true)
             }
 
-            // Pindah ke Login
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }

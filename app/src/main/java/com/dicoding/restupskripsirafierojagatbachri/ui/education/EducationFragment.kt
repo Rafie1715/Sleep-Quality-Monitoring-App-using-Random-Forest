@@ -25,18 +25,14 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentEducationBinding.bind(view)
 
-        // Setup RecyclerView Kosong
         adapter = ArticleAdapter(articleList)
         binding.rvArticle.layoutManager = LinearLayoutManager(requireContext())
         binding.rvArticle.adapter = adapter
 
-        // Ambil Data dari Firebase
         fetchArticles()
     }
 
     private fun fetchArticles() {
-        // Tampilkan Loading (kalau ada progress bar)
-
         db.collection("articles")
             .get()
             .addOnSuccessListener { result ->
@@ -44,7 +40,6 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
                 for (document in result) {
                     val article = document.toObject(Article::class.java)
 
-                    // Update nama variabel di sini juga
                     Log.d("DEBUG_FIREBASE", "Judul: ${article.title}")
                     Log.d("DEBUG_FIREBASE", "Link Gambar: '${article.image_url}'") // Ganti jadi image_url
 

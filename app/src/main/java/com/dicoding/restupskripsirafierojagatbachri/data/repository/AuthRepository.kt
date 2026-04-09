@@ -10,7 +10,6 @@ import javax.inject.Inject
 class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) {
-    // Fungsi Login
     suspend fun login(email: String, pass: String): Resource<FirebaseUser> {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, pass).await()
@@ -22,25 +21,21 @@ class AuthRepository @Inject constructor(
 
     suspend fun register(name: String, email: String, pass: String): Resource<FirebaseUser> {
         return try {
-            // 1. Buat Akun
             val result = firebaseAuth.createUserWithEmailAndPassword(email, pass).await()
             val user = result.user
 
-            // 2. Update Nama (Display Name)
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .build()
 
             user?.updateProfile(profileUpdates)?.await()
 
-            // 3. Kembalikan user yang sudah ada namanya
             Resource.Success(user!!)
         } catch (e: Exception) {
             Resource.Error(e.message ?: "Gagal mendaftar")
         }
     }
 
-    // Cek User yang sedang login
     fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
     fun logout() = firebaseAuth.signOut()

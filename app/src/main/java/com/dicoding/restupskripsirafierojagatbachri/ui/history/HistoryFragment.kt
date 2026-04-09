@@ -1,50 +1,86 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.history
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentHistoryBinding
+import com.dicoding.restupskripsirafierojagatbachri.ui.result.ResultActivity
+import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HistoryFragment : Fragment(R.layout.fragment_history) {
+class HistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentHistoryBinding
+    private var _binding: FragmentHistoryBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: HistoryViewModel by viewModels()
+    private lateinit var historyAdapter: HistoryAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHistoryBinding.bind(view)
 
-        // 1. Data Dummy (Pura-pura data dari Database)
-        val dummyData = listOf(
-            SleepHistory("12 Feb", "23:00 - 06:30", "7j 30m", "Baik", android.R.color.holo_green_dark),
-            SleepHistory("11 Feb", "01:00 - 05:00", "4j 0m", "Buruk", android.R.color.holo_red_dark),
-            SleepHistory("10 Feb", "22:30 - 06:00", "7j 30m", "Baik", android.R.color.holo_green_dark),
-            SleepHistory("09 Feb", "00:00 - 06:00", "6j 0m", "Cukup", android.R.color.holo_orange_dark),
-            SleepHistory("08 Feb", "02:00 - 09:00", "7j 0m", "Buruk", android.R.color.holo_red_dark)
-        )
+        setupRecyclerView()
+        observeData()
 
-        // 2. Setup RecyclerView
-        setupRecyclerView(dummyData)
+        viewModel.fetchSleepHistory()
+    }
 
-        // 3. Handle Empty State (Kalau data kosong)
-        if (dummyData.isEmpty()) {
-            binding.rvHistory.visibility = View.GONE
-            binding.tvEmptyHistory.visibility = View.VISIBLE
-        } else {
-            binding.rvHistory.visibility = View.VISIBLE
-            binding.tvEmptyHistory.visibility = View.GONE
+    private fun setupRecyclerView() {
+        historyAdapter = HistoryAdapter { record ->
+            val intent = Intent(requireContext(), ResultActivity::class.java)
+            intent.putExtra("EXTRA_SLEEP_RECORD", record)
+            startActivity(intent)
+        }
+
+        binding.rvHistory.apply {
+            adapter = historyAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
-    private fun setupRecyclerView(data: List<SleepHistory>) {
-        val historyAdapter = HistoryAdapter(data)
-        binding.rvHistory.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = historyAdapter
-            setHasFixedSize(true)
+    private fun observeData() {
+        viewModel.historyList.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.tvEmptyHistory.visibility = View.GONE
+                }
+                is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val records = result.data ?: emptyList()
+                    if (records.isEmpty()) {
+                        binding.tvEmptyHistory.visibility = View.VISIBLE
+                    } else {
+                        binding.tvEmptyHistory.visibility = View.GONE
+                    }
+                    historyAdapter.submitList(records)
+                }
+                is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), "Gagal memuat riwayat: ${result.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

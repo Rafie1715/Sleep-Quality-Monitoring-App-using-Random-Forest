@@ -19,7 +19,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var firebaseAuth: FirebaseAuth // Inject Firebase
+    lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,19 +43,15 @@ class ProfileFragment : Fragment() {
             startActivity(Intent(requireContext(), EditProfileActivity::class.java))
         }
 
-        // 2. Menu Pengaturan
         binding.menuSettings.setOnClickListener {
             startActivity(Intent(requireContext(), SettingsActivity::class.java))
         }
 
-        // 3. Menu Bantuan
         binding.menuHelp.setOnClickListener {
             startActivity(Intent(requireContext(), HelpActivity::class.java))
         }
 
-        // UPDATE: Gunakan ID baru 'btnLogoutLayout'
         binding.btnLogoutLayout.setOnClickListener {
-            // Animasi klik (Optional)
             it.alpha = 0.5f
             it.animate().alpha(1f).duration = 200
 

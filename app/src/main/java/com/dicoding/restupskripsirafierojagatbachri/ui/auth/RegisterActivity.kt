@@ -24,54 +24,44 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
-            // 1. Ambil data
             val name = binding.edNameRegister.text.toString().trim()
             val email = binding.edEmailRegister.text.toString().trim()
             val pass = binding.edPasswordRegister.text.toString().trim()
 
-            // 2. Reset Error
             binding.tilNameReg.error = null
             binding.tilEmailReg.error = null
             binding.tilPassReg.error = null
 
-            // 3. Validasi Input
-
-            // Cek Nama
             if (name.isEmpty()) {
                 binding.tilNameReg.error = "Nama harus diisi"
                 binding.edNameRegister.requestFocus()
                 return@setOnClickListener
             }
 
-            // Cek Email Kosong
             if (email.isEmpty()) {
                 binding.tilEmailReg.error = "Email harus diisi"
                 binding.edEmailRegister.requestFocus()
                 return@setOnClickListener
             }
 
-            // Cek Format Email
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.tilEmailReg.error = "Format email tidak valid"
                 binding.edEmailRegister.requestFocus()
                 return@setOnClickListener
             }
 
-            // Cek Password Kosong
             if (pass.isEmpty()) {
                 binding.tilPassReg.error = "Password harus diisi"
                 binding.edPasswordRegister.requestFocus()
                 return@setOnClickListener
             }
 
-            // Cek Panjang Password (Min 8)
             if (pass.length < 8) {
                 binding.tilPassReg.error = "Password minimal 8 karakter"
                 binding.edPasswordRegister.requestFocus()
                 return@setOnClickListener
             }
 
-            // 4. Panggil ViewModel jika valid
             viewModel.register(name, email, pass)
         }
 
@@ -86,14 +76,12 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.authResult.observe(this) { resource ->
             when (resource) {
                 is Resource.Loading -> {
-                    // UI Loading
                     binding.progressBarRegister.visibility = View.VISIBLE
                     binding.btnRegister.isEnabled = false
                     binding.btnRegister.text = "Memproses..."
                     binding.tvLogin.isEnabled = false
                 }
                 is Resource.Success -> {
-                    // UI Sukses
                     binding.progressBarRegister.visibility = View.GONE
                     binding.btnRegister.isEnabled = true
                     binding.btnRegister.text = "DAFTAR SEKARANG"
@@ -106,7 +94,6 @@ class RegisterActivity : AppCompatActivity() {
                     finish()
                 }
                 is Resource.Error -> {
-                    // UI Error
                     binding.progressBarRegister.visibility = View.GONE
                     binding.btnRegister.isEnabled = true
                     binding.tvLogin.isEnabled = true

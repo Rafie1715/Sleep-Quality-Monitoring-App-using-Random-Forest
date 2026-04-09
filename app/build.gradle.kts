@@ -1,22 +1,19 @@
-import org.gradle.kotlin.dsl.ksp
-
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
     namespace = "com.dicoding.restupskripsirafierojagatbachri"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.dicoding.restupskripsirafierojagatbachri"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -63,5 +60,5 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.glide)
-    ksp(libs.ksp)
+    implementation(libs.mpandroidchart)
 }

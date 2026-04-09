@@ -1,5 +1,6 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.education
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,16 +24,20 @@ class ArticleAdapter(private val list: List<Article>) : RecyclerView.Adapter<Art
             tvDescArticle.text = article.desc
             tvCategory.text = article.category.uppercase()
 
-            // Ganti article.readTime jadi article.read_time
             tvReadTime.text = "• ${article.read_time}"
 
             Glide.with(holder.itemView.context)
-                // Ganti article.imageUrl jadi article.image_url
                 .load(article.image_url)
                 .centerCrop()
                 .placeholder(R.drawable.bg_header_rounded)
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(ivArticleThumb)
+
+            root.setOnClickListener {
+                val intent = Intent(it.context, DetailArticleActivity::class.java)
+                intent.putExtra(DetailArticleActivity.EXTRA_ARTICLE, article)
+                it.context.startActivity(intent)
+            }
         }
     }
 

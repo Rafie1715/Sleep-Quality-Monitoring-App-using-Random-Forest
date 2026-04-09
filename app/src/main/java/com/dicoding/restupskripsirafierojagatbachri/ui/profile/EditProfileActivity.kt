@@ -19,7 +19,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         val user = auth.currentUser
 
-        // 1. Load Data Awal
         if (user != null) {
             binding.edNameEdit.setText(user.displayName)
             binding.edEmailEdit.setText(user.email)
@@ -27,7 +26,6 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
-        // 2. Simpan Data ke Firebase
         binding.btnSaveProfile.setOnClickListener {
             val newName = binding.edNameEdit.text.toString().trim()
 
@@ -40,7 +38,7 @@ class EditProfileActivity : AppCompatActivity() {
                     ?.addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this, "Profil berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                            finish() // Kembali ke halaman sebelumnya
+                            finish()
                         } else {
                             Toast.makeText(this, "Gagal update profil", Toast.LENGTH_SHORT).show()
                         }

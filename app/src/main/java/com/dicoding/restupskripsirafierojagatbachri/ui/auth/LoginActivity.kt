@@ -24,15 +24,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            // 1. Ambil data
             val email = binding.edEmail.text.toString().trim()
             val pass = binding.edPassword.text.toString().trim()
 
-            // 2. Reset Error dulu (hapus tulisan merah sebelumnya)
             binding.tilEmail.error = null
             binding.tilPassword.error = null
 
-            // 3. Validasi Berjenjang
             if (email.isEmpty()) {
                 binding.tilEmail.error = "Email tidak boleh kosong"
                 binding.edEmail.requestFocus()
@@ -71,13 +68,11 @@ class LoginActivity : AppCompatActivity() {
         viewModel.authResult.observe(this) { resource ->
             when (resource) {
                 is Resource.Loading -> {
-                    // Tampilkan Loading
                     binding.progressBar.visibility = View.VISIBLE
                     binding.btnLogin.isEnabled = false
                     binding.btnLogin.text = "Loading..."
                 }
                 is Resource.Success -> {
-                    // Sembunyikan Loading
                     binding.progressBar.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
                     binding.btnLogin.text = "LOGIN"
@@ -87,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 }
                 is Resource.Error -> {
-                    // Tampilkan Error
                     binding.progressBar.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
                     binding.btnLogin.text = "LOGIN"

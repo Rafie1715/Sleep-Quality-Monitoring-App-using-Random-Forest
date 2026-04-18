@@ -16,13 +16,17 @@ class TrackerViewModel @Inject constructor(
     private val repository: TrackerRepository
 ) : ViewModel() {
 
-    private val _saveStatus = MutableLiveData<Resource<String>>()
-    val saveStatus: LiveData<Resource<String>> = _saveStatus
+    private val _saveStatus = MutableLiveData<Resource<SleepRecord>>()
+    val saveStatus: LiveData<Resource<SleepRecord>> = _saveStatus
 
     fun saveSleepRecord(record: SleepRecord) {
         viewModelScope.launch {
             repository.saveSleepRecord(record).collect { result ->
-                _saveStatus.postValue(result)
+                when (result) {
+                    is Resource.Success -> _saveStatus.postValue(Resource.Success(record))
+                    is Resource.Error -> _saveStatus.postValue(Resource.Error(result.message))
+                    is Resource.Loading -> _saveStatus.postValue(Resource.Loading)
+                }
             }
         }
     }

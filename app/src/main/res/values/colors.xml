@@ -8,5 +8,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="sleep_primary">#1A237E</color> <color name="sleep_accent">#FF9800</color>  <color name="bg_light">#F5F6FA</color>
+    <!-- Light Theme Colors -->
+    <color name="background_app">#F5F6FA</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="text_main">#1A1A1A</color>
+    <color name="text_sub">#757575</color>
+    <color name="color_primary">#1A237E</color>
+    <color name="color_accent">#58A6FF</color>
+    <color name="border_divider">#E0E0E0</color>
+    <color name="input_hint">#BDBDBD</color>
+
+    <!-- Legacy names to avoid immediate breakage -->
+    <color name="bg_light">#F5F6FA</color>
+    <color name="card_dark">#FFFFFF</color>
+    <color name="text_white">#1A1A1A</color>
+    <color name="text_gray">#757575</color>
+    <color name="hint_color">#BDBDBD</color>
+    <color name="sleep_primary">#1A237E</color>
+    <color name="sleep_accent">#58A6FF</color>
 </resources>

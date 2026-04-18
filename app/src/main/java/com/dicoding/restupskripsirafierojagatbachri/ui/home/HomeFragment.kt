@@ -1,5 +1,6 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -7,10 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.graphics.toColorInt
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentHomeBinding
+import com.dicoding.restupskripsirafierojagatbachri.ui.calculator.SksCalculatorActivity
+import com.dicoding.restupskripsirafierojagatbachri.ui.reminder.ReminderActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.tracker.SleepTrackerActivity
 import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
 import com.github.mikephil.charting.components.XAxis
@@ -22,8 +28,6 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import javax.inject.Inject
-import androidx.core.graphics.toColorInt
-import com.dicoding.restupskripsirafierojagatbachri.ui.reminder.ReminderActivity
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -60,9 +64,43 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.cardSksCalculatorHome.setOnClickListener {
+            val intent = Intent(requireContext(), SksCalculatorActivity::class.java)
+            startActivity(intent)
+        }
+
+        setupThemeToggle()
+
         viewModel.fetchLatestSleep()
         viewModel.fetchWeeklySleep()
         observeData()
+    }
+
+    private fun setupThemeToggle() {
+        val sharedPref = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE)
+        val savedMode = sharedPref.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+        
+        updateThemeIcon(savedMode)
+
+        binding.ivThemeToggle.setOnClickListener {
+            val nextMode = if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                AppCompatDelegate.MODE_NIGHT_YES
+            }
+            AppCompatDelegate.setDefaultNightMode(nextMode)
+            updateThemeIcon(nextMode)
+            
+            sharedPref.edit().putInt("theme_mode", nextMode).apply()
+        }
+    }
+
+    private fun updateThemeIcon(mode: Int) {
+        if (mode == AppCompatDelegate.MODE_NIGHT_YES) {
+            binding.ivThemeToggle.setImageResource(R.drawable.ic_sun)
+        } else {
+            binding.ivThemeToggle.setImageResource(R.drawable.ic_moon)
+        }
     }
 
     private fun setupGreeting() {
@@ -132,14 +170,17 @@ class HomeFragment : Fragment() {
         records.forEachIndexed { index, record ->
             val hours = record.duration_minutes / 60f
             entries.add(BarEntry(index.toFloat(), hours))
-
-            labels.add(record.date.take(6))
+            labels.add(record.date.take(5))
         }
+
+        // Ambil warna teks berdasarkan tema yang aktif
+        val isDarkMode = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
+        val textColor = if (isDarkMode) Color.WHITE else Color.BLACK
 
         val dataSet = BarDataSet(entries, "Durasi Tidur (Jam)")
         dataSet.color = "#4CAF50".toColorInt()
-        dataSet.valueTextColor = Color.BLACK
-        dataSet.valueTextSize = 12f
+        dataSet.valueTextColor = textColor
+        dataSet.valueTextSize = 10f
 
         val barData = BarData(dataSet)
         binding.barChart.data = barData
@@ -149,9 +190,12 @@ class HomeFragment : Fragment() {
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.granularity = 1f
         xAxis.setDrawGridLines(false)
+        xAxis.textColor = textColor
 
         binding.barChart.axisRight.isEnabled = false
         binding.barChart.axisLeft.axisMinimum = 0f
+        binding.barChart.axisLeft.textColor = textColor
+        binding.barChart.legend.textColor = textColor
 
         binding.barChart.description.isEnabled = false
         binding.barChart.animateY(1000)

@@ -25,7 +25,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pengaturan"
+            android:text="@string/pengaturan"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -59,7 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Jadwal &amp; Pengingat Tidur"
+                android:text="@string/jadwal_amp_pengingat_tidur"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"/>
@@ -98,7 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Versi Aplikasi"
+                android:text="@string/versi_aplikasi"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginStart="16dp"/>
@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="v1.0.0"
+                android:text="@string/v1_0_0"
                 android:textColor="@android:color/darker_gray"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

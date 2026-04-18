@@ -98,14 +98,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jam Tidur"
+                            android:text="@string/jam_tidur"
                             android:textSize="12sp"
                             android:textColor="@android:color/darker_gray"/>
                         <TextView
                             android:id="@+id/tvTimeRange"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="23:00 - 06:00"
+                            android:text="@string/_23_00_06_00"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
@@ -159,7 +159,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rekomendasi Pakar"
+                    android:text="@string/rekomendasi_pakar"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -169,7 +169,7 @@
                     android:id="@+id/tvRecommendationDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Memuat saran..."
+                    android:text="@string/memuat_saran"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp"
                     android:textColor="@android:color/darker_gray"/>

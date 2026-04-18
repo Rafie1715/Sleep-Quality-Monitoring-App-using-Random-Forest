@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buat_akun_baru"
-        android:textColor="@color/sleep_primary"
+        android:textColor="@color/text_white"
         android:textSize="26sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mulai_perjalanan_tidur_sehatmu_hari_ini"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/text_gray"
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_reg" />
@@ -37,16 +37,22 @@
         android:layout_marginTop="32dp"
         android:hint="@string/nama_lengkap"
         app:startIconDrawable="@drawable/ic_person"
+        app:startIconTint="@color/text_gray"
+        app:hintTextColor="@color/sleep_accent"
+        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        android:textColorHint="@color/text_gray"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitle_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_name_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_gray"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,16 +64,22 @@
         android:layout_marginTop="16dp"
         android:hint="@string/email"
         app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/text_gray"
+        app:hintTextColor="@color/sleep_accent"
+        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        android:textColorHint="@color/text_gray"
         app:layout_constraintTop_toBottomOf="@id/til_name_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_email_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_gray"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,17 +91,24 @@
         android:layout_marginTop="16dp"
         android:hint="@string/password"
         app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/text_gray"
+        app:hintTextColor="@color/sleep_accent"
         app:endIconMode="password_toggle"
+        app:endIconTint="@color/text_gray"
+        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        android:textColorHint="@color/text_gray"
         app:layout_constraintTop_toBottomOf="@id/til_email_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_password_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_gray"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sudah_punya_akun"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/text_gray" />
 
         <TextView
             android:id="@+id/tv_login"

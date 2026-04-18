@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_light">#010409</color>
+    <color name="card_dark">#161B22</color>
+    <color name="text_white">#C9D1D9</color>
+    <color name="text_gray">#8B949E</color>
+    <color name="sleep_primary">#58A6FF</color>
+    <color name="sleep_accent">#58A6FF</color>
+    <color name="hint_color">#484F58</color>
+    <color name="border_divider">#30363D</color>
+</resources>

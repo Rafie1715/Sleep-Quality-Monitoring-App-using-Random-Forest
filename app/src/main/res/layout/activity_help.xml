@@ -29,7 +29,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bantuan &amp; FAQ"
+                android:text="@string/bantuan_amp_faq"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pertanyaan Umum"
+            android:text="@string/pertanyaan_umum"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginBottom="16dp"/>
@@ -57,13 +57,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:text="Bagaimana cara kerja Sleep Tracker?"
+                    android:text="@string/bagaimana_cara_kerja_sleep_tracker"
                     android:textStyle="bold"
                     android:textColor="@color/sleep_primary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:text="Tekan tombol Bulan di halaman utama saat Anda ingin tidur. Aplikasi akan menghitung durasi tidur Anda hingga Anda menekan tombol Bangun."
+                    android:text="@string/tekan_tombol_bulan_di_halaman_utama_saat_anda_ingin_tidur_aplikasi_akan_menghitung_durasi_tidur_anda_hingga_anda_menekan_tombol_bangun"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -82,13 +82,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:text="Apakah butuh koneksi internet?"
+                    android:text="@string/apakah_butuh_koneksi_internet"
                     android:textStyle="bold"
                     android:textColor="@color/sleep_primary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:text="Untuk login dan menyimpan data riwayat ke cloud, Anda memerlukan koneksi internet. Namun fitur Sleep Tracker bisa berjalan offline."
+                    android:text="@string/untuk_login_dan_menyimpan_data_riwayat_ke_cloud_anda_memerlukan_koneksi_internet_namun_fitur_sleep_tracker_bisa_berjalan_offline"
                     android:layout_marginTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -99,7 +99,7 @@
             android:id="@+id/btn_contact_support"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hubungi Dukungan (Email)"
+            android:text="@string/hubungi_dukungan_email"
             android:backgroundTint="@color/sleep_accent"
             android:layout_marginTop="24dp"/>
 

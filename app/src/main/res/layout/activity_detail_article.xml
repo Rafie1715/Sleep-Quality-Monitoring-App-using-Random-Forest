@@ -58,7 +58,7 @@
                 android:backgroundTint="#FFF3E0"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
-                android:text="KATEGORI"
+                android:text="@string/kategori"
                 android:textColor="@color/sleep_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Judul Lengkap Artikel"
+                android:text="@string/judul_lengkap_artikel"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="5 min baca"
+                android:text="@string/_5_min_baca"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="6dp"
-                android:text="Isi artikel akan muncul di sini..."
+                android:text="@string/isi_artikel_akan_muncul_di_sini"
                 android:textColor="#444444"
                 android:textSize="16sp" />
 
@@ -109,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sumber &amp; Referensi:"
+                    android:text="@string/sumber_amp_referensi"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:autoLink="web"
-                    android:text="https://link-sumber-artikel.com"
+                    android:text="@string/https_link_sumber_artikel_com"
                     android:textColor="@color/sleep_accent"
                     android:textSize="14sp" />
             </LinearLayout>

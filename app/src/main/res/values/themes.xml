@@ -1,16 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.RestUPSkripsiRafieRojagatBachri" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowBackground">@color/bg_light</item>
+        <item name="colorPrimary">@color/sleep_primary</item>
+        <item name="colorAccent">@color/sleep_accent</item>
     </style>
 
     <style name="Theme.RestUPSkripsiRafieRojagatBachri" parent="Base.Theme.RestUPSkripsiRafieRojagatBachri" />
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/sleep_primary</item>
 
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
 
         <item name="postSplashScreenTheme">@style/Theme.RestUPSkripsiRafieRojagatBachri</item>
     </style>

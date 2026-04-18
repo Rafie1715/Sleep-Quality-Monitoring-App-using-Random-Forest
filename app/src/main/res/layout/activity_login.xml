@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light"
@@ -24,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome_back"
-        android:textColor="@color/sleep_primary"
+        android:textColor="@color/text_white"
         android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginTop="24dp"
@@ -37,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_untuk_melanjutkan_tidur_nyenyakmu"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/text_gray"
         android:textSize="14sp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,16 +51,23 @@
         android:layout_marginTop="40dp"
         android:hint="@string/email_address"
         app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/text_gray"
+        app:hintTextColor="@color/sleep_accent"
+        app:placeholderTextColor="@color/text_gray"
+        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        android:textColorHint="@color/text_gray"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_gray"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,17 +79,24 @@
         android:layout_marginTop="16dp"
         android:hint="@string/password"
         app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/text_gray"
+        app:hintTextColor="@color/sleep_accent"
         app:endIconMode="password_toggle"
+        app:endIconTint="@color/text_gray"
+        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
+        android:textColorHint="@color/text_gray"
         app:layout_constraintTop_toBottomOf="@id/til_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_white"
+            android:textColorHint="@color/text_gray"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/belum_punya_akun"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/text_gray" />
 
         <TextView
             android:id="@+id/tv_register"

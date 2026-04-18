@@ -20,7 +20,7 @@
         android:id="@+id/tv_greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selamat Malam,"
+        android:text="@string/selamat_malam"
         android:textColor="#B3FFFFFF"
         android:textSize="14sp"
         android:layout_marginStart="24dp"
@@ -41,17 +41,32 @@
         app:layout_constraintTop_toBottomOf="@id/tv_greeting"/>
 
     <ImageView
+        android:id="@+id/iv_theme_toggle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_circle_gray"
+        android:backgroundTint="#33FFFFFF"
+        android:padding="8dp"
+        android:src="@drawable/ic_moon"
+        app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
+        app:layout_constraintEnd_toStartOf="@+id/iv_profile"
+        app:layout_constraintTop_toTopOf="@id/tv_greeting"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/iv_profile"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_person"
-        app:tint="@color/white"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_circle_gray"
         android:backgroundTint="#33FFFFFF"
         android:padding="12dp"
-        android:layout_marginEnd="24dp"
+        android:src="@drawable/ic_person"
         app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_greeting"/>
+        app:layout_constraintTop_toTopOf="@id/tv_greeting"
+        app:tint="@color/white" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_sleep_summary"
@@ -61,7 +76,7 @@
         android:layout_marginTop="24dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_dark"
         app:layout_constraintTop_toBottomOf="@id/tv_user_name">
 
         <LinearLayout
@@ -80,25 +95,25 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_moon"
-                    app:tint="@color/sleep_primary"
+                    app:tint="@color/sleep_accent"
                     android:background="@drawable/bg_circle_gray"
-                    android:backgroundTint="#E8EAF6"
+                    android:backgroundTint="#161B22"
                     android:padding="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tidur Terakhir"
+                    android:text="@string/tidur_terakhir"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginStart="12dp"
-                    android:textColor="@color/sleep_primary"/>
+                    android:textColor="@color/text_white"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F0F0F0"
+                android:background="#30363D"
                 android:layout_marginVertical="16dp"/>
 
             <LinearLayout
@@ -115,17 +130,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Durasi"
+                        android:text="@string/durasi"
                         android:textSize="12sp"
                         android:textColor="@android:color/darker_gray"/>
                     <TextView
                         android:id="@+id/tv_sleep_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7j 30m"
+                        android:text="@string/_7j_30m"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/text_white"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -136,14 +151,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kualitas"
+                        android:text="@string/kualitas"
                         android:textSize="12sp"
                         android:textColor="@android:color/darker_gray"/>
                     <TextView
                         android:id="@+id/tv_sleep_quality"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Baik"
+                        android:text="@string/baik"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="#4CAF50"/>
@@ -156,10 +171,10 @@
         android:id="@+id/tv_label_chart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Statistik Mingguan"
+        android:text="@string/statistik_mingguan"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/text_white"
         android:layout_marginTop="24dp"
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +188,7 @@
         android:layout_marginTop="12dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_dark"
         app:layout_constraintTop_toBottomOf="@id/tv_label_chart">
 
         <com.github.mikephil.charting.charts.BarChart
@@ -184,6 +199,66 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_sks_calculator_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/card_dark"
+        app:layout_constraintTop_toBottomOf="@+id/card_chart_placeholder">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_timer"
+                app:tint="#4CAF50"
+                android:background="@drawable/bg_circle_gray"
+                android:backgroundTint="#E8F5E9"
+                android:padding="10dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kalkulator_sks"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cari_waktu_bangun_terbaik_saat_begadang"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@android:color/darker_gray"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_reminder_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,8 +266,8 @@
         android:layout_marginTop="16dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/card_chart_placeholder"
+        app:cardBackgroundColor="@color/card_dark"
+        app:layout_constraintTop_toBottomOf="@+id/card_sks_calculator_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -223,16 +298,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pengingat Tidur"
+                    android:text="@string/pengingat_tidur"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_white"/>
 
                 <TextView
                     android:id="@+id/tv_reminder_time_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Belum diatur"
+                    android:text="@string/belum_diatur"
                     android:textSize="14sp"
                     android:textColor="@android:color/darker_gray"
                     android:layout_marginTop="2dp"/>
@@ -256,6 +331,6 @@
         app:backgroundTint="@color/sleep_accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="Mulai Tidur" />
+        android:contentDescription="@string/mulai_tidur" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

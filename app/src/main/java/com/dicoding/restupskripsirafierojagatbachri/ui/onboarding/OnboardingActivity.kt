@@ -1,6 +1,5 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.onboarding
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +17,7 @@ class OnboardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnGetStarted.setOnClickListener {
-            val sharedPref = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+            val sharedPref = getSharedPreferences("AppPrefs", MODE_PRIVATE)
             sharedPref.edit {
                 putBoolean("HasSeenOnboarding", true)
             }

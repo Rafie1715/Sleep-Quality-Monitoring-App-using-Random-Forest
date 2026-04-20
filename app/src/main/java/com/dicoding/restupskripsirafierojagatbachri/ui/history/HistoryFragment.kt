@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentHistoryBinding
 import com.dicoding.restupskripsirafierojagatbachri.ui.result.ResultActivity
 import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
@@ -63,7 +62,7 @@ class HistoryFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    val records = result.data ?: emptyList()
+                    val records = result.data
                     if (records.isEmpty()) {
                         binding.tvEmptyHistory.visibility = View.VISIBLE
                     } else {

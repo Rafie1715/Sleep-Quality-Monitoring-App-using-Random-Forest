@@ -4,5 +4,7 @@ data class SleepCycle(
     val wakeUpTime: String,
     val durationText: String,
     val tag: String,
-    val tagColor: String
+    val tagColor: String,
+    val hourOfDay: Int,
+    val minuteOfHour: Int
 )

@@ -1,7 +1,6 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.tracker
 
 import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
@@ -42,7 +41,7 @@ class SleepTrackerActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        sharedPref = getSharedPreferences("SleepTrackerPref", Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences("SleepTrackerPref", MODE_PRIVATE)
 
         checkSleepStatus()
 
@@ -72,7 +71,6 @@ class SleepTrackerActivity : AppCompatActivity() {
                     binding.btnToggleSleep.isEnabled = true
                     Toast.makeText(this, "Data Berhasil Disimpan", Toast.LENGTH_SHORT).show()
 
-                    // Langsung ke halaman Result setelah berhasil simpan
                     val intent = Intent(this, ResultActivity::class.java)
                     intent.putExtra("EXTRA_SLEEP_RECORD", result.data)
                     startActivity(intent)
@@ -109,7 +107,7 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun stopSleep() {
-        setDndMode(false) //
+        setDndMode(false)
 
         val wakeUpTime = System.currentTimeMillis()
         val durationMillis = wakeUpTime - sleepStartTime
@@ -123,7 +121,7 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun isNotificationPolicyAccessGranted(): Boolean {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         return notificationManager.isNotificationPolicyAccessGranted
     }
 
@@ -140,7 +138,7 @@ class SleepTrackerActivity : AppCompatActivity() {
     }
 
     private fun setDndMode(enabled: Boolean) {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (isNotificationPolicyAccessGranted()) {
             if (enabled) {
                 notificationManager.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_PRIORITY)
@@ -157,11 +155,8 @@ class SleepTrackerActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val currentDate = sdf.format(Date(wakeTime))
 
-            // --- KODE AI DIMULAI DARI SINI ---
-            // 1. Siapkan Array berisi 13 angka sesuai urutan fitur dari Google Colab
             val features = DoubleArray(13)
 
-            // Variabel numerik & boolean
             features[0] = durationMins.toDouble()
             features[1] = if (isStressed) 1.0 else 0.0
             features[2] = if (hasCaffeine) 1.0 else 0.0
@@ -169,21 +164,23 @@ class SleepTrackerActivity : AppCompatActivity() {
             features[4] = if (freqAwake) 1.0 else 0.0
             features[5] = if (badTemp) 1.0 else 0.0
 
-            // One-Hot Encoding Latensi (Hanya 1 yang bernilai 1.0, sisanya 0.0)
-            features[6] = if (latency == "15-30 menit") 1.0 else 0.0
-            features[7] = if (latency == "30-60 menit") 1.0 else 0.0
-            features[8] = if (latency == "<15 menit") 1.0 else 0.0
-            features[9] = if (latency == ">60 menit") 1.0 else 0.0
+            val latLower = latency.lowercase()
+            features[6] = if (latLower.contains("15") && latLower.contains("30")) 1.0 else 0.0
+            features[7] = if (latLower.contains("30") && latLower.contains("60")) 1.0 else 0.0
+            features[8] = if (latLower.contains("<") || latLower.contains("kurang")) 1.0 else 0.0
+            features[9] = if (latLower.contains(">") || latLower.contains("lebih")) 1.0 else 0.0
 
-            // One-Hot Encoding Mood (Hanya 1 yang bernilai 1.0, sisanya 0.0)
-            features[10] = if (mood == "Baik") 1.0 else 0.0
-            features[11] = if (mood == "Buruk") 1.0 else 0.0
-            features[12] = if (mood == "Cukup") 1.0 else 0.0
+            val moodLower = mood.lowercase()
+            features[10] = if (moodLower.contains("baik") || moodLower.contains("bugar")) 1.0 else 0.0
+            features[11] = if (moodLower.contains("buruk") || moodLower.contains("lelah")) 1.0 else 0.0
+            features[12] = if (moodLower.contains("cukup") || moodLower.contains("biasa")) 1.0 else 0.0
 
-            // 2. Panggil Class AI buatan M2CGEN untuk menebak!
+            if (features[10] == 0.0 && features[11] == 0.0 && features[12] == 0.0) {
+                features[12] = 1.0
+            }
+
             val aiScores = SleepQualityClassifier.score(features)
 
-            // 3. Cari nilai tertinggi dari hasil tebakan (0=Baik, 1=Cukup, 2=Buruk)
             var maxIndex = 0
             for (i in aiScores.indices) {
                 if (aiScores[i] > aiScores[maxIndex]) {
@@ -197,7 +194,6 @@ class SleepTrackerActivity : AppCompatActivity() {
                 2 -> "Cukup"
                 else -> "Cukup"
             }
-            // --- KODE AI SELESAI ---
 
             val sleepRecord = SleepRecord(
                 date = currentDate,
@@ -211,7 +207,7 @@ class SleepTrackerActivity : AppCompatActivity() {
                 frequent_awakenings = freqAwake,
                 bad_temperature = badTemp,
                 wake_up_mood = mood,
-                sleep_quality = hasilPrediksiAi // <-- Masukkan hasil tebakan AI ke sini!
+                sleep_quality = hasilPrediksiAi
             )
 
             val saran = SleepRecommendationEngine.generateRecommendation(sleepRecord)

@@ -1,6 +1,5 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.result
 
-import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.appcompat.app.AppCompatActivity

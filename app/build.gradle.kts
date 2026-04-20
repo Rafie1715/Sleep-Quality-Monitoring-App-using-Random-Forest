@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
@@ -17,6 +19,18 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val properties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            properties.load(localPropertiesFile.inputStream())
+        }
+
+        // Ambil nilai GEMINI_API_KEY, jika tidak ada isi dengan string kosong
+        val geminiApiKey = properties.getProperty("GEMINI_API_KEY") ?: ""
+
+        // Jadikan variabel di dalam class BuildConfig
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +49,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -61,4 +76,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.glide)
     implementation(libs.mpandroidchart)
+    implementation(libs.generativeai)
+    implementation(libs.kotlinx.coroutines.android)
 }

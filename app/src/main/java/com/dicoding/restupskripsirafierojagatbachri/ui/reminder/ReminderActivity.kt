@@ -28,7 +28,7 @@ class ReminderActivity : AppCompatActivity() {
         binding = ActivityReminderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPref = getSharedPreferences("ReminderPref", Context.MODE_PRIVATE)
+        sharedPref = getSharedPreferences("ReminderPref", MODE_PRIVATE)
 
         val isReminderOn = sharedPref.getBoolean("REMINDER_STATUS", false)
         val savedHour = sharedPref.getInt("REMINDER_HOUR", 22)
@@ -72,7 +72,7 @@ class ReminderActivity : AppCompatActivity() {
 
     private fun checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
             if (!alarmManager.canScheduleExactAlarms()) {
                 val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                 startActivity(intent)
@@ -88,7 +88,7 @@ class ReminderActivity : AppCompatActivity() {
     }
 
     private fun setAlarm(hour: Int, minute: Int) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, AlarmReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -108,13 +108,13 @@ class ReminderActivity : AppCompatActivity() {
 
         try {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             Toast.makeText(this, "Izin alarm tidak diberikan oleh sistem", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun cancelAlarm() {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             this, 101, intent,

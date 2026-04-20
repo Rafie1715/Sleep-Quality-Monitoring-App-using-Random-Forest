@@ -16,13 +16,11 @@ class DetailArticleActivity : AppCompatActivity() {
         binding = ActivityDetailArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup Toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        // Ambil data dari Intent
         val article = intent.getParcelableExtra<Article>(EXTRA_ARTICLE)
 
         if (article != null) {
@@ -35,7 +33,7 @@ class DetailArticleActivity : AppCompatActivity() {
             tvDetailTitle.text = article.title
             tvDetailCategory.text = article.category.uppercase()
             tvDetailReadTime.text = article.read_time
-            tvDetailContent.text = article.content.replace("\\n", "\n") // Handle newline if any
+            tvDetailContent.text = article.content.replace("\\n", "\n")
 
             if (article.source_url.isNotEmpty()) {
                 layoutSource.visibility = View.VISIBLE

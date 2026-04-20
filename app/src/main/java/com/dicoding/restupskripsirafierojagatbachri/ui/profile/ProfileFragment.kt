@@ -55,7 +55,6 @@ class ProfileFragment : Fragment() {
             it.alpha = 0.5f
             it.animate().alpha(1f).duration = 200
 
-            // Proses Logout
             firebaseAuth.signOut()
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

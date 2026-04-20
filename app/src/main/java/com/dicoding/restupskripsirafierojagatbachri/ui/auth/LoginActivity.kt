@@ -85,7 +85,15 @@ class LoginActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.GONE
                     binding.btnLogin.isEnabled = true
                     binding.btnLogin.text = "LOGIN"
-                    Toast.makeText(this, resource.message, Toast.LENGTH_SHORT).show()
+                    
+                    val errorMessage = when {
+                        resource.message.contains("password", ignoreCase = true) -> "Password salah"
+                        resource.message.contains("user-not-found", ignoreCase = true) || resource.message.contains("no user", ignoreCase = true) -> "Email belum terdaftar"
+                        resource.message.contains("credential", ignoreCase = true) -> "Email atau password salah"
+                        else -> resource.message
+                    }
+                    
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -47,15 +47,15 @@ class HistoryAdapter (private val onItemClick: (SleepRecord) -> Unit) : ListAdap
 
             when (quality) {
                 "Baik" -> {
-                    binding.viewStatusIndicator.setBackgroundColor("#4CAF50".toColorInt()) // Hijau
+                    binding.viewStatusIndicator.setBackgroundColor("#4CAF50".toColorInt())
                     binding.tvItemQuality.setTextColor("#4CAF50".toColorInt())
                 }
                 "Cukup" -> {
-                    binding.viewStatusIndicator.setBackgroundColor("#FFC107".toColorInt()) // Kuning
+                    binding.viewStatusIndicator.setBackgroundColor("#FFC107".toColorInt())
                     binding.tvItemQuality.setTextColor("#FFC107".toColorInt())
                 }
                 "Buruk" -> {
-                    binding.viewStatusIndicator.setBackgroundColor("#F44336".toColorInt()) // Merah
+                    binding.viewStatusIndicator.setBackgroundColor("#F44336".toColorInt())
                     binding.tvItemQuality.setTextColor("#F44336".toColorInt())
                 }
                 else -> {

@@ -99,8 +99,20 @@
     <string name="pengingat_tidur">Pengingat Tidur</string>
     <string name="belum_diatur">Belum diatur</string>
     <string name="mulai_tidur">Mulai Tidur</string>
+    <string name="edit_foto">Edit Foto</string>
     <string name="tips_sehat">TIPS SEHAT</string>
     <string name="_3_min_baca">• 3 min baca</string>
     <string name="judul_artikel_yang_menarik">Judul Artikel Yang Menarik</string>
-    <string name="deskripsi_singkat_artikel_akan_muncul_di_sini_untuk_memancing_user_membaca_lebih_lanjut">Deskripsi singkat artikel akan muncul di sini untuk memancing user membaca lebih lanjut...</string>
+    <string name="deskripsi_singkat_artikel_akan_muncul_di_sini_untuk_memancing_user_membaca_lebih_lanjut">Deskripsi singkat artikel akan muncul di sini untuk memancing user membaca lebih lanjut…</string>
+    <string name="tanya_seputar_tidurmu">Tanya seputar tidurmu…</string>
+    <string name="tanya_restbot_ai">Tanya RestBot AI</string>
+    <string name="asisten_cerdas_solusi_tidurmu">Asisten cerdas solusi tidurmu</string>
+    <string name="apa_itu_kalkulator_sks">Apa itu Kalkulator SKS?</string>
+    <string name="kalkulator_sks_sistem_kebut_semalam_adalah_fitur_harm_reduction_yang_dirancang_khusus_untuk_mahasiswa_yang_terpaksa_tidur_dalam_waktu_singkat_fitur_ini_mencari_waktu_bangun_emas_agar_kamu_terhindar_dari_rasa_pening_dan_linglung_saat_bangun">Kalkulator SKS (Sistem Kebut Semalam) adalah fitur Harm-Reduction yang dirancang khusus untuk mahasiswa yang terpaksa tidur dalam waktu singkat. Fitur ini mencari \'Waktu Bangun Emas\' agar kamu terhindar dari rasa pening dan linglung saat bangun.</string>
+    <string name="dasar_teori_medis">Dasar Teori Medis 🔬</string>
+    <string name="_1_siklus_tidur_90_menit_ntidur_manusia_melewati_siklus_nrem_tidur_ringan_ke_nyenyak_dan_rem_mimpi_satu_siklus_penuh_membutuhkan_rata_rata_90_menit_jika_kamu_bangun_tepat_di_akhir_siklus_fase_tidur_ringan_tubuh_akan_terasa_jauh_lebih_segar_dibandingkan_jika_kamu_terbangun_di_tengah_fase_deep_sleep_nrem_3_n_n2_sleep_inertia_kelambanan_tidur_nbangun_secara_paksa_di_fase_deep_sleep_akan_memicu_sleep_inertia_kondisi_neurologis_di_mana_otak_belum_siap_sadar_menyebabkan_disorientasi_kepala_berat_dan_penurunan_memori_kalkulator_ini_mencegah_hal_tersebut_n_n3_waktu_latensi_15_menit_nrata_rata_manusia_sehat_membutuhkan_waktu_15_hingga_20_menit_untuk_benar_benar_tertidur_sejak_memejamkan_mata_sleep_latency">1. Siklus Tidur 90 Menit\nTidur manusia melewati siklus NREM (tidur ringan ke nyenyak) dan REM (mimpi). Satu siklus penuh membutuhkan rata-rata 90 menit. Jika kamu bangun tepat di akhir siklus (fase tidur ringan), tubuh akan terasa jauh lebih segar dibandingkan jika kamu terbangun di tengah fase \'Deep Sleep\' (NREM 3).\n\n2. Sleep Inertia (Kelambanan Tidur)\nBangun secara paksa di fase Deep Sleep akan memicu Sleep Inertia—kondisi neurologis di mana otak belum siap sadar, menyebabkan disorientasi, kepala berat, dan penurunan memori. Kalkulator ini mencegah hal tersebut.\n\n3. Waktu Latensi 15 Menit\nRata-rata manusia sehat membutuhkan waktu 15 hingga 20 menit untuk benar-benar tertidur sejak memejamkan mata (Sleep Latency).</string>
+    <string name="sumber_referensi">Sumber Referensi:</string>
+    <string name="national_institutes_of_health_nih_brain_basics_understanding_sleep_n_sleep_foundation_what_is_sleep_inertia_n_harvard_medical_school_the_importance_of_sleep_cycles">• National Institutes of Health (NIH). Brain Basics: Understanding Sleep.\n• Sleep Foundation. What is Sleep Inertia?\n• Harvard Medical School. The importance of sleep cycles.</string>
+    <string name="saya_mengerti">SAYA MENGERTI</string>
+    <string name="pesan_di_sini">Pesan di sini</string>
 </resources>

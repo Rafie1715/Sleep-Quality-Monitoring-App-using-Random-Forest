@@ -1,0 +1,57 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Antena -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M58,10h4v15h-4z" />
+    <path
+        android:fillColor="#FF5252"
+        android:pathData="M60,12m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0" />
+
+    <!-- Kepala Robot -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M25,25h70v60h-70z" />
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M25,80h70v5h-70z" />
+
+    <!-- Telinga/Baut Samping -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M15,45h10v20h-10z" />
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M95,45h10v20h-10z" />
+
+    <!-- Mata (Layar Digital) -->
+    <path
+        android:fillColor="#263238"
+        android:pathData="M35,40h15v15h-15z" />
+    <path
+        android:fillColor="#263238"
+        android:pathData="M70,40h15v15h-15z" />
+
+    <!-- Pupil Cahaya (Biar hidup) -->
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M40,45h5v5h-5z" />
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M75,45h5v5h-5z" />
+
+    <!-- Mulut (Garis Sinyal) -->
+    <path
+        android:fillColor="#424242"
+        android:pathData="M45,65h30v4h-30z" />
+
+    <!-- Detail Garis-garis kecil -->
+    <path
+        android:fillColor="#757575"
+        android:pathData="M48,65v4M54,65v4M60,65v4M66,65v4M72,65v4" />
+
+</vector>

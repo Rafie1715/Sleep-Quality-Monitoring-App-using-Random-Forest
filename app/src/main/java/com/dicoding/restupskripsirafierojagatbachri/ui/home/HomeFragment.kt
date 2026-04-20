@@ -16,8 +16,11 @@ import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentHomeBinding
 import com.dicoding.restupskripsirafierojagatbachri.ui.calculator.SksCalculatorActivity
+import com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.reminder.ReminderActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.tracker.SleepTrackerActivity
+import com.dicoding.restupskripsirafierojagatbachri.ui.profile.EditProfileActivity
+import com.bumptech.glide.Glide
 import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -28,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import javax.inject.Inject
+import androidx.core.content.edit
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -69,6 +73,16 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.cardRestbotHome.setOnClickListener {
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.ivProfile.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         setupThemeToggle()
 
         viewModel.fetchLatestSleep()
@@ -91,7 +105,7 @@ class HomeFragment : Fragment() {
             AppCompatDelegate.setDefaultNightMode(nextMode)
             updateThemeIcon(nextMode)
             
-            sharedPref.edit().putInt("theme_mode", nextMode).apply()
+            sharedPref.edit { putInt("theme_mode", nextMode) }
         }
     }
 
@@ -119,16 +133,25 @@ class HomeFragment : Fragment() {
     private fun setupUser() {
         val user = auth.currentUser
         binding.tvUserName.text = user?.displayName ?: "Pengguna"
+        
+        user?.photoUrl?.let {
+            Glide.with(this)
+                .load(it)
+                .placeholder(R.drawable.ic_person)
+                .into(binding.ivProfile)
+        }
     }
 
     private fun observeData() {
         viewModel.latestSleep.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
                     binding.tvSleepDuration.text = "Memuat..."
                     binding.tvSleepQuality.text = "..."
                 }
                 is Resource.Success -> {
+                    binding.progressBar.visibility = View.GONE
                     val record = result.data
                     if (record != null) {
                         val hours = record.duration_minutes / 60
@@ -145,6 +168,7 @@ class HomeFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
+                    binding.progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), "Gagal memuat data: ${result.message}", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -152,7 +176,7 @@ class HomeFragment : Fragment() {
 
         viewModel.weeklySleep.observe(viewLifecycleOwner) { result ->
             if (result is Resource.Success) {
-                val records = result.data ?: emptyList()
+                val records = result.data
                 setupChart(records)
             }
         }
@@ -173,7 +197,6 @@ class HomeFragment : Fragment() {
             labels.add(record.date.take(5))
         }
 
-        // Ambil warna teks berdasarkan tema yang aktif
         val isDarkMode = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
         val textColor = if (isDarkMode) Color.WHITE else Color.BLACK
 

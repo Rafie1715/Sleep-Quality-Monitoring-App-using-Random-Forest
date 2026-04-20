@@ -6,10 +6,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentEducationBinding
-import com.dicoding.restupskripsirafierojagatbachri.databinding.ItemArticleBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,9 +31,11 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
     }
 
     private fun fetchArticles() {
+        binding.progressBar.visibility = View.VISIBLE
         db.collection("articles")
             .get()
             .addOnSuccessListener { result ->
+                binding.progressBar.visibility = View.GONE
                 articleList.clear()
                 for (document in result) {
                     val article = document.toObject(Article::class.java)
@@ -48,7 +48,9 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
+                binding.progressBar.visibility = View.GONE
                 Log.e("DEBUG_FIREBASE", "Error fetch data", exception)
+                Toast.makeText(requireContext(), "Gagal memuat artikel", Toast.LENGTH_SHORT).show()
             }
     }
 }

@@ -49,11 +49,12 @@
         tools:text="Rafie Rojagat"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/text_white"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_profile"/>
+
 
     <TextView
         android:id="@+id/tv_email_profile"
@@ -72,8 +73,9 @@
         android:layout_margin="24dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@color/card_dark"
         app:layout_constraintTop_toBottomOf="@id/tv_email_profile">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,7 +105,8 @@
                     android:text="@string/edit_profil"
                     android:textSize="16sp"
                     android:layout_marginStart="16dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_white"/>
+
 
                 <ImageView
                     android:layout_width="24dp"
@@ -115,7 +118,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F5F5F5"/>
+                android:background="#30363D"/>
+
 
             <LinearLayout
                 android:id="@+id/menu_settings"
@@ -137,7 +141,8 @@
                     android:text="@string/pengaturan"
                     android:textSize="16sp"
                     android:layout_marginStart="16dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_white"/>
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -148,7 +153,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#F5F5F5"/>
+                android:background="#30363D"/>
+
 
             <LinearLayout
                 android:id="@+id/menu_help"
@@ -170,7 +176,8 @@
                     android:text="@string/bantuan"
                     android:textSize="16sp"
                     android:layout_marginStart="16dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/text_white"/>
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"

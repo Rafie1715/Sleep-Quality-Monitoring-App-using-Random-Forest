@@ -18,7 +18,7 @@
     <string name="edit_profil">Edit Profil</string>
     <string name="pengaturan">Pengaturan</string>
     <string name="bantuan">Bantuan</string>
-    <string name="keluar_dari_aplikasi">Keluar dari Aplikasi</string>
+    <string name="keluar_dari_aplikasi">Logout</string>
     <string name="tidur_lebih_berkualitas">Tidur Lebih Berkualitas</string>
     <string name="pantau_pola_tidurmu_dapatkan_analisis_ai_dan_bangun_lebih_segar_setiap_hari_bersama_restup">Pantau pola tidurmu, dapatkan analisis AI, dan bangun lebih segar setiap hari bersama RestUP.</string>
     <string name="mulai_sekarang">Mulai Sekarang</string>

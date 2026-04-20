@@ -14,5 +14,4 @@ data class Article(
     val image_url: String = "",
     val source_url: String = ""
 ) : Parcelable {
-    constructor() : this("", "", "", "", "", "", "", "")
 }

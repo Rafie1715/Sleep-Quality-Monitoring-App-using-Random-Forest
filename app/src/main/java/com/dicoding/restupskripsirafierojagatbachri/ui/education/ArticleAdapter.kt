@@ -8,7 +8,12 @@ import com.bumptech.glide.Glide
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ItemArticleBinding
 
-class ArticleAdapter(private val list: List<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private var list: List<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+
+    fun updateList(newList: List<Article>) {
+        list = newList
+        notifyDataSetChanged()
+    }
 
     class ViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root)
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentEducationBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,7 +28,33 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
         binding.rvArticle.layoutManager = LinearLayoutManager(requireContext())
         binding.rvArticle.adapter = adapter
 
+        setupSearch()
         fetchArticles()
+    }
+
+    private fun setupSearch() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterArticles(newText ?: "")
+                return true
+            }
+        })
+    }
+
+    private fun filterArticles(query: String) {
+        val filteredList = if (query.isEmpty()) {
+            articleList
+        } else {
+            articleList.filter {
+                it.title.contains(query, ignoreCase = true) ||
+                it.category.contains(query, ignoreCase = true)
+            }
+        }
+        adapter.updateList(filteredList)
     }
 
     private fun fetchArticles() {

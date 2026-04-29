@@ -63,19 +63,20 @@
                 app:layout_constraintTop_toTopOf="@id/tv_greeting"
                 app:tint="@color/white" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginEnd="24dp"
-                android:background="@drawable/bg_circle_gray"
-                android:backgroundTint="#33FFFFFF"
-                android:padding="12dp"
-                android:src="@drawable/ic_person"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImage"
                 app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_greeting"
-                app:tint="@color/white" />
+                android:background="#33FFFFFF"
+                android:src="@drawable/ic_person"
+                app:tint="@color/white"
+                android:padding="10dp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_sleep_summary"
@@ -106,7 +107,7 @@
                             android:src="@drawable/ic_moon"
                             app:tint="@color/sleep_accent"
                             android:background="@drawable/bg_circle_gray"
-                            android:backgroundTint="#161B22"
+                            android:backgroundTint="#E3F2FD"
                             android:padding="8dp"/>
 
                         <TextView
@@ -122,7 +123,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#30363D"
+                        android:background="@color/border_divider"
                         android:layout_marginVertical="16dp"/>
 
                     <LinearLayout
@@ -173,6 +174,62 @@
                                 android:textColor="#4CAF50"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/border_divider"
+                        android:layout_marginVertical="16dp"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_sleep_debt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#FFCDD2"
+                        app:cardBackgroundColor="#FFF0F0">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/iv_debt_status"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_warning"
+                                app:tint="#D32F2F"/>
+
+                            <TextView
+                                android:id="@+id/tv_sleep_debt_status"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/tidurmu_kurang_2_jam"
+                                android:textColor="#D32F2F"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                android:layout_marginStart="8dp"/>
+
+                            <TextView
+                                android:id="@+id/tv_target_display"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/target_7_jam"
+                                android:textColor="#616161"
+                                android:textSize="11sp"
+                                android:textStyle="bold"
+                                android:background="@drawable/bg_badge_rounded"
+                                android:backgroundTint="#EEEEEE"
+                                android:paddingHorizontal="10dp"
+                                android:paddingVertical="4dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -200,11 +257,22 @@
                 app:cardBackgroundColor="@color/card_dark"
                 app:layout_constraintTop_toBottomOf="@id/tv_label_chart">
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChart"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="16dp"/>
+                    android:layout_height="match_parent">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"/>
+
+                    <include
+                        android:id="@+id/layout_empty_chart"
+                        layout="@layout/layout_empty_state"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -267,7 +335,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_sks_calculator_home"
+                android:id="@+id/card_set_target"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
@@ -288,10 +356,10 @@
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/ic_timer"
-                        app:tint="#4CAF50"
+                        android:src="@drawable/ic_moon"
+                        app:tint="#2196F3"
                         android:background="@drawable/bg_circle_gray"
-                        android:backgroundTint="#E8F5E9"
+                        android:backgroundTint="#E3F2FD"
                         android:padding="10dp"/>
 
                     <LinearLayout
@@ -304,7 +372,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/kalkulator_sks"
+                            android:text="@string/atur_target_tidur"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:textColor="@color/text_white"/>
@@ -312,7 +380,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/cari_waktu_bangun_terbaik_saat_begadang"
+                            android:text="@string/sesuaikan_durasi_ideal_harianmu"
                             android:textSize="12sp"
                             android:textColor="@android:color/darker_gray"
                             android:layout_marginTop="2dp"/>
@@ -325,7 +393,6 @@
                         app:tint="@android:color/darker_gray"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_reminder_home"
                 android:layout_width="match_parent"
@@ -335,8 +402,7 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="@color/card_dark"
-                app:layout_constraintTop_toBottomOf="@+id/card_sks_calculator_home"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_set_target" app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <LinearLayout

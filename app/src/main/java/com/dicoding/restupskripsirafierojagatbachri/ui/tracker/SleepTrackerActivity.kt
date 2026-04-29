@@ -19,6 +19,7 @@ import java.util.Date
 import java.util.Locale
 import androidx.core.content.edit
 import androidx.core.graphics.toColorInt
+import com.dicoding.restupskripsirafierojagatbachri.ui.calculator.SksCalculatorActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.result.ResultActivity
 import com.dicoding.restupskripsirafierojagatbachri.utils.SleepQualityClassifier
 
@@ -55,6 +56,11 @@ class SleepTrackerActivity : AppCompatActivity() {
 
         if (!isNotificationPolicyAccessGranted()) {
             Toast.makeText(this, "Fitur Jangan Ganggu belum diaktifkan", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnOpenSks.setOnClickListener {
+            val intent = Intent(this, SksCalculatorActivity::class.java)
+            startActivity(intent)
         }
 
         observeViewModel()
@@ -179,20 +185,24 @@ class SleepTrackerActivity : AppCompatActivity() {
                 features[12] = 1.0
             }
 
-            val aiScores = SleepQualityClassifier.score(features)
+            val finalClassification: String
 
-            var maxIndex = 0
-            for (i in aiScores.indices) {
-                if (aiScores[i] > aiScores[maxIndex]) {
-                    maxIndex = i
+            if (durationMins < 180) {
+                finalClassification = "Buruk"
+            } else {
+                val aiScores = SleepQualityClassifier.score(features)
+                var maxIndex = 0
+                for (i in aiScores.indices) {
+                    if (aiScores[i] > aiScores[maxIndex]) {
+                        maxIndex = i
+                    }
                 }
-            }
-
-            val hasilPrediksiAi = when (maxIndex) {
-                0 -> "Baik"
-                1 -> "Buruk"
-                2 -> "Cukup"
-                else -> "Cukup"
+                finalClassification = when (maxIndex) {
+                    0 -> "Baik"
+                    1 -> "Buruk"
+                    2 -> "Cukup"
+                    else -> "Cukup"
+                }
             }
 
             val sleepRecord = SleepRecord(
@@ -207,7 +217,7 @@ class SleepTrackerActivity : AppCompatActivity() {
                 frequent_awakenings = freqAwake,
                 bad_temperature = badTemp,
                 wake_up_mood = mood,
-                sleep_quality = hasilPrediksiAi
+                sleep_quality = finalClassification
             )
 
             val saran = SleepRecommendationEngine.generateRecommendation(sleepRecord)

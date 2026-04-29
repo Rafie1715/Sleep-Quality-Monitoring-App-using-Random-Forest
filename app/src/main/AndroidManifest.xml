@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RestUPSkripsiRafieRojagatBachri">
         <activity
+            android:name=".ui.calculator.SleepDebtDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.chat.ChatActivity"
             android:exported="false" />
         <activity

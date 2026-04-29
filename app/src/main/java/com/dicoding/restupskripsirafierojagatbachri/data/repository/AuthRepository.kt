@@ -3,6 +3,7 @@ package com.dicoding.restupskripsirafierojagatbachri.data.repository
 import com.dicoding.restupskripsirafierojagatbachri.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -16,6 +17,16 @@ class AuthRepository @Inject constructor(
             Resource.Success(result.user!!)
         } catch (e: Exception) {
             Resource.Error(e.message ?: "Terjadi kesalahan")
+        }
+    }
+
+    suspend fun loginWithGoogle(idToken: String): Resource<FirebaseUser> {
+        return try {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            val result = firebaseAuth.signInWithCredential(credential).await()
+            Resource.Success(result.user!!)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Gagal masuk dengan Google")
         }
     }
 

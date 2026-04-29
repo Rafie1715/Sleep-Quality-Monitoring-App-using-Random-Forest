@@ -1,5 +1,7 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.auth
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -23,6 +25,12 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupAction()
+        setupObserver()
+        playAnimation()
+    }
+
+    private fun setupAction() {
         binding.btnRegister.setOnClickListener {
             val name = binding.edNameRegister.text.toString().trim()
             val email = binding.edEmailRegister.text.toString().trim()
@@ -68,8 +76,21 @@ class RegisterActivity : AppCompatActivity() {
         binding.tvLogin.setOnClickListener {
             finish()
         }
+    }
 
-        setupObserver()
+    private fun playAnimation() {
+        val title = ObjectAnimator.ofFloat(binding.tvTitleReg, View.ALPHA, 1f).setDuration(400)
+        val subtitle = ObjectAnimator.ofFloat(binding.tvSubtitleReg, View.ALPHA, 1f).setDuration(400)
+        val name = ObjectAnimator.ofFloat(binding.tilNameReg, View.ALPHA, 1f).setDuration(400)
+        val email = ObjectAnimator.ofFloat(binding.tilEmailReg, View.ALPHA, 1f).setDuration(400)
+        val pass = ObjectAnimator.ofFloat(binding.tilPassReg, View.ALPHA, 1f).setDuration(400)
+        val btn = ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(400)
+        val footer = ObjectAnimator.ofFloat(binding.layoutFooterReg, View.ALPHA, 1f).setDuration(400)
+
+        AnimatorSet().apply {
+            playSequentially(title, subtitle, name, email, pass, btn, footer)
+            start()
+        }
     }
 
     private fun setupObserver() {

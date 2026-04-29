@@ -8,6 +8,11 @@
 
     <style name="Theme.RestUPSkripsiRafieRojagatBachri" parent="Base.Theme.RestUPSkripsiRafieRojagatBachri" />
 
+    <style name="CircleImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/sleep_primary</item>
 

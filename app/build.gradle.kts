@@ -78,4 +78,6 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(libs.generativeai)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.play.services.auth)
+    implementation(libs.shimmer)
 }

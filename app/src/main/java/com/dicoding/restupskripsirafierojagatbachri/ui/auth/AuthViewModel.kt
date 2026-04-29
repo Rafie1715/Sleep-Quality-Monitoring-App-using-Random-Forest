@@ -26,6 +26,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun loginWithGoogle(idToken: String) {
+        _authResult.value = Resource.Loading
+        viewModelScope.launch {
+            _authResult.value = repository.loginWithGoogle(idToken)
+        }
+    }
+
     fun register(name: String, email: String, pass: String) {
         _authResult.value = Resource.Loading
         viewModelScope.launch {

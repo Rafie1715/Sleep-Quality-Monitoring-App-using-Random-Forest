@@ -4,6 +4,9 @@
     <string name="belum_punya_akun">Belum punya akun?</string>
     <string name="daftar_sekarang">Daftar Sekarang</string>
     <string name="login">LOGIN</string>
+    <string name="masuk_dengan_google">Masuk dengan Google</string>
+    <string name="atau">ATAU</string>
+    <string name="default_web_client_id" translatable="false">332444635825-7ghm88gni8diljnm6qpjvkrp16sd38m0.apps.googleusercontent.com</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_untuk_melanjutkan_tidur_nyenyakmu">Login untuk melanjutkan tidur nyenyakmu</string>
     <string name="email_address">Email Address</string>
@@ -106,6 +109,7 @@
     <string name="deskripsi_singkat_artikel_akan_muncul_di_sini_untuk_memancing_user_membaca_lebih_lanjut">Deskripsi singkat artikel akan muncul di sini untuk memancing user membaca lebih lanjut…</string>
     <string name="tanya_seputar_tidurmu">Tanya seputar tidurmu…</string>
     <string name="tanya_restbot_ai">Tanya RestBot AI</string>
+    <string name="konsultasi_restbot_desc">Konsultasikan hasil tidurmu dengan asisten AI kami.</string>
     <string name="asisten_cerdas_solusi_tidurmu">Asisten cerdas solusi tidurmu</string>
     <string name="apa_itu_kalkulator_sks">Apa itu Kalkulator SKS?</string>
     <string name="kalkulator_sks_sistem_kebut_semalam_adalah_fitur_harm_reduction_yang_dirancang_khusus_untuk_mahasiswa_yang_terpaksa_tidur_dalam_waktu_singkat_fitur_ini_mencari_waktu_bangun_emas_agar_kamu_terhindar_dari_rasa_pening_dan_linglung_saat_bangun">Kalkulator SKS (Sistem Kebut Semalam) adalah fitur Harm-Reduction yang dirancang khusus untuk mahasiswa yang terpaksa tidur dalam waktu singkat. Fitur ini mencari \'Waktu Bangun Emas\' agar kamu terhindar dari rasa pening dan linglung saat bangun.</string>
@@ -115,4 +119,22 @@
     <string name="national_institutes_of_health_nih_brain_basics_understanding_sleep_n_sleep_foundation_what_is_sleep_inertia_n_harvard_medical_school_the_importance_of_sleep_cycles">• National Institutes of Health (NIH). Brain Basics: Understanding Sleep.\n• Sleep Foundation. What is Sleep Inertia?\n• Harvard Medical School. The importance of sleep cycles.</string>
     <string name="saya_mengerti">SAYA MENGERTI</string>
     <string name="pesan_di_sini">Pesan di sini</string>
+    <string name="tidurmu_kurang_2_jam">Tidurmu kurang dari 2 Jam</string>
+    <string name="target_7_jam">Target: 7 Jam</string>
+    <string name="_7_jam">7 jam</string>
+    <string name="simpan_target">SIMPAN TARGET</string>
+    <string name="total_defisit_tidurmu">Total Defisit Tidurmu:</string>
+    <string name="_2_jam">2 Jam</string>
+    <string name="rencana_pemulihan_medis">Rencana Pemulihan Medis</string>
+    <string name="memuat_saran_pemulihan">Memuat saran pemulihan..</string>
+    <string name="atur_pengingat_tidur_lebih_awal">Atur Pengingat Tidur Lebih Awal</string>
+    <string name="tidur_singkat_hitung_sks">Ingin Tidur Singkat? Hitung Waktu Tidur yang Pas Disini</string>
+    <string name="atur_target_tidur">Atur Target Tidur</string>
+    <string name="sesuaikan_durasi_ideal_harianmu">Sesuaikan durasi ideal harianmu</string>
+    <string name="belum_ada_data">Belum Ada Data</string>
+    <string name="mulai_aktivitas_desc">Mulai aktivitasmu hari ini agar kami bisa memberikan analisis terbaik.</string>
+    <string name="mulai_tracking_tidur_desc">Malam ini adalah awal yang baik untuk mulai memantau tidurmu!</string>
+    <string name="artikel_tidak_ditemukan">Artikel Tidak Ditemukan</string>
+    <string name="cari_kata_kunci_lain">Coba cari dengan kata kunci lain.</string>
+    <string name="belum_ada_riwayat_mingguan">Belum ada riwayat mingguan untuk ditampilkan.</string>
 </resources>

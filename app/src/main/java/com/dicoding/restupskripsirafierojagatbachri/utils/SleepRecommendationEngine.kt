@@ -8,7 +8,12 @@ object SleepRecommendationEngine {
         val recommendations = mutableListOf<String>()
         val sources = mutableSetOf<String>()
 
-        if (record.duration_minutes < 360) {
+        if (record.duration_minutes < 180) {
+            recommendations.add("<b>⚠️ PERINGATAN MEDIS:</b> Durasi tidurmu sangat ekstrem (kurang dari 3 jam). Ini secara mutlak dikategorikan <b>Buruk</b> dan berisiko tinggi memicu <i>microsleep</i> serta penurunan fungsi kognitif otak secara drastis. Segera rencanakan <i>power nap</i> atau tidur lebih awal malam ini!")
+            sources.add("• <a href=\"https://www.sleepfoundation.org/sleep-deprivation\">Sleep Foundation: Severe Sleep Deprivation</a>")
+        }
+
+        else if (record.duration_minutes < 360) {
             recommendations.add("Durasi tidurmu kurang dari 6 jam. Usahakan tidur lebih awal besok malam untuk melunasi 'utang tidur' agar tetap fokus saat kuliah.")
             sources.add("• <a href=\"https://www.cdc.gov/sleep/about/?CDC_AAref_Val=https://www.cdc.gov/sleep/about_sleep/how_much_sleep.html\">CDC: How Much Sleep Do I Need?</a>")
         }

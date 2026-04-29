@@ -2,7 +2,6 @@ package com.dicoding.restupskripsirafierojagatbachri.ui.chat
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +11,7 @@ import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
 import kotlin.getValue
 import com.dicoding.restupskripsirafierojagatbachri.BuildConfig
+import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 
 class ChatActivity : AppCompatActivity() {
 
@@ -19,12 +19,30 @@ class ChatActivity : AppCompatActivity() {
     private val chatList = mutableListOf<ChatMessage>()
     private lateinit var chatAdapter: ChatAdapter
 
+    private var sleepRecord: SleepRecord? = null
+
     private val generativeModel by lazy {
+        val systemPrompt = StringBuilder("Kamu adalah RestBot, asisten virtual aplikasi RestUP. " +
+                "Tugasmu adalah memberikan saran kesehatan tidur yang ramah, informatif, dan mudah dimengerti. " +
+                "Gunakan bullet points untuk daftar saran agar mudah dibaca. " +
+                "Jangan memberikan jawaban yang terlalu panjang, maksimal 3 paragraf.")
+        
+        sleepRecord?.let {
+            systemPrompt.append("\n\nKonteks tidur terakhir pengguna:")
+            systemPrompt.append("\n- Durasi: ${it.duration_minutes / 60} jam ${it.duration_minutes % 60} menit")
+            systemPrompt.append("\n- Kualitas: ${it.sleep_quality}")
+            systemPrompt.append("\n- Mood bangun: ${it.wake_up_mood}")
+            systemPrompt.append("\n- Latensi: ${it.sleep_latency}")
+            if (it.is_stressed) systemPrompt.append("\n- Pengguna merasa stres.")
+            if (it.has_caffeine) systemPrompt.append("\n- Pengguna mengonsumsi kafein sebelum tidur.")
+            if (it.high_screen_time) systemPrompt.append("\n- Pengguna menggunakan gadget sebelum tidur.")
+        }
+
         GenerativeModel(
             modelName = "gemini-2.5-flash",
             apiKey = BuildConfig.GEMINI_API_KEY,
             systemInstruction = content {
-                text("Kamu adalah RestBot, asisten virtual aplikasi RestUP...")
+                text(systemPrompt.toString())
             }
         )
     }
@@ -34,9 +52,17 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sleepRecord = intent.getParcelableExtra("EXTRA_SLEEP_RECORD")
+
         setupUI()
 
-        addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?", false))
+        val greeting = if (sleepRecord != null) {
+            "Halo! Aku RestBot 🤖. Aku melihat tidurmu tadi kualitasnya **${sleepRecord?.sleep_quality}**. Ada yang ingin kamu diskusikan atau tanyakan agar tidurmu lebih baik malam ini?"
+        } else {
+            "Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?"
+        }
+        
+        addMessageToChat(ChatMessage(greeting, false))
     }
 
     private fun setupUI() {
@@ -65,16 +91,23 @@ class ChatActivity : AppCompatActivity() {
             try {
                 val response = generativeModel.generateContent(message)
 
-                var aiReply = response.text ?: "Maaf, aku sedang pusing. Coba lagi nanti ya!"
+                val aiReply = response.text ?: "Maaf, aku sedang pusing. Coba lagi nanti ya!"
                 
-                aiReply = aiReply.replace(Regex("\\*\\*|__|\\*|_|#"), "")
-
-                addMessageToChat(ChatMessage(aiReply, false))
+                addMessageToChat(ChatMessage(aiReply.trim(), false))
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                val cleanError = e.message?.replace("Unexpected Response:", "")?.trim() ?: "Terjadi kesalahan koneksi"
-                Toast.makeText(this@ChatActivity, "Error: $cleanError", Toast.LENGTH_LONG).show()
+                val errorMessage = when {
+                    e.message?.contains("high demand", ignoreCase = true) == true || 
+                    e.message?.contains("503", ignoreCase = true) == true -> 
+                        "Waduh, sepertinya RestBot lagi sibuk banget melayani pengguna lain nih 🤖. Coba kirim pesan lagi sebentar lagi ya! ⏳"
+                    
+                    e.message?.contains("SAFETY", ignoreCase = true) == true ->
+                        "Maaf, aku tidak bisa menjawab pertanyaan itu karena alasan keamanan. Tanya yang lain yuk!"
+                        
+                    else -> "Terjadi kesalahan koneksi. Pastikan internetmu aktif dan coba lagi ya! ✨"
+                }
+                addMessageToChat(ChatMessage(errorMessage, false))
             } finally {
                 binding.progressBar.visibility = View.GONE
                 binding.btnSend.isEnabled = true

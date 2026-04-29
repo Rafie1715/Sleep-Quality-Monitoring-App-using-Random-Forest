@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
+    android:background="@drawable/bg_onboarding_gradient"
     android:padding="24dp">
 
     <TextView
@@ -12,10 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/buat_akun_baru"
-        android:textColor="@color/text_white"
-        android:textSize="26sp"
+        android:textColor="@color/sleep_primary"
+        android:textSize="32sp"
         android:textStyle="bold"
         android:layout_marginTop="40dp"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +27,7 @@
         android:text="@string/mulai_perjalanan_tidur_sehatmu_hari_ini"
         android:textColor="@color/text_gray"
         android:layout_marginTop="8dp"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_reg" />
 
@@ -34,25 +36,23 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:hint="@string/nama_lengkap"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_person"
         app:startIconTint="@color/text_gray"
         app:hintTextColor="@color/sleep_accent"
         app:boxStrokeColor="@color/sleep_accent"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        android:textColorHint="@color/text_gray"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
         app:layout_constraintTop_toBottomOf="@id/tv_subtitle_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_name_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_white"
-            android:textColorHint="@color/text_gray"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,23 +63,21 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/email"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_email"
         app:startIconTint="@color/text_gray"
         app:hintTextColor="@color/sleep_accent"
         app:boxStrokeColor="@color/sleep_accent"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        android:textColorHint="@color/text_gray"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
         app:layout_constraintTop_toBottomOf="@id/til_name_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_email_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_white"
-            android:textColorHint="@color/text_gray"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,38 +88,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/password"
+        android:alpha="0"
         app:startIconDrawable="@drawable/ic_lock"
         app:startIconTint="@color/text_gray"
         app:hintTextColor="@color/sleep_accent"
         app:endIconMode="password_toggle"
-        app:endIconTint="@color/text_gray"
         app:boxStrokeColor="@color/sleep_accent"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusBottomEnd="12dp"
-        android:textColorHint="@color/text_gray"
+        app:boxCornerRadiusTopStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusBottomEnd="16dp"
         app:layout_constraintTop_toBottomOf="@id/til_email_reg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_password_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_white"
-            android:textColorHint="@color/text_gray"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/daftar_sekarang"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        android:alpha="0"
         android:backgroundTint="@color/sleep_primary"
-        app:cornerRadius="12dp"
+        app:cornerRadius="16dp"
         app:layout_constraintTop_toBottomOf="@id/til_pass_reg" />
 
     <ProgressBar
@@ -129,16 +125,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_register"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
+        android:id="@+id/layout_footer_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_marginBottom="32dp"
+        android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -147,15 +146,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sudah_punya_akun"
-            android:textColor="@color/text_gray" />
+            android:textColor="@color/text_gray"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/masuk_di_sini"
             android:textStyle="bold"
-            android:textColor="@color/sleep_accent" />
+            android:textColor="@color/sleep_accent"
+            android:textSize="16sp"
+            android:padding="8dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

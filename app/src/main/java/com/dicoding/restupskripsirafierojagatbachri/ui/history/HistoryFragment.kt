@@ -57,16 +57,20 @@ class HistoryFragment : Fragment() {
         viewModel.historyList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.tvEmptyHistory.visibility = View.GONE
+                    binding.layoutSkeleton.root.visibility = View.VISIBLE
+                    binding.layoutEmptyHistory.root.visibility = View.GONE
+                    binding.rvHistory.visibility = View.GONE
                 }
                 is Resource.Success -> {
-                    binding.progressBar.visibility = View.GONE
+                    binding.layoutSkeleton.root.visibility = View.GONE
+                    binding.rvHistory.visibility = View.VISIBLE
                     val records = result.data
                     if (records.isEmpty()) {
-                        binding.tvEmptyHistory.visibility = View.VISIBLE
+                        binding.layoutEmptyHistory.root.visibility = View.VISIBLE
+                        binding.layoutEmptyHistory.tvEmptyTitle.text = getString(com.dicoding.restupskripsirafierojagatbachri.R.string.riwayat_tidur)
+                        binding.layoutEmptyHistory.tvEmptyDesc.text = getString(com.dicoding.restupskripsirafierojagatbachri.R.string.mulai_tracking_tidur_desc)
                     } else {
-                        binding.tvEmptyHistory.visibility = View.GONE
+                        binding.layoutEmptyHistory.root.visibility = View.GONE
                     }
                     historyAdapter.submitList(records)
                 }

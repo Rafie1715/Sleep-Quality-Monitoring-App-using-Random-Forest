@@ -55,24 +55,36 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
             }
         }
         adapter.updateList(filteredList)
+        
+        if (filteredList.isEmpty()) {
+            binding.layoutEmptyEducation.root.visibility = View.VISIBLE
+            binding.layoutEmptyEducation.tvEmptyTitle.text = getString(R.string.artikel_tidak_ditemukan)
+            binding.layoutEmptyEducation.tvEmptyDesc.text = getString(R.string.cari_kata_kunci_lain)
+        } else {
+            binding.layoutEmptyEducation.root.visibility = View.GONE
+        }
     }
 
     private fun fetchArticles() {
-        binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+        binding.layoutSkeletonEdu.root.visibility = View.VISIBLE
+        binding.layoutEmptyEducation.root.visibility = View.GONE
         db.collection("articles")
             .get()
             .addOnSuccessListener { result ->
-                binding.progressBar.visibility = View.GONE
+                binding.layoutSkeletonEdu.root.visibility = View.GONE
                 articleList.clear()
                 for (document in result) {
                     val article = document.toObject(Article::class.java)
-
-                    Log.d("DEBUG_FIREBASE", "Judul: ${article.title}")
-                    Log.d("DEBUG_FIREBASE", "Link Gambar: '${article.image_url}'") // Ganti jadi image_url
-
                     articleList.add(article)
                 }
                 adapter.notifyDataSetChanged()
+                
+                if (articleList.isEmpty()) {
+                    binding.layoutEmptyEducation.root.visibility = View.VISIBLE
+                } else {
+                    binding.layoutEmptyEducation.root.visibility = View.GONE
+                }
             }
             .addOnFailureListener { exception ->
                 binding.progressBar.visibility = View.GONE

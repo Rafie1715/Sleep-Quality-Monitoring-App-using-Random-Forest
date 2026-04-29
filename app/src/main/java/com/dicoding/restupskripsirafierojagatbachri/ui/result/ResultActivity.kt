@@ -1,11 +1,13 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.result
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityResultBinding
+import com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -25,9 +27,18 @@ class ResultActivity : AppCompatActivity() {
 
         if (sleepRecord != null) {
             displayResult(sleepRecord)
+            setupChatBot(sleepRecord)
         }
 
         binding.btnBack.setOnClickListener { finish() }
+    }
+
+    private fun setupChatBot(record: SleepRecord) {
+        binding.cardRestbot.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("EXTRA_SLEEP_RECORD", record)
+            startActivity(intent)
+        }
     }
 
     private fun displayResult(record: SleepRecord) {

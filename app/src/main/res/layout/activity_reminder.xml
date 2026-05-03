@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sleep_primary"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:fitsSystemWindows="true">
 
     <ImageButton
         android:id="@+id/btn_back_reminder"
@@ -16,7 +17,8 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         app:tint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:id="@+id/tv_title_rem"
@@ -24,9 +26,9 @@
         android:layout_height="wrap_content"
         android:text="@string/jadwal_tidur"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back_reminder"/>
 

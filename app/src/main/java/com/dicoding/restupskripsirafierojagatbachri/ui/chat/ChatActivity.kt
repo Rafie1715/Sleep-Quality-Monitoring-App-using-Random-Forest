@@ -81,6 +81,11 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun sendMessageToGemini(message: String) {
+        if (BuildConfig.GEMINI_API_KEY.isEmpty()) {
+            addMessageToChat(ChatMessage("Waduh, API Key Gemini belum dipasang di project ini. Silakan cek local.properties ya! 🤖", false))
+            return
+        }
+
         addMessageToChat(ChatMessage(message, true))
         binding.etMessage.text.clear()
 

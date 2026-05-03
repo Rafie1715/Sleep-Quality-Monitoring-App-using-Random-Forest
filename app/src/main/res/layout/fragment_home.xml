@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="100dp"
+            android:paddingBottom="24dp"
             android:clipToPadding="false">
 
             <View
@@ -33,7 +33,7 @@
                 android:textColor="#B3FFFFFF"
                 android:textSize="14sp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -463,7 +463,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="40dp"
         android:src="@drawable/ic_moon"
         app:tint="@color/white"
         app:backgroundTint="@color/sleep_accent"

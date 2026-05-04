@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_onboarding_gradient"
@@ -11,6 +12,7 @@
         android:layout_width="280dp"
         android:layout_height="280dp"
         android:src="@drawable/ic_moon"
+        app:tint="@color/sleep_primary"
         app:layout_constraintBottom_toTopOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +43,7 @@
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:text="@string/pantau_pola_tidurmu_dapatkan_analisis_ai_dan_bangun_lebih_segar_setiap_hari_bersama_restup"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/text_sub"
         android:textSize="16sp"
         android:alpha="0"
         app:layout_constraintBottom_toTopOf="@+id/btn_get_started"
@@ -49,17 +51,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_get_started"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="48dp"
-        android:backgroundTint="@color/sleep_primary"
         android:text="@string/mulai_sekarang"
         android:textAllCaps="false"
         android:textSize="18sp"
         android:textStyle="bold"
         android:alpha="0"
+        app:backgroundTint="@color/sleep_primary"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_description" />

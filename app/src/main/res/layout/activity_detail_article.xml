@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/bg_light"
     tools:context=".ui.education.DetailArticleActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="320dp"
+        android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="@color/sleep_primary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -29,12 +29,19 @@
                 android:src="@drawable/bg_header_rounded"
                 app:layout_collapseMode="parallax" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_gradient_black" />
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_back" />
+                app:navigationIcon="@drawable/ic_back"
+                app:navigationIconTint="@color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -42,24 +49,25 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="-32dp"
+        android:background="@drawable/bg_bottom_sheet"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/tv_detail_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_circle_gray"
-                android:backgroundTint="#FFF3E0"
+                android:background="@color/sleep_primary_light"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="6dp"
                 android:text="@string/kategori"
-                android:textColor="@color/sleep_accent"
+                android:textColor="@color/sleep_primary"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -67,11 +75,12 @@
                 android:id="@+id/tv_detail_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/judul_lengkap_artikel"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_main"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="4dp"/>
 
             <TextView
                 android:id="@+id/tv_detail_read_time"
@@ -79,51 +88,62 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/_5_min_baca"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/text_sub"
                 android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginVertical="20dp"
-                android:background="#EEEEEE" />
+                android:layout_marginVertical="24dp"
+                android:background="@color/border_divider" />
 
             <TextView
                 android:id="@+id/tv_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="8dp"
                 android:text="@string/isi_artikel_akan_muncul_di_sini"
-                android:textColor="#444444"
+                android:textColor="@color/text_main"
                 android:textSize="16sp" />
 
-            <LinearLayout
-                android:id="@+id/layout_source"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:orientation="vertical"
                 android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/border_divider"
+                app:cardBackgroundColor="#F5F5F5"
                 tools:visibility="visible">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sumber_amp_referensi"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_detail_source"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:autoLink="web"
-                    android:text="@string/https_link_sumber_artikel_com"
-                    android:textColor="@color/sleep_accent"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sumber_amp_referensi"
+                        android:textColor="@color/text_main"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:autoLink="web"
+                        android:text="@string/https_link_sumber_artikel_com"
+                        android:textColor="@color/sleep_primary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

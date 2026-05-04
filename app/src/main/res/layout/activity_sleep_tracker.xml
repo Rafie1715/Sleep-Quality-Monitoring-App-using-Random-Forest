@@ -2,20 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#12151E"> <TextView
-    android:id="@+id/tv_greeting"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="64dp"
-    android:text="@string/siap_untuk_beristirahat"
-    android:textColor="@android:color/white"
-    android:textSize="24sp"
-    android:textStyle="bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:background="#0F111A">
+
+    <View
+        android:id="@+id/view_header"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/bg_header_rounded"
+        android:backgroundTint="#1A237E"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="@string/siap_untuk_beristirahat"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_subtitle"
@@ -23,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/pastikan_lingkungan_tidurmu_nyaman"
-        android:textColor="#90A4AE"
+        android:textColor="#B0BEC5"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,20 +47,20 @@
         android:format12Hour="hh:mm a"
         android:format24Hour="HH:mm"
         android:textColor="@android:color/white"
-        android:textSize="72sp"
+        android:textSize="80sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_tracker_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/view_header" />
 
     <TextView
         android:id="@+id/tv_tracker_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/belum_ada_aktivitas_tidur_direkam"
-        android:textColor="#78909C"
+        android:textColor="#90A4AE"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_open_sks"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,31 +73,31 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="@string/tidur_singkat_hitung_sks"
+        android:textColor="@color/white"
+        app:cornerRadius="12dp"
         app:icon="@drawable/ic_timer"
         app:iconTint="@color/sleep_accent"
-        android:textColor="@color/white"
-        app:strokeColor="#555555"
-        app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_toggle_sleep"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:strokeColor="#44FFFFFF" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_toggle_sleep"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="48dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="64dp"
         android:insetLeft="0dp"
         android:insetTop="0dp"
         android:insetRight="0dp"
         android:insetBottom="0dp"
         android:text="@string/mulai_ntidur"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textStyle="bold"
-        app:backgroundTint="#4CAF50"
-        app:cornerRadius="100dp"
-        app:elevation="8dp"
+        app:backgroundTint="@color/success_green"
+        app:cornerRadius="90dp"
+        app:elevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

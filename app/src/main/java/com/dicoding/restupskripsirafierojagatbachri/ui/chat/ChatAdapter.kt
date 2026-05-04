@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
@@ -26,7 +27,10 @@ class ChatAdapter(private val chatList: List<ChatMessage>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = chatList[position]
         
-        // Convert simple markdown **bold** to <b>bold</b> and \n to <br>
+        val animation = AnimationUtils.loadAnimation(holder.itemView.context, android.R.anim.fade_in)
+        animation.duration = 400
+        holder.itemView.startAnimation(animation)
+
         val formattedMessage = chat.message
             .replace(Regex("\\*\\*(.*?)\\*\\*"), "<b>$1</b>")
             .replace("\n", "<br>")

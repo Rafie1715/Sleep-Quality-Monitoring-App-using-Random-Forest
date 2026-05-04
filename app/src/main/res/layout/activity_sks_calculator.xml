@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
+    android:background="@color/bg_light">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <View
+        android:id="@+id/view_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:elevation="0dp">
+        android:layout_height="160dp"
+        android:background="@drawable/bg_header_rounded"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="32dp"
+        app:title="@string/kalkulator_sks"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/white"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:title="Kalkulator SKS"
-                app:titleTextColor="#FFFFFF"
-                app:navigationIcon="@drawable/ic_back" />
-
-            <ImageView
-                android:id="@+id/btnInfoTheory"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:padding="12dp"
-                android:src="@drawable/ic_info"
-                app:tint="#FFFFFF"
-                android:background="?attr/selectableItemBackgroundBorderless" />
-        </RelativeLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/btnInfoTheory"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_circle_gray"
+        android:backgroundTint="#33FFFFFF"
+        android:padding="10dp"
+        android:src="@drawable/ic_info"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,43 +56,44 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="#1E1E1E"
-                app:strokeWidth="1dp"
-                app:strokeColor="#333333">
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/card_white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rencana Tidur"
-                        android:textColor="#BBBBBB"
+                        android:text="Waktu Mulai Tidur"
+                        android:textColor="@color/text_sub"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvCurrentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sekarang (02:30)"
-                        android:textColor="#FFFFFF"
-                        android:textSize="28sp"
+                        tools:text="Sekarang (02:30)"
+                        android:textColor="@color/text_main"
+                        android:textSize="32sp"
                         android:textStyle="bold"
                         android:layout_marginTop="4dp" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCalculate"
-                        style="@style/Widget.Material3.Button.TonalButton"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="24dp"
                         android:text="HITUNG SIKLUS TERBAIK"
                         android:textSize="16sp"
-                        app:cornerRadius="12dp" />
+                        android:textStyle="bold"
+                        app:cornerRadius="16dp"
+                        app:backgroundTint="@color/sleep_primary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -97,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Saran Waktu Bangun"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_main"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="32dp"
@@ -113,11 +118,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:text="*Perhitungan menyertakan estimasi 15 menit waktu untuk benar-benar tertidur."
-                android:textColor="#888888"
+                android:textColor="@color/text_sub"
                 android:textSize="12sp"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:lineSpacingExtra="2dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

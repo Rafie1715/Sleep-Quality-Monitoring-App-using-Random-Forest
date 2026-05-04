@@ -1,86 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <View
+        android:id="@+id/view_header"
         android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_header_rounded"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_title_edu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/bg_light"
-        app:elevation="0dp">
+        android:text="@string/edukasi_tidur"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_search"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="27dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/card_white"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_edu">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edukasi_tidur"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_white"/>
-        </androidx.appcompat.widget.Toolbar>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_search"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#30363D"
-            app:cardBackgroundColor="@color/card_dark">
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:iconifiedByDefault="false"
-                app:queryHint="@string/cari_topik_kesehatan"
-                app:queryBackground="@android:color/transparent"
-                app:searchIcon="@drawable/ic_search"
-                app:closeIcon="@drawable/ic_close" />
-        </com.google.android.material.card.MaterialCardView>
-
-    </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="match_parent"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/cari_topik_kesehatan"
+            app:queryBackground="@android:color/transparent"
+            app:searchIcon="@drawable/ic_search"
+            app:closeIcon="@drawable/ic_close" />
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_article"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:paddingHorizontal="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="120dp"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_header"/>
 
     <include
         android:id="@+id/layout_empty_education"
         layout="@layout/layout_empty_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:visibility="gone"
-        android:indeterminateTint="@color/sleep_accent" />
+        android:indeterminateTint="@color/sleep_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/layout_skeleton_edu"
         layout="@layout/layout_education_skeleton"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

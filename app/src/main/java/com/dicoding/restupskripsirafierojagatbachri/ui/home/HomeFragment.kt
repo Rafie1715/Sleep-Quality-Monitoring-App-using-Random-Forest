@@ -1,5 +1,7 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.home
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -64,7 +66,12 @@ class HomeFragment : Fragment() {
         setupGreeting()
         setupUser()
 
-        binding.fabSleepTrack.setOnClickListener {
+        binding.fabChatAi.setOnClickListener {
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.cardSleepTrackerHome.setOnClickListener {
             val intent = Intent(requireContext(), SleepTrackerActivity::class.java)
             startActivity(intent)
         }
@@ -78,17 +85,11 @@ class HomeFragment : Fragment() {
             showSetTargetDialog()
         }
 
-        binding.cardRestbotHome.setOnClickListener {
-            val intent = Intent(requireContext(), ChatActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.ivProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             startActivity(intent)
         }
 
-        // #PERUBAHAN: Klik Status Utang Tidur membuka Rencana Pemulihan
         binding.tvSleepDebtStatus.setOnClickListener { openDebtDetail() }
         binding.ivDebtStatus.setOnClickListener { openDebtDetail() }
 
@@ -96,7 +97,74 @@ class HomeFragment : Fragment() {
 
         viewModel.fetchLatestSleep()
         viewModel.fetchWeeklySleep()
+        updateReminderStatus()
         observeData()
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        // Set initial state to invisible
+        binding.viewHeader.alpha = 0f
+        binding.tvGreeting.alpha = 0f
+        binding.tvUserName.alpha = 0f
+        binding.ivProfile.alpha = 0f
+        binding.ivThemeToggle.alpha = 0f
+        binding.cardSleepSummary.alpha = 0f
+        binding.tvLabelChart.alpha = 0f
+        binding.cardChartPlaceholder.alpha = 0f
+        binding.cardSleepTrackerHome.alpha = 0f
+        binding.cardSetTarget.alpha = 0f
+        binding.cardReminderHome.alpha = 0f
+
+        // Animasi Header & User Info
+        val header = ObjectAnimator.ofFloat(binding.viewHeader, View.ALPHA, 1f).setDuration(400)
+        val greeting = ObjectAnimator.ofFloat(binding.tvGreeting, View.ALPHA, 1f).setDuration(300)
+        val name = ObjectAnimator.ofFloat(binding.tvUserName, View.ALPHA, 1f).setDuration(300)
+        val profile = ObjectAnimator.ofFloat(binding.ivProfile, View.ALPHA, 1f).setDuration(300)
+        val toggle = ObjectAnimator.ofFloat(binding.ivThemeToggle, View.ALPHA, 1f).setDuration(300)
+
+        // Animasi Cards dengan Slide Up Effect
+        val summary = ObjectAnimator.ofFloat(binding.cardSleepSummary, View.ALPHA, 1f).setDuration(400)
+        val summarySlide = ObjectAnimator.ofFloat(binding.cardSleepSummary, View.TRANSLATION_Y, 50f, 0f).setDuration(400)
+
+        val labelChart = ObjectAnimator.ofFloat(binding.tvLabelChart, View.ALPHA, 1f).setDuration(300)
+        val chart = ObjectAnimator.ofFloat(binding.cardChartPlaceholder, View.ALPHA, 1f).setDuration(400)
+        val chartSlide = ObjectAnimator.ofFloat(binding.cardChartPlaceholder, View.TRANSLATION_Y, 50f, 0f).setDuration(400)
+
+        val tracker = ObjectAnimator.ofFloat(binding.cardSleepTrackerHome, View.ALPHA, 1f).setDuration(300)
+        val trackerSlide = ObjectAnimator.ofFloat(binding.cardSleepTrackerHome, View.TRANSLATION_Y, 30f, 0f).setDuration(300)
+
+        val target = ObjectAnimator.ofFloat(binding.cardSetTarget, View.ALPHA, 1f).setDuration(300)
+        val targetSlide = ObjectAnimator.ofFloat(binding.cardSetTarget, View.TRANSLATION_Y, 30f, 0f).setDuration(300)
+
+        val reminder = ObjectAnimator.ofFloat(binding.cardReminderHome, View.ALPHA, 1f).setDuration(300)
+        val reminderSlide = ObjectAnimator.ofFloat(binding.cardReminderHome, View.TRANSLATION_Y, 30f, 0f).setDuration(300)
+
+        AnimatorSet().apply {
+            playSequentially(
+                header,
+                AnimatorSet().apply { playTogether(greeting, name, profile, toggle) },
+                AnimatorSet().apply { playTogether(summary, summarySlide) },
+                labelChart,
+                AnimatorSet().apply { playTogether(chart, chartSlide) },
+                AnimatorSet().apply { playTogether(tracker, trackerSlide) },
+                AnimatorSet().apply { playTogether(target, targetSlide) },
+                AnimatorSet().apply { playTogether(reminder, reminderSlide) }
+            )
+            start()
+        }
+    }
+
+    private fun updateReminderStatus() {
+        val sharedPref = requireActivity().getSharedPreferences("ReminderPref", Context.MODE_PRIVATE)
+        val isReminderOn = sharedPref.getBoolean("REMINDER_STATUS", false)
+        val timeString = sharedPref.getString("REMINDER_TIME_STRING", null)
+
+        if (isReminderOn && timeString != null) {
+            binding.tvReminderTimeHome.text = timeString
+        } else {
+            binding.tvReminderTimeHome.text = getString(R.string.belum_diatur)
+        }
     }
 
     private fun setupThemeToggle() {
@@ -164,7 +232,7 @@ class HomeFragment : Fragment() {
             when (result) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
-                    binding.tvSleepDuration.text = "Memuat..."
+                    binding.tvSleepDuration.text = getString(R.string.memuat)
                     binding.tvSleepQuality.text = "..."
                 }
                 is Resource.Success -> {
@@ -173,18 +241,18 @@ class HomeFragment : Fragment() {
                     if (record != null) {
                         val hours = record.duration_minutes / 60
                         val mins = record.duration_minutes % 60
-                        binding.tvSleepDuration.text = "${hours}j ${mins}m"
+                        binding.tvSleepDuration.text = getString(R.string.sleep_duration_format, hours, mins)
 
                         val quality = record.sleep_quality.ifEmpty {
-                            "Menunggu Analisis AI"
+                            getString(R.string.menunggu_analisis_ai)
                         }
                         binding.tvSleepQuality.text = quality
 
                         calculateSleepDebt(hours)
 
                     } else {
-                        binding.tvSleepDuration.text = "0j 0m"
-                        binding.tvSleepQuality.text = "Belum Ada Data"
+                        binding.tvSleepDuration.text = getString(R.string.zero_duration)
+                        binding.tvSleepQuality.text = getString(R.string.belum_ada_data)
                         calculateSleepDebt(0)
                     }
                 }
@@ -209,12 +277,11 @@ class HomeFragment : Fragment() {
 
         currentSleepDebt = targetHours - lastSleepHours
 
-        binding.tvTargetDisplay.text = "Target: $targetHours Jam"
+        binding.tvTargetDisplay.text = getString(R.string.target_display_format, targetHours)
 
         when {
             currentSleepDebt > 0 -> {
-                // Keadaan: Kurang Tidur (Debt)
-                binding.tvSleepDebtStatus.text = "Tidurmu kurang dari $currentSleepDebt Jam"
+                binding.tvSleepDebtStatus.text = getString(R.string.sleep_debt_format, currentSleepDebt)
                 binding.tvSleepDebtStatus.setTextColor("#D32F2F".toColorInt())
                 binding.ivDebtStatus.setImageResource(R.drawable.ic_warning)
                 binding.ivDebtStatus.setColorFilter("#D32F2F".toColorInt())
@@ -222,9 +289,8 @@ class HomeFragment : Fragment() {
                 binding.cardSleepDebt.strokeColor = "#FFCDD2".toColorInt()
             }
             currentSleepDebt < 0 -> {
-                // Keadaan: Kelebihan Tidur (Over)
                 val over = currentSleepDebt * -1
-                binding.tvSleepDebtStatus.text = "Kelebihan tidur $over Jam"
+                binding.tvSleepDebtStatus.text = getString(R.string.sleep_over_format, over)
                 binding.tvSleepDebtStatus.setTextColor("#E65100".toColorInt())
                 binding.ivDebtStatus.setImageResource(R.drawable.ic_info)
                 binding.ivDebtStatus.setColorFilter("#E65100".toColorInt())
@@ -232,8 +298,7 @@ class HomeFragment : Fragment() {
                 binding.cardSleepDebt.strokeColor = "#FFE082".toColorInt()
             }
             else -> {
-                // Keadaan: Target Tercapai (Success)
-                binding.tvSleepDebtStatus.text = "Target tidur tercapai! ✨"
+                binding.tvSleepDebtStatus.text = getString(R.string.target_reached)
                 binding.tvSleepDebtStatus.setTextColor("#2E7D32".toColorInt())
                 binding.ivDebtStatus.setImageResource(R.drawable.ic_check_circle)
                 binding.ivDebtStatus.setColorFilter("#2E7D32".toColorInt())
@@ -251,7 +316,7 @@ class HomeFragment : Fragment() {
 
     private fun showSetTargetDialog() {
         val bottomSheet = BottomSheetDialog(requireContext())
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_target, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_target, null, false)
         bottomSheet.setContentView(view)
 
         val slider = view.findViewById<Slider>(R.id.slider_target)
@@ -262,10 +327,10 @@ class HomeFragment : Fragment() {
         val currentTarget = sharedPref.getInt("SLEEP_TARGET", 7)
 
         slider.value = currentTarget.toFloat()
-        tvValue.text = "$currentTarget Jam"
+        tvValue.text = getString(R.string.hours_unit_format, currentTarget)
 
         slider.addOnChangeListener { _, value, _ ->
-            tvValue.text = "${value.toInt()} Jam"
+            tvValue.text = getString(R.string.hours_unit_format, value.toInt())
         }
 
         btnSave.setOnClickListener {
@@ -337,6 +402,7 @@ class HomeFragment : Fragment() {
         super.onResume()
         viewModel.fetchLatestSleep()
         viewModel.fetchWeeklySleep()
+        updateReminderStatus()
         setupGreeting()
     }
 

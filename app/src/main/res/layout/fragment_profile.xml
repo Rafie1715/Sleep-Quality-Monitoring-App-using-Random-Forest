@@ -19,7 +19,7 @@
             <View
                 android:id="@+id/view_header_profile"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:background="@drawable/bg_header_rounded"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -30,7 +30,7 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="56dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -55,9 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Rafie Rojagat"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_white"
+                android:textColor="@color/text_main"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 tools:text="rafie@student.upnvj.ac.id"
                 android:textSize="14sp"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/text_sub"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name_profile"/>
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="24dp"
                 android:orientation="horizontal"
                 android:weightSum="3"
                 app:layout_constraintTop_toBottomOf="@id/tv_email_profile">
@@ -90,31 +90,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/border_divider"
-                    app:cardBackgroundColor="@color/card_dark">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/card_white">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
                         <TextView
                             android:id="@+id/tv_avg_duration"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0j"
                             android:textColor="@color/sleep_primary"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rata-rata"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="10sp" />
+                            android:text="@string/rata_rata"
+                            android:textColor="@color/text_sub"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -123,31 +121,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginHorizontal="4dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/border_divider"
-                    app:cardBackgroundColor="@color/card_dark">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/card_white">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
                         <TextView
                             android:id="@+id/tv_total_sessions"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/sleep_primary"
-                            android:textSize="16sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sesi"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="10sp" />
+                            android:text="@string/sesi"
+                            android:textColor="@color/text_sub"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -156,31 +152,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    app:cardCornerRadius="12dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="1dp"
-                    app:strokeColor="@color/border_divider"
-                    app:cardBackgroundColor="@color/card_dark">
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/card_white">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="16dp">
                         <TextView
                             android:id="@+id/tv_last_quality"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-"
-                            android:textColor="#4CAF50"
-                            android:textSize="16sp"
+                            android:textColor="@color/success_green"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kualitas"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="10sp" />
+                            android:text="@string/kualitas"
+                            android:textColor="@color/text_sub"
+                            android:textSize="11sp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -190,9 +184,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/card_white"
                 app:layout_constraintTop_toBottomOf="@id/layout_stats_profile">
 
 
@@ -208,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:padding="12dp"
+                        android:padding="16dp"
                         android:background="?attr/selectableItemBackground">
 
                         <ImageView
@@ -224,20 +218,21 @@
                             android:text="@string/edit_profil"
                             android:textSize="16sp"
                             android:layout_marginStart="16dp"
-                            android:textColor="@color/text_white"/>
+                            android:textColor="@color/text_main"/>
 
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
-                            app:tint="@android:color/darker_gray"/>
+                            app:tint="@color/border_divider"/>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#30363D"/>
+                        android:background="@color/border_divider"
+                        android:layout_marginHorizontal="16dp"/>
 
 
                     <LinearLayout
@@ -246,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:padding="12dp"
+                        android:padding="16dp"
                         android:background="?attr/selectableItemBackground">
                         <ImageView
                             android:layout_width="24dp"
@@ -260,19 +255,20 @@
                             android:text="@string/pengaturan"
                             android:textSize="16sp"
                             android:layout_marginStart="16dp"
-                            android:textColor="@color/text_white"/>
+                            android:textColor="@color/text_main"/>
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
-                            app:tint="@android:color/darker_gray"/>
+                            app:tint="@color/border_divider"/>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#30363D"/>
+                        android:background="@color/border_divider"
+                        android:layout_marginHorizontal="16dp"/>
 
 
                     <LinearLayout
@@ -281,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:padding="12dp"
+                        android:padding="16dp"
                         android:background="?attr/selectableItemBackground">
                         <ImageView
                             android:layout_width="24dp"
@@ -295,13 +291,13 @@
                             android:text="@string/bantuan"
                             android:textSize="16sp"
                             android:layout_marginStart="16dp"
-                            android:textColor="@color/text_white"/>
+                            android:textColor="@color/text_main"/>
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_chevron_right"
-                            app:tint="@android:color/darker_gray"/>
+                            app:tint="@color/border_divider"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -313,12 +309,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:padding="16dp"
                 android:background="@drawable/bg_bottom_nav_white"
-                android:backgroundTint="#FFF0F0"
+                android:backgroundTint="@color/error_red_light"
                 app:layout_constraintTop_toBottomOf="@id/card_menu_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -326,13 +322,13 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_logout_variant"
-                    app:tint="#D32F2F"/>
+                    app:tint="@color/error_red"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/keluar_dari_aplikasi"
-                    android:textColor="#D32F2F"
+                    android:textColor="@color/error_red"
                     android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_marginStart="12dp"/>

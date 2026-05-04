@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_light"
-    android:padding="8dp"
-    android:paddingBottom="100dp"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="true">
+    android:background="@color/bg_light">
+
+    <View
+        android:id="@+id/view_header"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/bg_header_rounded"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tv_title_history"
@@ -16,8 +20,9 @@
         android:text="@string/riwayat_tidur"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/text_white"
-        android:layout_margin="16dp"
+        android:textColor="@color/white"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -25,23 +30,28 @@
         android:id="@+id/rv_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="120dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_history" />
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
     <include
         android:id="@+id/layout_empty_history"
         layout="@layout/layout_empty_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_history" />
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:indeterminateTint="@color/sleep_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,9 +62,8 @@
         layout="@layout/layout_history_skeleton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_history" />
+        app:layout_constraintTop_toBottomOf="@id/view_header" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

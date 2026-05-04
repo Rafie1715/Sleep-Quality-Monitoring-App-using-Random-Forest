@@ -28,7 +28,7 @@ class SksCalculatorActivity : AppCompatActivity() {
     private fun setupUI() {
         val now = Calendar.getInstance()
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        binding.tvCurrentTime.text = "Sekarang (${sdf.format(now.time)})"
+        binding.tvCurrentTime.text = getString(com.dicoding.restupskripsirafierojagatbachri.R.string.sekarang_format, sdf.format(now.time))
 
         binding.btnInfoTheory.setOnClickListener {
             val infoBottomSheet = SksInfoBottomSheet()

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_onboarding_gradient"
@@ -38,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_untuk_melanjutkan_tidur_nyenyakmu"
-        android:textColor="@color/text_gray"
+        android:textColor="@color/text_sub"
         android:textSize="14sp"
         android:layout_marginTop="8dp"
         android:alpha="0"
@@ -48,16 +49,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="@string/email_address"
         android:alpha="0"
         app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/text_gray"
-        app:hintTextColor="@color/sleep_accent"
-        app:boxStrokeColor="@color/sleep_accent"
+        app:startIconTint="@color/text_sub"
         app:boxCornerRadiusTopStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -73,17 +72,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/password"
         android:alpha="0"
         app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/text_gray"
-        app:hintTextColor="@color/sleep_accent"
+        app:startIconTint="@color/text_sub"
         app:endIconMode="password_toggle"
-        app:boxStrokeColor="@color/sleep_accent"
         app:boxCornerRadiusTopStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
@@ -97,7 +94,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -106,8 +103,8 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:alpha="0"
-        android:backgroundTint="@color/sleep_primary"
         app:cornerRadius="16dp"
+        app:backgroundTint="@color/sleep_primary"
         app:layout_constraintTop_toBottomOf="@id/til_password" />
 
     <LinearLayout
@@ -128,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/atau"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_sub"
             android:layout_marginHorizontal="16dp"
             android:textSize="12sp"/>
         <View
@@ -140,7 +137,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_google_login"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
@@ -162,6 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:indeterminateTint="@color/sleep_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +181,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/belum_punya_akun"
-            android:textColor="@color/text_gray"
+            android:textColor="@color/text_sub"
             android:textSize="14sp" />
 
         <TextView

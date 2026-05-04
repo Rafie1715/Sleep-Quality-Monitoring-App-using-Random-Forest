@@ -36,10 +36,10 @@ class DetailArticleActivity : AppCompatActivity() {
             tvDetailContent.text = article.content.replace("\\n", "\n")
 
             if (article.source_url.isNotEmpty()) {
-                layoutSource.visibility = View.VISIBLE
+                cardSource.visibility = View.VISIBLE
                 tvDetailSource.text = article.source_url
             } else {
-                layoutSource.visibility = View.GONE
+                cardSource.visibility = View.GONE
             }
 
             Glide.with(this@DetailArticleActivity)

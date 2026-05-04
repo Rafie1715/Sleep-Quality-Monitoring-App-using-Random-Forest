@@ -2,20 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
+    android:background="@color/bg_light"
     tools:context=".ui.calculator.SleepDebtDetailActivity">
+
+    <View
+        android:id="@+id/view_header"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/bg_header_rounded"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="32dp"
         app:title="Rincian Utang Tidur"
-        app:titleTextColor="#FFFFFF"
-        app:navigationIcon="@drawable/ic_arrow_left"
-        app:navigationIconTint="#FFFFFF"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
@@ -23,8 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="#1E1E1E"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/card_white"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <LinearLayout
@@ -32,13 +40,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="24dp">
+            android:padding="32dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_defisit_tidurmu"
-                android:textColor="#AAAAAA"
+                android:textColor="@color/text_sub"
                 android:textSize="14sp" />
 
             <TextView
@@ -46,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_2_jam"
-                android:textColor="#FF5252"
+                android:textColor="@color/error_red"
                 android:textSize="48sp"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp" />
@@ -58,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rencana_pemulihan_medis"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_main"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="32dp"
@@ -71,33 +79,35 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardBackgroundColor="#161B22"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/card_white"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_plan">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="24dp">
 
             <TextView
                 android:id="@+id/tv_recovery_advice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/memuat_saran_pemulihan"
-                android:textColor="#E0E0E0"
+                android:textColor="@color/text_main"
                 android:lineSpacingExtra="6dp"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_set_bedtime"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
                 android:text="@string/atur_pengingat_tidur_lebih_awal"
-                android:backgroundTint="#4CAF50"
-                app:cornerRadius="12dp" />
+                android:textStyle="bold"
+                app:backgroundTint="@color/success_green"
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

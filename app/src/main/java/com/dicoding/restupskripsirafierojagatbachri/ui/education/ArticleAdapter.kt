@@ -2,13 +2,17 @@ package com.dicoding.restupskripsirafierojagatbachri.ui.education
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ItemArticleBinding
 
 class ArticleAdapter(private var list: List<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+
+    private var lastPosition = -1
 
     fun updateList(newList: List<Article>) {
         list = newList
@@ -24,6 +28,7 @@ class ArticleAdapter(private var list: List<Article>) : RecyclerView.Adapter<Art
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val article = list[position]
+        setAnimation(holder.itemView, position)
         holder.binding.apply {
             tvTitleArticle.text = article.title
             tvDescArticle.text = article.desc
@@ -43,6 +48,15 @@ class ArticleAdapter(private var list: List<Article>) : RecyclerView.Adapter<Art
                 intent.putExtra(DetailArticleActivity.EXTRA_ARTICLE, article)
                 it.context.startActivity(intent)
             }
+        }
+    }
+
+    private fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.fade_in)
+            animation.duration = 500
+            viewToAnimate.startAnimation(animation)
+            lastPosition = position
         }
     }
 

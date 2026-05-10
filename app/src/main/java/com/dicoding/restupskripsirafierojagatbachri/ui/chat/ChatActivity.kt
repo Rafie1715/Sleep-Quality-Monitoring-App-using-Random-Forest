@@ -2,7 +2,11 @@ package com.dicoding.restupskripsirafierojagatbachri.ui.chat
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityChatBinding
@@ -48,21 +52,40 @@ class ChatActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            
+            v.updatePadding(
+                top = systemBars.top,
+                bottom = Math.max(systemBars.bottom, ime.bottom)
+            )
+            insets
+        }
+
         sleepRecord = intent.getParcelableExtra("EXTRA_SLEEP_RECORD")
+        val weeklyContext = intent.getStringExtra("EXTRA_WEEKLY_CONTEXT")
 
         setupUI()
 
-        val greeting = if (sleepRecord != null) {
-            "Halo! Aku RestBot 🤖. Aku melihat tidurmu tadi kualitasnya **${sleepRecord?.sleep_quality}**. Ada yang ingin kamu diskusikan atau tanyakan agar tidurmu lebih baik malam ini?"
-        } else {
-            "Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?"
+        when {
+            weeklyContext != null -> {
+                addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Aku sudah menerima data tidur mingguanmu. Sedang aku analisis ya...", false))
+                sendMessageToGemini(weeklyContext)
+            }
+            sleepRecord != null -> {
+                val greeting = "Halo! Aku RestBot 🤖. Aku melihat tidurmu tadi kualitasnya **${sleepRecord?.sleep_quality}**. Ada yang ingin kamu diskusikan atau tanyakan agar tidurmu lebih baik malam ini?"
+                addMessageToChat(ChatMessage(greeting, false))
+            }
+            else -> {
+                addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?", false))
+            }
         }
-        
-        addMessageToChat(ChatMessage(greeting, false))
     }
 
     private fun setupUI() {

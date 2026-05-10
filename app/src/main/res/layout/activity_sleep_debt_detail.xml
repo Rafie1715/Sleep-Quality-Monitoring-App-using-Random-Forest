@@ -105,6 +105,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/atur_pengingat_tidur_lebih_awal"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:backgroundTint="@color/success_green"
                 app:cornerRadius="16dp" />

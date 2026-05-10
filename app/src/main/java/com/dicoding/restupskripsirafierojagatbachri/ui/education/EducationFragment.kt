@@ -1,5 +1,7 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.education
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,6 +32,25 @@ class EducationFragment : Fragment(R.layout.fragment_education) {
 
         setupSearch()
         fetchArticles()
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        binding.viewHeader.alpha = 0f
+        binding.tvTitleEdu.alpha = 0f
+        binding.cardSearch.alpha = 0f
+        binding.rvArticle.alpha = 0f
+
+        val header = ObjectAnimator.ofFloat(binding.viewHeader, View.ALPHA, 1f).setDuration(400)
+        val title = ObjectAnimator.ofFloat(binding.tvTitleEdu, View.ALPHA, 1f).setDuration(400)
+        val search = ObjectAnimator.ofFloat(binding.cardSearch, View.ALPHA, 1f).setDuration(400)
+        val list = ObjectAnimator.ofFloat(binding.rvArticle, View.ALPHA, 1f).setDuration(400)
+        val listSlide = ObjectAnimator.ofFloat(binding.rvArticle, View.TRANSLATION_Y, 50f, 0f).setDuration(400)
+
+        AnimatorSet().apply {
+            playSequentially(header, title, search, AnimatorSet().apply { playTogether(list, listSlide) })
+            start()
+        }
     }
 
     private fun setupSearch() {

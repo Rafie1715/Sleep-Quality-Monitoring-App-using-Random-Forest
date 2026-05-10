@@ -318,6 +318,7 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:text="@string/simpan_hasil_tidur"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:backgroundTint="@color/sleep_primary"

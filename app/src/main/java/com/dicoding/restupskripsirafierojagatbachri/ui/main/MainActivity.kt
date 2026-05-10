@@ -2,8 +2,12 @@ package com.dicoding.restupskripsirafierojagatbachri.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dicoding.restupskripsirafierojagatbachri.R
@@ -26,6 +30,18 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.navView.setupWithNavController(navController)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.navViewContainer) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updateLayoutParams<MarginLayoutParams> {
+                val margin8 = (8 * resources.displayMetrics.density).toInt()
+                val margin20 = (20 * resources.displayMetrics.density).toInt()
+                bottomMargin = systemBars.bottom + margin8
+                leftMargin = margin20
+                rightMargin = margin20
+            }
+            insets
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {

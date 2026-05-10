@@ -108,6 +108,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:text="@string/daftar_sekarang"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:alpha="0"

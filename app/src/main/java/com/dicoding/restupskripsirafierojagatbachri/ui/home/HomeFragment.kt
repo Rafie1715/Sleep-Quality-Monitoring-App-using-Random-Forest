@@ -51,6 +51,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private var currentSleepDebt = 0
+    private var weeklyRecords: List<SleepRecord> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,6 +86,10 @@ class HomeFragment : Fragment() {
             showSetTargetDialog()
         }
 
+        binding.btnAnalyzeWeekly.setOnClickListener {
+            analyzeWeeklyWithAI()
+        }
+
         binding.ivProfile.setOnClickListener {
             val intent = Intent(requireContext(), EditProfileActivity::class.java)
             startActivity(intent)
@@ -103,7 +108,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun playAnimation() {
-        // Set initial state to invisible
         binding.viewHeader.alpha = 0f
         binding.tvGreeting.alpha = 0f
         binding.tvUserName.alpha = 0f
@@ -116,14 +120,12 @@ class HomeFragment : Fragment() {
         binding.cardSetTarget.alpha = 0f
         binding.cardReminderHome.alpha = 0f
 
-        // Animasi Header & User Info
         val header = ObjectAnimator.ofFloat(binding.viewHeader, View.ALPHA, 1f).setDuration(400)
         val greeting = ObjectAnimator.ofFloat(binding.tvGreeting, View.ALPHA, 1f).setDuration(300)
         val name = ObjectAnimator.ofFloat(binding.tvUserName, View.ALPHA, 1f).setDuration(300)
         val profile = ObjectAnimator.ofFloat(binding.ivProfile, View.ALPHA, 1f).setDuration(300)
         val toggle = ObjectAnimator.ofFloat(binding.ivThemeToggle, View.ALPHA, 1f).setDuration(300)
 
-        // Animasi Cards dengan Slide Up Effect
         val summary = ObjectAnimator.ofFloat(binding.cardSleepSummary, View.ALPHA, 1f).setDuration(400)
         val summarySlide = ObjectAnimator.ofFloat(binding.cardSleepSummary, View.TRANSLATION_Y, 50f, 0f).setDuration(400)
 
@@ -265,10 +267,50 @@ class HomeFragment : Fragment() {
 
         viewModel.weeklySleep.observe(viewLifecycleOwner) { result ->
             if (result is Resource.Success) {
-                val records = result.data
-                setupChart(records)
+                weeklyRecords = result.data
+                setupChart(weeklyRecords)
+                calculateSleepStreak(weeklyRecords)
             }
         }
+    }
+
+    private fun calculateSleepStreak(records: List<SleepRecord>) {
+        val sharedPref = requireActivity().getSharedPreferences("RestUP_Prefs", Context.MODE_PRIVATE)
+        val targetHours = sharedPref.getInt("SLEEP_TARGET", 7)
+        
+        var streak = 0
+        for (record in records.reversed()) {
+            if (record.duration_minutes >= targetHours * 60) {
+                streak++
+            } else {
+                break
+            }
+        }
+        
+        binding.tvStreakCount.text = "$streak Hari Streak"
+        if (streak > 0) {
+            binding.cardStreak.visibility = View.VISIBLE
+        } else {
+            binding.cardStreak.visibility = View.GONE
+        }
+    }
+
+    private fun analyzeWeeklyWithAI() {
+        if (weeklyRecords.isEmpty()) {
+            Toast.makeText(requireContext(), "Belum ada data untuk dianalisis", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val analysisContext = StringBuilder("Ini adalah data tidurku selama seminggu terakhir:\n")
+        weeklyRecords.forEach { record ->
+            analysisContext.append("- Tanggal ${record.date}: ${record.duration_minutes / 60}j ${record.duration_minutes % 60}m (${record.sleep_quality})\n")
+        }
+        analysisContext.append("\nTolong berikan analisis singkat dan saran untuk pola tidurku ini.")
+
+        val intent = Intent(requireContext(), ChatActivity::class.java)
+        intent.putExtra("EXTRA_WEEKLY_CONTEXT", analysisContext.toString())
+        startActivity(intent)
+        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun calculateSleepDebt(lastSleepHours: Int) {

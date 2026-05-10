@@ -1,5 +1,7 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.history
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,8 +38,25 @@ class HistoryFragment : Fragment() {
 
         setupRecyclerView()
         observeData()
+        playAnimation()
 
         viewModel.fetchSleepHistory()
+    }
+
+    private fun playAnimation() {
+        binding.viewHeader.alpha = 0f
+        binding.tvTitleHistory.alpha = 0f
+        binding.rvHistory.alpha = 0f
+
+        val header = ObjectAnimator.ofFloat(binding.viewHeader, View.ALPHA, 1f).setDuration(400)
+        val title = ObjectAnimator.ofFloat(binding.tvTitleHistory, View.ALPHA, 1f).setDuration(400)
+        val list = ObjectAnimator.ofFloat(binding.rvHistory, View.ALPHA, 1f).setDuration(400)
+        val listSlide = ObjectAnimator.ofFloat(binding.rvHistory, View.TRANSLATION_Y, 50f, 0f).setDuration(400)
+
+        AnimatorSet().apply {
+            playSequentially(header, title, AnimatorSet().apply { playTogether(list, listSlide) })
+            start()
+        }
     }
 
     private fun setupRecyclerView() {

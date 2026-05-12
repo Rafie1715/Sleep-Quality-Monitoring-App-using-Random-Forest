@@ -11,6 +11,11 @@
         android:title="Riwayat" />
 
     <item
+        android:id="@+id/navigation_placeholder"
+        android:title=""
+        android:enabled="false" />
+
+    <item
         android:id="@+id/navigation_education"
         android:icon="@drawable/ic_book"
         android:title="Edukasi" />

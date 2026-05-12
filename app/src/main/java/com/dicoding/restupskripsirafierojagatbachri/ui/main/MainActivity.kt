@@ -1,5 +1,6 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityMainBinding
+import com.dicoding.restupskripsirafierojagatbachri.ui.tracker.SleepTrackerActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,15 +33,42 @@ class MainActivity : AppCompatActivity() {
 
         binding.navView.setupWithNavController(navController)
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.navView) { v, insets ->
+            v.setPadding(0, 0, 0, 0)
+            insets
+        }
+
+        binding.btnTrackerCenter.setOnClickListener {
+            val intent = Intent(this, SleepTrackerActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.fabChatAiGlobal.setOnClickListener {
+            val intent = Intent(this, com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity::class.java)
+            startActivity(intent)
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.navViewContainer) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            
             v.updateLayoutParams<MarginLayoutParams> {
-                val margin8 = (8 * resources.displayMetrics.density).toInt()
+                val margin24 = (24 * resources.displayMetrics.density).toInt()
                 val margin20 = (20 * resources.displayMetrics.density).toInt()
-                bottomMargin = systemBars.bottom + margin8
+                bottomMargin = systemBars.bottom + margin24
                 leftMargin = margin20
                 rightMargin = margin20
             }
+            
+            binding.btnTrackerCenter.updateLayoutParams<MarginLayoutParams> {
+                val margin24 = (24 * resources.displayMetrics.density).toInt()
+                bottomMargin = systemBars.bottom + margin24
+            }
+            
+            binding.fabChatAiGlobal.updateLayoutParams<MarginLayoutParams> {
+                val baseMargin = (120 * resources.displayMetrics.density).toInt()
+                bottomMargin = systemBars.bottom + baseMargin
+            }
+            
             insets
         }
 
@@ -47,11 +76,14 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.navigation_home, R.id.navigation_history,
                 R.id.navigation_education, R.id.navigation_profile -> {
-                    binding.navView.visibility = View.VISIBLE
+                    binding.navViewContainer.visibility = View.VISIBLE
+                    binding.btnTrackerCenter.visibility = View.VISIBLE
+                    binding.fabChatAiGlobal.visibility = View.VISIBLE
                 }
                 else -> {
-                    // Kalau nanti ada halaman detail, navbar bisa disembunyikan
-                    // binding.navView.visibility = View.GONE
+                    binding.navViewContainer.visibility = View.GONE
+                    binding.btnTrackerCenter.visibility = View.GONE
+                    binding.fabChatAiGlobal.visibility = View.GONE
                 }
             }
         }

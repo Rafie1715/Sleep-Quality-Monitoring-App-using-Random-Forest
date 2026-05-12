@@ -14,10 +14,11 @@ import com.dicoding.restupskripsirafierojagatbachri.ui.main.MainActivity
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        showAlarmNotification(context)
+        val message = intent.getStringExtra("EXTRA_MESSAGE")
+        showAlarmNotification(context, message)
     }
 
-    private fun showAlarmNotification(context: Context) {
+    private fun showAlarmNotification(context: Context, message: String?) {
         val channelId = "sleep_reminder_channel"
         val channelName = "Pengingat Tidur"
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -28,13 +29,17 @@ class AlarmReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
+        val displayMessage = message ?: "Jauhkan HP-mu, matikan lampu, dan bersiaplah istirahat agar besok lebih fokus kuliah."
+        val title = if (message != null) "🚨 Rencana Pemulihan Medis" else "Waktunya Bersiap Tidur! 🌙"
+
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_alarm)
-            .setContentTitle("Waktunya Bersiap Tidur! 🌙")
-            .setContentText("Jauhkan HP-mu, matikan lampu, dan bersiaplah istirahat agar besok lebih fokus kuliah.")
+            .setContentTitle(title)
+            .setContentText(displayMessage)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(displayMessage))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel =

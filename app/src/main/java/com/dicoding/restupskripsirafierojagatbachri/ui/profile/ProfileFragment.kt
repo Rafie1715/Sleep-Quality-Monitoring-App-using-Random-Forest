@@ -60,14 +60,22 @@ class ProfileFragment : Fragment() {
         }
 
         binding.btnLogoutLayout.setOnClickListener {
-            it.alpha = 0.5f
-            it.animate().alpha(1f).duration = 200
-
-            firebaseAuth.signOut()
-            val intent = Intent(requireActivity(), LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            showLogoutConfirmationDialog()
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle("Logout")
+            .setMessage("Apakah Anda yakin ingin keluar dari aplikasi?")
+            .setPositiveButton("Ya") { _, _ ->
+                firebaseAuth.signOut()
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+            .setNegativeButton("Tidak", null)
+            .show()
     }
 
     private fun fetchStats() {

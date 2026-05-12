@@ -67,11 +67,6 @@ class HomeFragment : Fragment() {
         setupGreeting()
         setupUser()
 
-        binding.fabChatAi.setOnClickListener {
-            val intent = Intent(requireContext(), ChatActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.cardSleepTrackerHome.setOnClickListener {
             val intent = Intent(requireContext(), SleepTrackerActivity::class.java)
             startActivity(intent)

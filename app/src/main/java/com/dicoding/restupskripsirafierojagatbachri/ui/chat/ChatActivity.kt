@@ -10,12 +10,12 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityChatBinding
+import com.dicoding.restupskripsirafierojagatbachri.BuildConfig
+import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
+import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
-import kotlin.getValue
-import com.dicoding.restupskripsirafierojagatbachri.BuildConfig
-import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 
 class ChatActivity : AppCompatActivity() {
 
@@ -24,6 +24,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var chatAdapter: ChatAdapter
 
     private var sleepRecord: SleepRecord? = null
+    private var chatSession: Chat? = null
 
     private val generativeModel by lazy {
         val systemPrompt = StringBuilder("Kamu adalah RestBot, asisten virtual aplikasi RestUP. " +
@@ -56,6 +57,9 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Chat Session
+        chatSession = generativeModel.startChat()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -117,9 +121,9 @@ class ChatActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val response = generativeModel.generateContent(message)
+                val response = chatSession?.sendMessage(content { text(message) })
 
-                val aiReply = response.text ?: "Maaf, aku sedang pusing. Coba lagi nanti ya!"
+                val aiReply = response?.text ?: "Maaf, aku sedang pusing. Coba lagi nanti ya!"
                 
                 addMessageToChat(ChatMessage(aiReply.trim(), false))
 

@@ -1,115 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_light"
-    tools:context=".ui.calculator.SleepDebtDetailActivity">
+    android:fillViewport="true">
 
-    <View
-        android:id="@+id/view_header"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@drawable/bg_header_rounded"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="32dp"
-        app:title="Rincian Utang Tidur"
-        app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_back"
-        app:navigationIconTint="@color/white"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_main_status"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/card_white"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        tools:context=".ui.calculator.SleepDebtDetailActivity">
 
-        <LinearLayout
+        <View
+            android:id="@+id/view_header"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/bg_header_rounded"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/white"
+            app:title="Rincian Utang Tidur"
+            app:titleTextColor="@color/white" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_main_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="32dp">
+            android:layout_margin="24dp"
+            app:cardBackgroundColor="@color/card_white"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/total_defisit_tidurmu"
-                android:textColor="@color/text_sub"
-                android:textSize="14sp" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp">
 
-            <TextView
-                android:id="@+id/tv_total_debt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/_2_jam"
-                android:textColor="@color/error_red"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_defisit_tidurmu"
+                    android:textColor="@color/text_sub"
+                    android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_label_plan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rencana_pemulihan_medis"
-        android:textColor="@color/text_main"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_main_status" />
+                <TextView
+                    android:id="@+id/tv_total_debt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/_2_jam"
+                    android:textColor="@color/error_red"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="4dp"
-        app:cardBackgroundColor="@color/card_white"
-        app:layout_constraintTop_toBottomOf="@+id/tv_label_plan">
+        <TextView
+            android:id="@+id/tv_label_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/rencana_pemulihan_medis"
+            android:textColor="@color/text_main"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_main_status" />
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/card_white"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_label_plan">
 
-            <TextView
-                android:id="@+id/tv_recovery_advice"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/memuat_saran_pemulihan"
-                android:textColor="@color/text_main"
-                android:lineSpacingExtra="6dp"
-                android:textSize="15sp" />
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_set_bedtime"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/atur_pengingat_tidur_lebih_awal"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:backgroundTint="@color/success_green"
-                app:cornerRadius="16dp" />
+                <TextView
+                    android:id="@+id/tv_recovery_advice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6dp"
+                    android:text="@string/memuat_saran_pemulihan"
+                    android:textColor="@color/text_main"
+                    android:textSize="15sp" />
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_set_bedtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/atur_pengingat_tidur_lebih_awal"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/success_green"
+                    app:cornerRadius="16dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            app:layout_constraintTop_toBottomOf="@id/card_plan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

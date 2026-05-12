@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@drawable/bg_header_rounded"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_back_help"
@@ -40,8 +40,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="24dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_header">
 
@@ -54,38 +53,41 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="@string/pertanyaan_umum"
                 android:textColor="@color/text_main"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="16dp"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/card_white"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_white">
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/bagaimana_cara_kerja_sleep_tracker"
                         android:textColor="@color/sleep_primary"
-                        android:textStyle="bold"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="4dp"
                         android:text="@string/tekan_tombol_bulan_di_halaman_utama_saat_anda_ingin_tidur_aplikasi_akan_menghitung_durasi_tidur_anda_hingga_anda_menekan_tombol_bangun"
-                        android:textColor="@color/text_main"
-                        android:lineSpacingExtra="4dp"/>
+                        android:textColor="@color/text_main" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -93,28 +95,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/card_white"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/card_white">
+                app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/apakah_butuh_koneksi_internet"
                         android:textColor="@color/sleep_primary"
-                        android:textStyle="bold"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="4dp"
                         android:text="@string/untuk_login_dan_menyimpan_data_riwayat_ke_cloud_anda_memerlukan_koneksi_internet_namun_fitur_sleep_tracker_bisa_berjalan_offline"
-                        android:textColor="@color/text_main"
-                        android:lineSpacingExtra="4dp"/>
+                        android:textColor="@color/text_main" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,10 +128,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/hubungi_dukungan_email"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 app:backgroundTint="@color/sleep_accent"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

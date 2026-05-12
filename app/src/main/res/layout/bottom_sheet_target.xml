@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp"
     android:background="@drawable/bg_bottom_sheet">
 
-    <View
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/border_divider"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/atur_target_tidur"
-        android:textColor="@color/text_main"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
-
-    <TextView
-        android:id="@+id/tv_slider_value"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/_7_jam"
-        android:textColor="@color/sleep_primary"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider_target"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:valueFrom="4.0"
-        android:valueTo="12.0"
-        android:stepSize="1.0"
-        android:value="7.0"
-        app:thumbColor="@color/sleep_primary"
-        app:trackColorActive="@color/sleep_primary"
-        app:trackColorInactive="@color/sleep_primary_light" />
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:background="@color/border_divider" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_save_target"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/simpan_target"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:cornerRadius="16dp"
-        app:backgroundTint="@color/sleep_primary" />
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/atur_target_tidur"
+            android:textColor="@color/text_main"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_slider_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/_7_jam"
+            android:textAlignment="center"
+            android:textColor="@color/sleep_primary"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="1.0"
+            android:value="7.0"
+            android:valueFrom="4.0"
+            android:valueTo="12.0"
+            app:thumbColor="@color/sleep_primary"
+            app:trackColorActive="@color/sleep_primary"
+            app:trackColorInactive="@color/sleep_primary_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_target"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/simpan_target"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@color/sleep_primary"
+            app:cornerRadius="16dp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -5,7 +5,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
@@ -27,12 +26,23 @@ class ChatAdapter(private val chatList: List<ChatMessage>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = chatList[position]
         
-        val animation = AnimationUtils.loadAnimation(holder.itemView.context, android.R.anim.fade_in)
-        animation.duration = 400
-        holder.itemView.startAnimation(animation)
+        // Animasi Bounce/Pop-up Entrance
+        holder.itemView.alpha = 0f
+        holder.itemView.scaleX = 0.8f
+        holder.itemView.scaleY = 0.8f
+        
+        holder.itemView.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(400)
+            .setInterpolator(android.view.animation.OvershootInterpolator())
+            .start()
 
         val formattedMessage = chat.message
             .replace(Regex("\\*\\*(.*?)\\*\\*"), "<b>$1</b>")
+            .replace(Regex("\\*(.*?)\\*"), "<i>$1</i>")
+            .replace(Regex("(?m)^\\*\\s"), "• ")
             .replace("\n", "<br>")
 
         holder.tvMessage.text = HtmlCompat.fromHtml(formattedMessage, HtmlCompat.FROM_HTML_MODE_COMPACT)

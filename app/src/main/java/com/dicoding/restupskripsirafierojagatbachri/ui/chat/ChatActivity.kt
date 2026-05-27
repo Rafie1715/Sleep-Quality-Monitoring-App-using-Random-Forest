@@ -1,7 +1,10 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.chat
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityChatBinding
 import com.dicoding.restupskripsirafierojagatbachri.BuildConfig
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
+import com.dicoding.restupskripsirafierojagatbachri.utils.SleepRecommendationEngine
 import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
@@ -25,19 +29,37 @@ class ChatActivity : AppCompatActivity() {
 
     private var sleepRecord: SleepRecord? = null
     private var chatSession: Chat? = null
+    private var typingAnimator: AnimatorSet? = null
 
     private val generativeModel by lazy {
-        val systemPrompt = StringBuilder("Anda adalah RestBot, pakar kesehatan tidur. ")
+        val systemPrompt = StringBuilder()
 
         sleepRecord?.let {
             val durationText = "${it.duration_minutes / 60} jam ${it.duration_minutes % 60} menit"
             val journalText = it.sleep_journal.ifEmpty { "Tidak ada catatan tambahan." }
+            val aturanPakar = SleepRecommendationEngine.generateRecommendation(it)
 
-            systemPrompt.append("Mahasiswa ini baru saja tidur dengan durasi $durationText dan diprediksi memiliki kualitas tidur ${it.sleep_quality}. ")
-            systemPrompt.append("Ia juga menuliskan jurnal tidur berikut: '$journalText'. ")
-            systemPrompt.append("Berdasarkan sentimen jurnal tersebut dan status klasifikasinya, berikan saran pemulihan yang sangat personal dan empatik maksimal dua paragraf tanpa istilah medis yang rumit.")
+            systemPrompt.append("""
+                Anda adalah RestBot, asisten virtual yang cerdas, hangat, dan suportif layaknya seorang teman atau kakak tingkat yang juga pakar kesehatan tidur mahasiswa.
+                
+                Konteks pengguna saat ini:
+                - Hasil Klasifikasi Sistem: ${it.sleep_quality}
+                - Durasi Tidur Aktual: $durationText
+                - Keluhan/Jurnal Tidur (NLP): "$journalText"
+                
+                ATURAN MEDIS MUTLAK (Hanya gunakan poin-poin ini sebagai sumber saran):
+                "$aturanPakar"
+                
+                GAYA BAHASA & TUGAS ANDA:
+                1. BERIKAN EMPATI MENDALAM: Mulailah dengan merespons isi jurnal tidur pengguna secara tulus.
+                2. JADI MANUSIAWI: Gunakan gaya bahasa yang santai namun sopan (seperti kakak tingkat/teman akrab).
+                3. FORMATTING BERSIH: Dilarang keras menggunakan tanda bintang (*) untuk penekanan kata (bold/italic) di tengah kalimat. Gunakan huruf kapital di awal kata atau tanda kutip jika perlu.
+                4. TATA LETAK: Gunakan narasi yang mengalir. Jika harus membuat daftar, gunakan tanda hubung (-) atau simbol bullet (•) yang rapi, bukan tanda bintang.
+                5. TRANSLASI PAKAR: Ubah bahasa medis "ATURAN MEDIS" menjadi saran praktis yang menyemangati.
+                6. DURASI: Maksimal 2-3 paragraf saja.
+            """.trimIndent())
         } ?: run {
-            systemPrompt.append("Tugas Anda adalah memberikan saran kesehatan tidur yang ramah, informatif, dan mudah dimengerti kepada mahasiswa.")
+            systemPrompt.append("Anda adalah RestBot. Tugas Anda adalah memberikan saran kesehatan tidur yang ramah, informatif, dan mudah dimengerti kepada mahasiswa.")
         }
 
         GenerativeModel(
@@ -55,7 +77,6 @@ class ChatActivity : AppCompatActivity() {
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize Chat Session
         chatSession = generativeModel.startChat()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -115,7 +136,7 @@ class ChatActivity : AppCompatActivity() {
         }
         binding.etMessage.text.clear()
 
-        binding.progressBar.visibility = View.VISIBLE
+        showTypingIndicator(true)
         binding.btnSend.isEnabled = false
 
         lifecycleScope.launch {
@@ -124,10 +145,12 @@ class ChatActivity : AppCompatActivity() {
 
                 val aiReply = response?.text ?: "Maaf, aku sedang pusing. Coba lagi nanti ya!"
                 
+                showTypingIndicator(false)
                 addMessageToChat(ChatMessage(aiReply.trim(), false))
 
             } catch (e: Exception) {
                 e.printStackTrace()
+                showTypingIndicator(false)
                 val errorMessage = when {
                     e.message?.contains("high demand", ignoreCase = true) == true || 
                     e.message?.contains("503", ignoreCase = true) == true -> 
@@ -143,6 +166,41 @@ class ChatActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 binding.btnSend.isEnabled = true
             }
+        }
+    }
+
+    private fun showTypingIndicator(show: Boolean) {
+        if (show) {
+            binding.layoutTyping.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
+            
+            if (typingAnimator == null) {
+                val dot1 = ObjectAnimator.ofFloat(binding.dot1, "translationY", 0f, -15f, 0f).apply {
+                    duration = 600
+                    repeatCount = ObjectAnimator.INFINITE
+                    interpolator = AccelerateDecelerateInterpolator()
+                }
+                val dot2 = ObjectAnimator.ofFloat(binding.dot2, "translationY", 0f, -15f, 0f).apply {
+                    duration = 600
+                    repeatCount = ObjectAnimator.INFINITE
+                    startDelay = 150
+                    interpolator = AccelerateDecelerateInterpolator()
+                }
+                val dot3 = ObjectAnimator.ofFloat(binding.dot3, "translationY", 0f, -15f, 0f).apply {
+                    duration = 600
+                    repeatCount = ObjectAnimator.INFINITE
+                    startDelay = 300
+                    interpolator = AccelerateDecelerateInterpolator()
+                }
+
+                typingAnimator = AnimatorSet().apply {
+                    playTogether(dot1, dot2, dot3)
+                }
+            }
+            typingAnimator?.start()
+        } else {
+            binding.layoutTyping.visibility = View.GONE
+            typingAnimator?.cancel()
         }
     }
 

@@ -1,9 +1,11 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.tracker
 
 import android.os.Bundle
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import com.dicoding.restupskripsirafierojagatbachri.databinding.BottomSheetMorningSurveyBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -45,6 +47,7 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         val toggleCard = View.OnClickListener { view ->
             if (view is MaterialCardView) {
                 view.isChecked = !view.isChecked
+                animateCardSelection(view, view.isChecked)
             }
         }
 
@@ -52,17 +55,47 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         binding.cardDistPhysic.setOnClickListener(toggleCard)
         binding.cardHabitBad.setOnClickListener(toggleCard)
 
-        binding.cardMoodBad.setOnClickListener { updateMoodSelection("Buruk", binding.cardMoodBad) }
-        binding.cardMoodNeutral.setOnClickListener { updateMoodSelection("Cukup", binding.cardMoodNeutral) }
-        binding.cardMoodGood.setOnClickListener { updateMoodSelection("Baik", binding.cardMoodGood) }
+        binding.cardMoodBad.setOnClickListener { updateMoodSelection("Lelah", binding.cardMoodBad) }
+        binding.cardMoodNeutral.setOnClickListener { updateMoodSelection("Biasa", binding.cardMoodNeutral) }
+        binding.cardMoodGood.setOnClickListener { updateMoodSelection("Bugar", binding.cardMoodGood) }
     }
 
     private fun updateMoodSelection(mood: String, selectedCard: MaterialCardView) {
+        if (selectedMood == mood) return
+
         selectedMood = mood
-        binding.cardMoodBad.isChecked = false
-        binding.cardMoodNeutral.isChecked = false
-        binding.cardMoodGood.isChecked = false
+        
+        listOf(binding.cardMoodBad, binding.cardMoodNeutral, binding.cardMoodGood).forEach { card ->
+            if (card != selectedCard && card.isChecked) {
+                card.isChecked = false
+                animateCardSelection(card, false)
+            }
+        }
+        
         selectedCard.isChecked = true
+        animateCardSelection(selectedCard, true)
+    }
+
+    private fun animateCardSelection(card: MaterialCardView, isChecked: Boolean) {
+        val scale = if (isChecked) 1.05f else 1.0f
+        val stroke = if (isChecked) dpToPx(2) else dpToPx(1)
+        
+        card.animate()
+            .scaleX(scale)
+            .scaleY(scale)
+            .setDuration(200)
+            .setInterpolator(OvershootInterpolator())
+            .start()
+        
+        card.strokeWidth = stroke
+        
+        if (isChecked) {
+            card.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 
     private fun collectDataAndSubmit() {

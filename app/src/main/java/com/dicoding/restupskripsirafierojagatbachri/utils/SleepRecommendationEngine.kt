@@ -14,7 +14,7 @@ object SleepRecommendationEngine {
         }
 
         else if (record.duration_minutes < 360) {
-            recommendations.add("Durasi tidurmu kurang dari 6 jam. Usahakan tidur lebih awal besok malam untuk melunasi 'utang tidur' agar tetap fokus saat kuliah.")
+            recommendations.add("Durasi tidurmu kurang dari 6 jam. Usahakan tidur lebih awal besok malam untuk melunasi 'utang tidur' agar tetap fokus saat kuliah. Jangan mencoba 'membayar' utang tidur secara berlebihan di siang hari (napping >30 menit), karena akan merusak jadwal tidurmu malam berikutnya.")
             sources.add("• <a href=\"https://www.cdc.gov/sleep/about/?CDC_AAref_Val=https://www.cdc.gov/sleep/about_sleep/how_much_sleep.html\">CDC: How Much Sleep Do I Need?</a>")
         }
 
@@ -36,6 +36,11 @@ object SleepRecommendationEngine {
         if (record.frequent_awakenings || record.bad_temperature) {
             recommendations.add("Pastikan suhu kamarmu nyaman (ideal 15-19°C) dan minimalkan suara bising agar kamu tidak sering terbangun di tengah malam.")
             sources.add("• <a href=\"https://www.sleepfoundation.org/bedroom-environment/best-temperature-for-sleep\">Sleep Foundation: Best Temperature for Sleep</a>")
+        }
+
+        if (record.wake_up_mood == "Lelah" && record.duration_minutes > 420) {
+            recommendations.add("Meskipun durasi tidurmu cukup, kamu masih merasa lelah. Ini mungkin tanda kualitas tidur yang kurang (banyak gangguan) atau 'oversleeping'. Cobalah batasi tidur maksimal 9 jam.")
+            sources.add("• <a href=\"https://www.hopkinsmedicine.org/health/wellness-and-prevention/oversleeping-bad-for-your-health\">Johns Hopkins: Oversleeping</a>")
         }
 
         if (recommendations.isEmpty()) {

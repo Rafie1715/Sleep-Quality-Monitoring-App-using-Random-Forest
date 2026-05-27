@@ -1,5 +1,6 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.result
 
+import android.animation.ValueAnimator
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
@@ -7,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -19,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import androidx.core.view.isVisible
 
 @AndroidEntryPoint
 class ResultActivity : AppCompatActivity() {
@@ -35,6 +38,7 @@ class ResultActivity : AppCompatActivity() {
         if (sleepRecord != null) {
             displayResult(sleepRecord)
             setupChatBot(sleepRecord)
+            animateUI(sleepRecord)
         }
 
         binding.btnBack.setOnClickListener { finish() }
@@ -99,9 +103,7 @@ class ResultActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
         binding.tvTimeRange.text = "${sdf.format(Date(record.sleep_time))} - ${sdf.format(Date(record.wake_time))}"
 
-        val hours = record.duration_minutes / 60
-        val mins = record.duration_minutes % 60
-        binding.tvDurationDetail.text = "${hours}j ${mins}m"
+        binding.tvDurationDetail.text = "0j 0m"
 
         binding.tvQualityDetail.text = record.sleep_quality.ifEmpty { "Menunggu Analisis AI" }
 
@@ -122,6 +124,58 @@ class ResultActivity : AppCompatActivity() {
             binding.tvRecommendationDetail.movementMethod = LinkMovementMethod.getInstance()
         } else {
             binding.tvRecommendationDetail.text = "Belum ada saran untuk catatan ini."
+        }
+
+        // Sembunyikan elemen untuk persiapan animasi staggered
+        listOf(
+            binding.cardSummary,
+            binding.cardRecommendation,
+            binding.btnMedicalRecovery,
+            binding.cardRestbot,
+            binding.btnBack
+        ).forEach { view ->
+            if (view.visibility != View.GONE) {
+                view.alpha = 0f
+                view.translationY = 50f
+            }
+        }
+    }
+
+    private fun animateUI(record: SleepRecord) {
+        // 1. Animasi Ticker untuk Durasi Tidur
+        val totalMinutes = record.duration_minutes
+        val animator = ValueAnimator.ofInt(0, totalMinutes)
+        animator.duration = 1500
+        animator.interpolator = DecelerateInterpolator()
+        animator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            val h = value / 60
+            val m = value % 60
+            binding.tvDurationDetail.text = "${h}j ${m}m"
+        }
+        animator.start()
+
+        // 2. Animasi Staggered Slide-up untuk Kartu
+        val viewsToAnimate = mutableListOf<View>(
+            binding.cardSummary,
+            binding.cardRecommendation
+        )
+        
+        if (binding.btnMedicalRecovery.isVisible) {
+            viewsToAnimate.add(binding.btnMedicalRecovery)
+        }
+        
+        viewsToAnimate.add(binding.cardRestbot)
+        viewsToAnimate.add(binding.btnBack)
+
+        viewsToAnimate.forEachIndexed { index, view ->
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(600)
+                .setStartDelay(300L + (index * 150L))
+                .setInterpolator(DecelerateInterpolator())
+                .start()
         }
     }
 }

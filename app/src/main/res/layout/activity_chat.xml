@@ -28,6 +28,44 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/item_chat" />
 
+    <LinearLayout
+        android:id="@+id/layout_typing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_chat_bubble_bot"
+        android:backgroundTint="@color/sleep_accent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/card_input"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_circle_white" />
+
+        <View
+            android:id="@+id/dot2"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_circle_white" />
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/bg_circle_white" />
+    </LinearLayout>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_input"
         android:layout_width="match_parent"

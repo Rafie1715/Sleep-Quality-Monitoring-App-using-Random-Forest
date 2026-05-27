@@ -1,5 +1,9 @@
 package com.dicoding.restupskripsirafierojagatbachri.ui.tracker
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.SharedPreferences
@@ -33,6 +37,7 @@ class SleepTrackerActivity : AppCompatActivity() {
 
     private var isSleeping = false
     private var sleepStartTime: Long = 0L
+    private var pulseAnimator: ObjectAnimator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -230,20 +235,61 @@ class SleepTrackerActivity : AppCompatActivity() {
 
     private fun updateUI() {
         if (isSleeping) {
+            animateBackgroundColor("#0F111A", "#05070A")
             binding.tvGreeting.text = "Ssst... Sedang Tidur"
             binding.tvSubtitle.text = "Aplikasi sedang merekam waktu tidurmu."
             binding.tvTrackerStatus.text = "Tidur dimulai pada: ${formatTime(sleepStartTime)}"
 
             binding.btnToggleSleep.text = "BANGUN\nTIDUR"
             binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf("#FF7043".toColorInt())
+            
+            stopPulseAnimation()
         } else {
+            animateBackgroundColor("#05070A", "#0F111A")
             binding.tvGreeting.text = "Siap untuk beristirahat?"
             binding.tvSubtitle.text = "Pastikan lingkungan tidurmu nyaman."
             binding.tvTrackerStatus.text = "Belum ada aktivitas tidur direkam"
 
             binding.btnToggleSleep.text = "MULAI\nTIDUR"
             binding.btnToggleSleep.backgroundTintList = ColorStateList.valueOf("#4CAF50".toColorInt())
+            
+            startPulseAnimation()
         }
+    }
+
+    private fun animateBackgroundColor(fromColorStr: String, toColorStr: String) {
+        val fromColor = fromColorStr.toColorInt()
+        val toColor = toColorStr.toColorInt()
+
+        val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor)
+        colorAnimation.duration = 1000
+        colorAnimation.addUpdateListener { animator ->
+            binding.root.setBackgroundColor(animator.animatedValue as Int)
+        }
+        colorAnimation.start()
+    }
+
+    private fun startPulseAnimation() {
+        if (pulseAnimator == null) {
+            pulseAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                binding.btnToggleSleep,
+                PropertyValuesHolder.ofFloat("scaleX", 1f, 1.05f),
+                PropertyValuesHolder.ofFloat("scaleY", 1f, 1.05f)
+            ).apply {
+                duration = 1000
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+            }
+        }
+        if (pulseAnimator?.isRunning == false) {
+            pulseAnimator?.start()
+        }
+    }
+
+    private fun stopPulseAnimation() {
+        pulseAnimator?.cancel()
+        binding.btnToggleSleep.scaleX = 1f
+        binding.btnToggleSleep.scaleY = 1f
     }
 
     private fun formatTime(timeInMillis: Long): String {

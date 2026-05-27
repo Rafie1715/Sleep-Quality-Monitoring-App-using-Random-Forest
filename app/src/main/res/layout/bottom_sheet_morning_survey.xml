@@ -313,6 +313,39 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ceritakan_tidurmu_semalam_opsional"
+            android:textColor="@color/text_main"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_journal"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="@color/sleep_primary"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_journal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="@string/tulis_jurnal_tidur_di_sini"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:textColor="@color/text_main" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_survey"
             android:layout_width="match_parent"

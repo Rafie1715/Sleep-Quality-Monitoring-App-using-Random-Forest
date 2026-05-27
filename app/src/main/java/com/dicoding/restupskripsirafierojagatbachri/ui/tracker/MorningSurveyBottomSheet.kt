@@ -23,7 +23,8 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         highScreenTime: Boolean,
         frequentAwakenings: Boolean,
         badTemperature: Boolean,
-        mood: String
+        mood: String,
+        journal: String
     ) -> Unit)? = null
 
     override fun onCreateView(
@@ -85,6 +86,8 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
         val isStressed = false
 
+        val journalText = binding.etJournal.text.toString().trim()
+
         onSubmitListener?.invoke(
             latencyStr,
             isStressed,
@@ -92,7 +95,8 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
             badHabits,
             freqAwakenings,
             badTemp,
-            selectedMood
+            selectedMood,
+            journalText
         )
 
         dismiss()

@@ -21,5 +21,6 @@ data class SleepRecord(
 
     var wake_up_mood: String = "",
     var sleep_quality: String = "",
+    var sleep_journal: String = "",
     var recommendation: String = ""
 ) : Parcelable

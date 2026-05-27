@@ -157,7 +157,7 @@ class SleepTrackerActivity : AppCompatActivity() {
     private fun showMorningSurvey(sleepTime: Long, wakeTime: Long, durationMins: Int) {
         val bottomSheet = MorningSurveyBottomSheet()
 
-        bottomSheet.onSubmitListener = { latency, isStressed, hasCaffeine, highScreenTime, freqAwake, badTemp, mood ->
+        bottomSheet.onSubmitListener = { latency, isStressed, hasCaffeine, highScreenTime, freqAwake, badTemp, mood, journal ->
             val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val currentDate = sdf.format(Date(wakeTime))
 
@@ -217,7 +217,8 @@ class SleepTrackerActivity : AppCompatActivity() {
                 frequent_awakenings = freqAwake,
                 bad_temperature = badTemp,
                 wake_up_mood = mood,
-                sleep_quality = finalClassification
+                sleep_quality = finalClassification,
+                sleep_journal = journal
             )
 
             val saran = SleepRecommendationEngine.generateRecommendation(sleepRecord)

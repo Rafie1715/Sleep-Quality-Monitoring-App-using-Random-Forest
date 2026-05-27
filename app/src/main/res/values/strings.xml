@@ -88,6 +88,8 @@
     <string name="biasa">Biasa</string>
     <string name="emote3">😄</string>
     <string name="bugar">Bugar</string>
+    <string name="ceritakan_tidurmu_semalam_opsional">Jurnal Tidur (Opsional)</string>
+    <string name="tulis_jurnal_tidur_di_sini">Tulis jurnal tidur di sini…</string>
     <string name="simpan_hasil_tidur">SIMPAN HASIL TIDUR</string>
     <string name="riwayat_tidur">Riwayat Tidur</string>
     <string name="belum_ada_riwayat_tidur_nmulai_tracking_tidurmu_malam_ini">Belum ada riwayat tidur.\nMulai tracking tidurmu malam ini!</string>

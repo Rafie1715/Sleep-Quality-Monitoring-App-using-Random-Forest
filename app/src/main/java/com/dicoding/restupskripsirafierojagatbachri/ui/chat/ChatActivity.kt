@@ -27,20 +27,17 @@ class ChatActivity : AppCompatActivity() {
     private var chatSession: Chat? = null
 
     private val generativeModel by lazy {
-        val systemPrompt = StringBuilder("Kamu adalah RestBot, asisten virtual aplikasi RestUP. " +
-                "Tugasmu adalah memberikan saran kesehatan tidur yang ramah, informatif, dan mudah dimengerti. " +
-                "Gunakan bullet points untuk daftar saran agar mudah dibaca. " +
-                "Jangan memberikan jawaban yang terlalu panjang, maksimal 3 paragraf.")
-        
+        val systemPrompt = StringBuilder("Anda adalah RestBot, pakar kesehatan tidur. ")
+
         sleepRecord?.let {
-            systemPrompt.append("\n\nKonteks tidur terakhir pengguna:")
-            systemPrompt.append("\n- Durasi: ${it.duration_minutes / 60} jam ${it.duration_minutes % 60} menit")
-            systemPrompt.append("\n- Kualitas: ${it.sleep_quality}")
-            systemPrompt.append("\n- Mood bangun: ${it.wake_up_mood}")
-            systemPrompt.append("\n- Latensi: ${it.sleep_latency}")
-            if (it.is_stressed) systemPrompt.append("\n- Pengguna merasa stres.")
-            if (it.has_caffeine) systemPrompt.append("\n- Pengguna mengonsumsi kafein sebelum tidur.")
-            if (it.high_screen_time) systemPrompt.append("\n- Pengguna menggunakan gadget sebelum tidur.")
+            val durationText = "${it.duration_minutes / 60} jam ${it.duration_minutes % 60} menit"
+            val journalText = it.sleep_journal.ifEmpty { "Tidak ada catatan tambahan." }
+
+            systemPrompt.append("Mahasiswa ini baru saja tidur dengan durasi $durationText dan diprediksi memiliki kualitas tidur ${it.sleep_quality}. ")
+            systemPrompt.append("Ia juga menuliskan jurnal tidur berikut: '$journalText'. ")
+            systemPrompt.append("Berdasarkan sentimen jurnal tersebut dan status klasifikasinya, berikan saran pemulihan yang sangat personal dan empatik maksimal dua paragraf tanpa istilah medis yang rumit.")
+        } ?: run {
+            systemPrompt.append("Tugas Anda adalah memberikan saran kesehatan tidur yang ramah, informatif, dan mudah dimengerti kepada mahasiswa.")
         }
 
         GenerativeModel(
@@ -80,11 +77,11 @@ class ChatActivity : AppCompatActivity() {
         when {
             weeklyContext != null -> {
                 addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Aku sudah menerima data tidur mingguanmu. Sedang aku analisis ya...", false))
-                sendMessageToGemini(weeklyContext)
+                sendMessageToGemini(weeklyContext, false)
             }
             sleepRecord != null -> {
-                val greeting = "Halo! Aku RestBot 🤖. Aku melihat tidurmu tadi kualitasnya **${sleepRecord?.sleep_quality}**. Ada yang ingin kamu diskusikan atau tanyakan agar tidurmu lebih baik malam ini?"
-                addMessageToChat(ChatMessage(greeting, false))
+                addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Sedang menganalisis jurnal dan data tidurmu sebentar ya...", false))
+                sendMessageToGemini("Berikan analisis awal dan saran pemulihan berdasarkan data tidurku semalam.", false)
             }
             else -> {
                 addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?", false))
@@ -107,13 +104,15 @@ class ChatActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
     }
 
-    private fun sendMessageToGemini(message: String) {
+    private fun sendMessageToGemini(message: String, addToUi: Boolean = true) {
         if (BuildConfig.GEMINI_API_KEY.isEmpty()) {
             addMessageToChat(ChatMessage("Waduh, API Key Gemini belum dipasang di project ini. Silakan cek local.properties ya! 🤖", false))
             return
         }
 
-        addMessageToChat(ChatMessage(message, true))
+        if (addToUi) {
+            addMessageToChat(ChatMessage(message, true))
+        }
         binding.etMessage.text.clear()
 
         binding.progressBar.visibility = View.VISIBLE

@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.dicoding.restupskripsirafierojagatbachri"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.dicoding.restupskripsirafierojagatbachri"
@@ -25,10 +25,8 @@ android {
             properties.load(localPropertiesFile.inputStream())
         }
 
-        // Ambil nilai GEMINI_API_KEY, jika tidak ada isi dengan string kosong
         val geminiApiKey = properties.getProperty("GEMINI_API_KEY") ?: ""
 
-        // Jadikan variabel di dalam class BuildConfig
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

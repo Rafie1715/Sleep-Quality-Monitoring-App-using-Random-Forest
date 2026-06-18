@@ -28,8 +28,8 @@ object SleepRecommendationEngine {
             sources.add("• <a href=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6292246/\">O'Callaghan et al. (2018): Effects of caffeine on sleep</a>")
         }
 
-        if (record.sleep_latency == ">60m" || record.sleep_latency == "30-60m" || record.is_stressed) {
-            recommendations.add("Pikiran yang stres atau banyak tugas membuatmu butuh waktu lama untuk tertidur. Cobalah teknik relaksasi pernapasan 4-7-8 sebelum memejamkan mata.")
+        if (record.sleep_latency == ">60 menit" || record.sleep_latency == "30-60 menit" || record.is_stressed) {
+            recommendations.add("<b>Pikiran yang stres atau banyak tugas</b> (seperti yang kamu tulis di jurnal) membuat sistem saraf tetap aktif sehingga sulit terlelap. Cobalah teknik relaksasi pernapasan 4-7-8 atau mendengarkan musik <i>ambient</i> sebelum memejamkan mata.")
             sources.add("• <a href=\"https://pubmed.ncbi.nlm.nih.gov/25968710/\">Jerath et al. (2015): Self-regulation of breathing for anxiety</a>")
         }
 

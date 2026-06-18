@@ -85,7 +85,7 @@ class ChatActivity : AppCompatActivity() {
             
             v.updatePadding(
                 top = systemBars.top,
-                bottom = Math.max(systemBars.bottom, ime.bottom)
+                bottom = systemBars.bottom.coerceAtLeast(ime.bottom)
             )
             insets
         }

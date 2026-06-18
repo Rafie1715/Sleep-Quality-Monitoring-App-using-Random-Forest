@@ -26,23 +26,10 @@ class ChatAdapter(private val chatList: List<ChatMessage>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chat = chatList[position]
         
-        // Animasi Bounce/Pop-up Entrance
-        holder.itemView.alpha = 0f
-        holder.itemView.scaleX = 0.8f
-        holder.itemView.scaleY = 0.8f
-        
-        holder.itemView.animate()
-            .alpha(1f)
-            .scaleX(1f)
-            .scaleY(1f)
-            .setDuration(400)
-            .setInterpolator(android.view.animation.OvershootInterpolator())
-            .start()
-
-        val formattedMessage = chat.message
+        val formattedMessage = chat.message.trim()
             .replace(Regex("\\*\\*(.*?)\\*\\*"), "<b>$1</b>")
             .replace(Regex("\\*(.*?)\\*"), "<i>$1</i>")
-            .replace(Regex("(?m)^\\*\\s"), "• ")
+            .replace(Regex("(?m)^\\s*\\*\\s"), "• ")
             .replace("\n", "<br>")
 
         holder.tvMessage.text = HtmlCompat.fromHtml(formattedMessage, HtmlCompat.FROM_HTML_MODE_COMPACT)

@@ -153,4 +153,6 @@
     <string name="hours_unit_format">%1$d Jam</string>
     <string name="sesi">Sesi</string>
     <string name="rata_rata">Rata-rata</string>
+    <string name="jurnal_tidurmu">Jurnal Tidurmu</string>
+    <string name="tidak_ada_catatan_jurnal">Tidak ada catatan tambahan di jurnal ini.</string>
 </resources>

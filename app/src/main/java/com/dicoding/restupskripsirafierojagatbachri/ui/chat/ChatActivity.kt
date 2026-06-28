@@ -102,7 +102,15 @@ class ChatActivity : AppCompatActivity() {
             }
             sleepRecord != null -> {
                 addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Sedang menganalisis jurnal dan data tidurmu sebentar ya...", false))
-                sendMessageToGemini("Berikan analisis awal dan saran pemulihan berdasarkan data tidurku semalam.", false)
+                val prompt = """
+                    Berdasarkan data tidurku:
+                    - Kualitas: ${sleepRecord?.sleep_quality}
+                    - Durasi: ${sleepRecord?.duration_minutes} menit
+                    - Jurnal/Keluhan: "${sleepRecord?.sleep_journal}"
+                    
+                    Tolong berikan analisis singkat yang sangat personal berdasarkan keluhan di jurnalku itu dan berikan 1 solusi praktis.
+                """.trimIndent()
+                sendMessageToGemini(prompt, false)
             }
             else -> {
                 addMessageToChat(ChatMessage("Halo! Aku RestBot 🤖. Ada keluhan apa soal tidurmu malam ini?", false))

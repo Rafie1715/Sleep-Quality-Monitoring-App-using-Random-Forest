@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
+import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityResultBinding
 import com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity
@@ -107,6 +108,15 @@ class ResultActivity : AppCompatActivity() {
 
         binding.tvQualityDetail.text = record.sleep_quality.ifEmpty { "Menunggu Analisis AI" }
 
+        // Menampilkan Jurnal Tidur
+        if (record.sleep_journal.isNotEmpty()) {
+            binding.tvJournalDetail.text = record.sleep_journal
+            binding.tvJournalDetail.setTypeface(null, android.graphics.Typeface.NORMAL)
+        } else {
+            binding.tvJournalDetail.text = getString(R.string.tidak_ada_catatan_jurnal)
+            binding.tvJournalDetail.setTypeface(null, android.graphics.Typeface.ITALIC)
+        }
+
         if (record.sleep_quality.equals("Buruk", ignoreCase = true)) {
             binding.btnMedicalRecovery.visibility = View.VISIBLE
             binding.btnMedicalRecovery.setOnClickListener {
@@ -129,6 +139,7 @@ class ResultActivity : AppCompatActivity() {
         // Sembunyikan elemen untuk persiapan animasi staggered
         listOf(
             binding.cardSummary,
+            binding.cardJournal,
             binding.cardRecommendation,
             binding.btnMedicalRecovery,
             binding.cardRestbot,
@@ -158,6 +169,7 @@ class ResultActivity : AppCompatActivity() {
         // 2. Animasi Staggered Slide-up untuk Kartu
         val viewsToAnimate = mutableListOf<View>(
             binding.cardSummary,
+            binding.cardJournal,
             binding.cardRecommendation
         )
         

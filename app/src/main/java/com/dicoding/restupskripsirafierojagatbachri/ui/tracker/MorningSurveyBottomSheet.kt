@@ -119,8 +119,6 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
         val journalText = binding.etJournal.text.toString().trim()
 
-        // Integrasi Jurnal ke Fitur Analisis:
-        // Melakukan deteksi kata kunci sederhana untuk menentukan status stres/pikiran
         val stressKeywords = listOf(
             "stres", "stress", "tugas", "deadline", "ujian", "skripsi", "cemas",
             "khawatir", "banyak pikiran", "pusing", "overthink", "sedih", "takut"
@@ -129,9 +127,9 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
         onSubmitListener?.invoke(
             latencyStr,
-            isStressedInferred, // Menggunakan hasil deteksi dari jurnal
-            badHabits,          // Mapped ke hasCaffeine (berdasarkan UI card)
-            badHabits,          // Mapped ke highScreenTime (berdasarkan UI card)
+            isStressedInferred,
+            badHabits,
+            badHabits,
             freqAwakenings,
             badTemp,
             selectedMood,

@@ -30,7 +30,7 @@ class ReminderActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences("ReminderPref", MODE_PRIVATE)
 
-        val isReminderOn = sharedPref.getBoolean("REMINDER_STATUS", false)
+        val isReminderOn = sharedPref.getBoolean("REMINDER_STATUS", true)
         val savedHour = sharedPref.getInt("REMINDER_HOUR", 22)
         val savedMinute = sharedPref.getInt("REMINDER_MINUTE", 0)
 

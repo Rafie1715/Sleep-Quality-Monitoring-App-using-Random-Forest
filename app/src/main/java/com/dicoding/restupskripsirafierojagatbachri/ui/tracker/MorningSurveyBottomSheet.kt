@@ -108,8 +108,13 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
             else -> ""
         }
 
+        if (latencyId == -1) {
+            showValidationError("Mohon pilih berapa lama kamu tertidur.")
+            return
+        }
+
         if (selectedMood.isEmpty()) {
-            Toast.makeText(requireContext(), "Bagaimana perasaanmu pagi ini? Pilih salah satu emoji.", Toast.LENGTH_SHORT).show()
+            showValidationError("Bagaimana perasaanmu pagi ini? Pilih salah satu emoji.")
             return
         }
 
@@ -137,6 +142,15 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         )
 
         dismiss()
+    }
+
+    private fun showValidationError(message: String) {
+        binding.btnSaveSurvey.isEnabled = false
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        
+        binding.btnSaveSurvey.postDelayed({
+            binding.btnSaveSurvey.isEnabled = true
+        }, 1000)
     }
 
     override fun onDestroyView() {

@@ -71,22 +71,6 @@
             app:layout_constraintTop_toBottomOf="@+id/text_clock" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_open_sks"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/tidur_singkat_hitung_sks"
-            android:textColor="@color/white"
-            app:cornerRadius="12dp"
-            app:icon="@drawable/ic_timer"
-            app:iconTint="@color/sleep_accent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_tracker_status"
-            app:strokeColor="#44FFFFFF" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_toggle_sleep"
             android:layout_width="180dp"
             android:layout_height="180dp"
@@ -106,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_open_sks"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tracker_status"
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

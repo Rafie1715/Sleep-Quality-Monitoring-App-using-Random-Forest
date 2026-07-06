@@ -25,9 +25,6 @@
             android:name=".ui.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.calculator.SksCalculatorActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.profile.HelpActivity"
             android:exported="false" />
         <activity

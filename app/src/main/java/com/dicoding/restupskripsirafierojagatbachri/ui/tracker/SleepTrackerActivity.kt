@@ -23,7 +23,6 @@ import java.util.Date
 import java.util.Locale
 import androidx.core.content.edit
 import androidx.core.graphics.toColorInt
-import com.dicoding.restupskripsirafierojagatbachri.ui.calculator.SksCalculatorActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.result.ResultActivity
 import com.dicoding.restupskripsirafierojagatbachri.utils.SleepQualityClassifier
 
@@ -61,11 +60,6 @@ class SleepTrackerActivity : AppCompatActivity() {
 
         if (!isNotificationPolicyAccessGranted()) {
             Toast.makeText(this, "Fitur Jangan Ganggu belum diaktifkan", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.btnOpenSks.setOnClickListener {
-            val intent = Intent(this, SksCalculatorActivity::class.java)
-            startActivity(intent)
         }
 
         observeViewModel()

@@ -43,11 +43,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.fabChatAiGlobal.setOnClickListener {
-            val intent = Intent(this, com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity::class.java)
-            startActivity(intent)
-        }
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.navViewContainer) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             
@@ -64,11 +59,6 @@ class MainActivity : AppCompatActivity() {
                 bottomMargin = systemBars.bottom + margin24
             }
             
-            binding.fabChatAiGlobal.updateLayoutParams<MarginLayoutParams> {
-                val baseMargin = (120 * resources.displayMetrics.density).toInt()
-                bottomMargin = systemBars.bottom + baseMargin
-            }
-            
             insets
         }
 
@@ -78,12 +68,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_education, R.id.navigation_profile -> {
                     binding.navViewContainer.visibility = View.VISIBLE
                     binding.btnTrackerCenter.visibility = View.VISIBLE
-                    binding.fabChatAiGlobal.visibility = View.VISIBLE
                 }
                 else -> {
                     binding.navViewContainer.visibility = View.GONE
                     binding.btnTrackerCenter.visibility = View.GONE
-                    binding.fabChatAiGlobal.visibility = View.GONE
                 }
             }
         }

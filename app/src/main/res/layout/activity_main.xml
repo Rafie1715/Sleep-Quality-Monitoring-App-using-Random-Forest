@@ -79,19 +79,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_chat_ai_global"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="120dp"
-        android:src="@drawable/ic_restbot"
-        app:tint="@color/white"
-        app:backgroundTint="@color/sleep_primary"
-        app:elevation="8dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/tanya_restbot_ai" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,6 @@ import androidx.fragment.app.viewModels
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.FragmentHomeBinding
-import com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.reminder.ReminderActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.tracker.SleepTrackerActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.profile.EditProfileActivity
@@ -79,10 +78,6 @@ class HomeFragment : Fragment() {
 
         binding.cardSetTarget.setOnClickListener {
             showSetTargetDialog()
-        }
-
-        binding.btnAnalyzeWeekly.setOnClickListener {
-            analyzeWeeklyWithAI()
         }
 
         binding.ivProfile.setOnClickListener {
@@ -290,23 +285,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun analyzeWeeklyWithAI() {
-        if (weeklyRecords.isEmpty()) {
-            Toast.makeText(requireContext(), "Belum ada data untuk dianalisis", Toast.LENGTH_SHORT).show()
-            return
-        }
 
-        val analysisContext = StringBuilder("Ini adalah data tidurku selama seminggu terakhir:\n")
-        weeklyRecords.forEach { record ->
-            analysisContext.append("- Tanggal ${record.date}: ${record.duration_minutes / 60}j ${record.duration_minutes % 60}m (${record.sleep_quality})\n")
-        }
-        analysisContext.append("\nTolong berikan analisis singkat dan saran untuk pola tidurku ini.")
-
-        val intent = Intent(requireContext(), ChatActivity::class.java)
-        intent.putExtra("EXTRA_WEEKLY_CONTEXT", analysisContext.toString())
-        startActivity(intent)
-        requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-    }
 
     private fun calculateSleepDebt(lastSleepHours: Int) {
         val sharedPref = requireActivity().getSharedPreferences("RestUP_Prefs", Context.MODE_PRIVATE)

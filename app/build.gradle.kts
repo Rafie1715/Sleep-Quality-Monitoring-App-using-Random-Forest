@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.devtools.ksp")
@@ -19,6 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        /*
         val properties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
         if (localPropertiesFile.exists()) {
@@ -28,6 +27,7 @@ android {
         val geminiApiKey = properties.getProperty("GEMINI_API_KEY") ?: ""
 
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        */
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -74,7 +74,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.glide)
     implementation(libs.mpandroidchart)
-    implementation(libs.generativeai)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.play.services.auth)
     implementation(libs.shimmer)

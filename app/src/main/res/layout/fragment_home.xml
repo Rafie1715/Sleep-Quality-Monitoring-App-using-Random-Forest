@@ -318,25 +318,6 @@
                             android:visibility="gone" />
                     </FrameLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
-                        android:background="@color/border_divider" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_analyze_weekly"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Minta Analisis AI Mingguan 🤖"
-                        android:textColor="@color/sleep_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:icon="@drawable/ic_restbot"
-                        app:iconGravity="textStart"
-                        app:iconSize="18dp"
-                        app:iconTint="@color/sleep_primary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -7,7 +7,6 @@ object SleepRecommendationEngine {
     fun generateRecommendation(record: SleepRecord): String {
         val recommendations = mutableListOf<String>()
         val sources = mutableSetOf<String>()
-        val journal = record.sleep_journal.lowercase()
 
         if (record.duration_minutes < 180) {
             recommendations.add("<b>⚠️ PERINGATAN MEDIS:</b> Durasi tidurmu sangat ekstrem (kurang dari 3 jam). Ini berisiko tinggi memicu <i>microsleep</i> dan penurunan fungsi kognitif drastis.")
@@ -33,28 +32,13 @@ object SleepRecommendationEngine {
             sources.add("• <a href=\"https://www.alodokter.com/komunitas/topic/apakah-kafein-memengaruhi-kualitas-tidur-dan-kapan-sebaiknya-berhenti-minum\">Alodokter: Pengaruh Kafein terhadap Tidur</a>")
         }
 
-        if (record.is_stressed || listOf("stres", "stress", "tugas", "skripsi", "deadline", "cemas", "pikiran").any { journal.contains(it) }) {
-            recommendations.add("<b>Analisis Jurnal:</b> Pikiran yang stres atau beban tugas membuat sistem saraf tetap aktif. Cobalah teknik relaksasi pernapasan 4-7-8 untuk menenangkan pikiran sebelum tidur.")
+        if (record.is_stressed) {
+            recommendations.add("Pikiran yang stres atau beban tugas membuat sistem saraf tetap aktif. Cobalah teknik relaksasi pernapasan 4-7-8 untuk menenangkan pikiran sebelum tidur.")
             sources.add("• <a href=\"https://pubmed.ncbi.nlm.nih.gov/25869930/\">Jerath et al: Self-regulation of breathing for anxiety</a>")
             sources.add("• <a href=\"https://www.alodokter.com/menyiasati-insomnia\">AloDokter: Cara Mengatasi Insomnia</a>")
         }
 
-        if (listOf("toilet", "kamar mandi", "pipis", "kencing", "minum").any { journal.contains(it) }) {
-            recommendations.add("<b>Analisis Jurnal:</b> Sering terbangun untuk ke toilet (nokturia) bisa disebabkan konsumsi cairan berlebih sebelum tidur. Batasi minum 1-2 jam sebelum jam tidurmu.")
-            sources.add("• <a href=\"https://www.alodokter.com/nokturia\">Alodokter: Nokturia (Sering Kencing di Malam Hari)</a>")
-        }
-
-        if (listOf("ngorok", "dengkur", "snoring", "nafas", "sesak").any { journal.contains(it) }) {
-            recommendations.add("<b>Analisis Jurnal:</b> Mendengkur bisa menandakan adanya hambatan jalan napas. Cobalah posisi tidur miring dan hindari tidur telentang untuk membantu pernapasan lebih lancar.")
-            sources.add("• <a href=\"https://www.klikdokter.com/penyakit/masalah-tidur/mendengkur\">KlikDokter: Mengatasi Mendengkur</a>")
-        }
-
-        if (listOf("mimpi buruk", "gelisah", "nightmare", "takut").any { journal.contains(it) }) {
-            recommendations.add("<b>Analisis Jurnal:</b> Mimpi buruk sering kali dipicu oleh stres atau kondisi lingkungan. Pastikan suhu kamar sejuk dan hindari konten menegangkan sebelum tidur.")
-            sources.add("• <a href=\"https://www.halodoc.com/artikel/penyebab-mimpi-buruk-dan-tips-untuk-mengatasinya\">Halodoc: Penjelasan Medis Mimpi Buruk</a>")
-        }
-
-        if (record.frequent_awakenings || record.bad_temperature || journal.contains("berisik") || journal.contains("panas")) {
+        if (record.frequent_awakenings || record.bad_temperature) {
             recommendations.add("Pastikan suhu kamarmu nyaman (ideal 15-19°C) dan minimalkan cahaya serta kebisingan agar kamu tidak sering terbangun.")
             sources.add("• <a href=\"https://www.sleepfoundation.org/bedroom-environment/best-temperature-for-sleep\">Sleep Foundation: Best Temperature for Sleep</a>")
         }

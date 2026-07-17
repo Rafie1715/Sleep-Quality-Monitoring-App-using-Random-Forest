@@ -68,7 +68,7 @@
     <string name="hubungi_dukungan_email">Hubungi Dukungan (Email)</string>
     <string name="jam_tidur">Jam Tidur</string>
     <string name="_23_00_06_00">23:00 – 06:00</string>
-    <string name="rekomendasi_pakar">Rekomendasi Pakar</string>
+    <string name="rekomendasi_pakar">Saran Kesehatan Tidur</string>
     <string name="memuat_saran">Memuat saran…</string>
     <string name="jadwal_amp_pengingat_tidur"><![CDATA[Jadwal & Pengingat Tidur]]></string>
     <string name="versi_aplikasi">Versi Aplikasi</string>
@@ -80,6 +80,7 @@
     <string name="tandai_yang_kamu_alami_semalam">Tandai yang kamu alami semalam:</string>
     <string name="sering_terbangun_tengah_malam">Sering terbangun tengah malam</string>
     <string name="gangguan_fisik_suhu_ke_toilet">Gangguan Fisik (Suhu / Ke Toilet)</string>
+    <string name="merasa_stres_cemas_atau_banyak_pikiran">Merasa stres, cemas, atau banyak pikiran</string>
     <string name="screen_time_1_jam_minum_kafein_sebelum_tidur"><![CDATA[Screen time >1 jam / Minum Kafein sebelum tidur]]></string>
     <string name="perasaan_pagi_ini">Perasaan pagi ini?</string>
     <string name="emote">😫</string>
@@ -108,8 +109,8 @@
     <string name="judul_artikel_yang_menarik">Judul Artikel Yang Menarik</string>
     <string name="deskripsi_singkat_artikel_akan_muncul_di_sini_untuk_memancing_user_membaca_lebih_lanjut">Deskripsi singkat artikel akan muncul di sini untuk memancing user membaca lebih lanjut…</string>
     <string name="tanya_seputar_tidurmu">Tanya seputar tidurmu…</string>
-    <string name="tanya_restbot_ai">Tanya RestBot AI</string>
-    <string name="konsultasi_restbot_desc">Konsultasikan hasil tidurmu dengan asisten AI kami.</string>
+    <string name="tanya_restbot_ai">Konsultasi ke Pakar Medis</string>
+    <string name="konsultasi_restbot_desc">Konsultasikan hasil tidurmu langsung dengan dokter via Halodoc.</string>
     <string name="asisten_cerdas_solusi_tidurmu">Asisten cerdas solusi tidurmu</string>
     <string name="pesan_di_sini">Pesan di sini</string>
     <string name="tidurmu_kurang_2_jam">Tidurmu kurang 2 Jam</string>

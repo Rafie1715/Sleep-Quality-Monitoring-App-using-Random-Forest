@@ -25,8 +25,7 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
         highScreenTime: Boolean,
         frequentAwakenings: Boolean,
         badTemperature: Boolean,
-        mood: String,
-        journal: String
+        mood: String
     ) -> Unit)? = null
 
     override fun onCreateView(
@@ -53,6 +52,7 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
         binding.cardDistWake.setOnClickListener(toggleCard)
         binding.cardDistPhysic.setOnClickListener(toggleCard)
+        binding.cardStress.setOnClickListener(toggleCard)
         binding.cardHabitBad.setOnClickListener(toggleCard)
 
         binding.cardMoodBad.setOnClickListener { updateMoodSelection("Lelah", binding.cardMoodBad) }
@@ -120,25 +120,17 @@ class MorningSurveyBottomSheet : BottomSheetDialogFragment() {
 
         val freqAwakenings = binding.cardDistWake.isChecked
         val badTemp = binding.cardDistPhysic.isChecked
+        val isStressed = binding.cardStress.isChecked
         val badHabits = binding.cardHabitBad.isChecked
-
-        val journalText = binding.etJournal.text.toString().trim()
-
-        val stressKeywords = listOf(
-            "stres", "stress", "tugas", "deadline", "ujian", "skripsi", "cemas",
-            "khawatir", "banyak pikiran", "pusing", "overthink", "sedih", "takut"
-        )
-        val isStressedInferred = stressKeywords.any { journalText.lowercase().contains(it) }
 
         onSubmitListener?.invoke(
             latencyStr,
-            isStressedInferred,
+            isStressed,
             badHabits,
             badHabits,
             freqAwakenings,
             badTemp,
-            selectedMood,
-            journalText
+            selectedMood
         )
 
         dismiss()

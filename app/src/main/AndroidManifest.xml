@@ -21,9 +21,7 @@
         <activity
             android:name=".ui.calculator.SleepDebtDetailActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.chat.ChatActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.profile.HelpActivity"
             android:exported="false" />

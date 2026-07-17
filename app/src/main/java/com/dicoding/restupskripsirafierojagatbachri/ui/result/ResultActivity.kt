@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -15,7 +16,6 @@ import androidx.core.text.HtmlCompat
 import com.dicoding.restupskripsirafierojagatbachri.R
 import com.dicoding.restupskripsirafierojagatbachri.data.model.SleepRecord
 import com.dicoding.restupskripsirafierojagatbachri.databinding.ActivityResultBinding
-import com.dicoding.restupskripsirafierojagatbachri.ui.chat.ChatActivity
 import com.dicoding.restupskripsirafierojagatbachri.ui.reminder.AlarmReceiver
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -38,17 +38,16 @@ class ResultActivity : AppCompatActivity() {
 
         if (sleepRecord != null) {
             displayResult(sleepRecord)
-            setupChatBot(sleepRecord)
+            setupTelemedicine()
             animateUI(sleepRecord)
         }
 
         binding.btnBack.setOnClickListener { finish() }
     }
 
-    private fun setupChatBot(record: SleepRecord) {
-        binding.cardRestbot.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("EXTRA_SLEEP_RECORD", record)
+    private fun setupTelemedicine() {
+        binding.cardTelemedicine.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.halodoc.com/tanya-dokter"))
             startActivity(intent)
         }
     }
@@ -108,15 +107,6 @@ class ResultActivity : AppCompatActivity() {
 
         binding.tvQualityDetail.text = record.sleep_quality.ifEmpty { "Menunggu Analisis AI" }
 
-        // Menampilkan Jurnal Tidur
-        if (record.sleep_journal.isNotEmpty()) {
-            binding.tvJournalDetail.text = record.sleep_journal
-            binding.tvJournalDetail.setTypeface(null, android.graphics.Typeface.NORMAL)
-        } else {
-            binding.tvJournalDetail.text = getString(R.string.tidak_ada_catatan_jurnal)
-            binding.tvJournalDetail.setTypeface(null, android.graphics.Typeface.ITALIC)
-        }
-
         if (record.sleep_quality.equals("Buruk", ignoreCase = true)) {
             binding.btnMedicalRecovery.visibility = View.VISIBLE
             binding.btnMedicalRecovery.setOnClickListener {
@@ -124,6 +114,13 @@ class ResultActivity : AppCompatActivity() {
             }
         } else {
             binding.btnMedicalRecovery.visibility = View.GONE
+        }
+
+        // Tampilkan tombol konsultasi hanya jika hasil bukan "Baik"
+        if (record.sleep_quality.equals("Baik", ignoreCase = true)) {
+            binding.cardTelemedicine.visibility = View.GONE
+        } else {
+            binding.cardTelemedicine.visibility = View.VISIBLE
         }
 
         if (record.recommendation.isNotEmpty()) {
@@ -139,10 +136,9 @@ class ResultActivity : AppCompatActivity() {
         // Sembunyikan elemen untuk persiapan animasi staggered
         listOf(
             binding.cardSummary,
-            binding.cardJournal,
             binding.cardRecommendation,
             binding.btnMedicalRecovery,
-            binding.cardRestbot,
+            binding.cardTelemedicine,
             binding.btnBack
         ).forEach { view ->
             if (view.visibility != View.GONE) {
@@ -169,7 +165,6 @@ class ResultActivity : AppCompatActivity() {
         // 2. Animasi Staggered Slide-up untuk Kartu
         val viewsToAnimate = mutableListOf<View>(
             binding.cardSummary,
-            binding.cardJournal,
             binding.cardRecommendation
         )
         
@@ -177,7 +172,10 @@ class ResultActivity : AppCompatActivity() {
             viewsToAnimate.add(binding.btnMedicalRecovery)
         }
         
-        viewsToAnimate.add(binding.cardRestbot)
+        if (binding.cardTelemedicine.isVisible) {
+            viewsToAnimate.add(binding.cardTelemedicine)
+        }
+        
         viewsToAnimate.add(binding.btnBack)
 
         viewsToAnimate.forEachIndexed { index, view ->
